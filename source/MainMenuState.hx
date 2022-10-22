@@ -214,9 +214,11 @@ class MainMenuState extends MusicBeatState
 				selectedSomethin = true;
 				FlxG.sound.play(Paths.sound('confirmMenu'));
 
+				/*
 				FlxTween.tween(FlxG.camera, {y: -900}, 0.9, {
 					ease: FlxEase.quadInOut
 				});
+				*/
 				
 				menuItems.forEach(function(spr:FlxSprite)
 				{

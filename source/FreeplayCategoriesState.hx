@@ -160,6 +160,7 @@ class FreeplayCategoriesState extends MusicBeatState
                         FlxFlicker.flicker(spr, 1, 0.06, false, false, function(flick:FlxFlicker)
                         {
                             var daChoice:String = categories[curSelected];
+                            MusicBeatState.switchState(new FreeplayState());
 
                             /*
                             switch (daChoice)
