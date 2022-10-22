@@ -44,7 +44,7 @@ class FreeplayCategoriesState extends MusicBeatState
 		FlxG.cameras.reset(camGame);
 		FlxG.cameras.setDefaultDrawTarget(camGame, true);
 
-        bg = new FlxSprite(0, 0).loadGraphic(Paths.image("mainmenu/bgDarkened"));
+        bg = new FlxSprite(0, 0).loadGraphic(Paths.image("menustuff/bgDarkened", 'sadfox'));
 		bg.setGraphicSize(Std.int(bg.width * 1.12));
 		bg.screenCenter();
 		bg.antialiasing = false;
@@ -58,19 +58,21 @@ class FreeplayCategoriesState extends MusicBeatState
 
         for (i in 0...categories.length)
         {
-            var item:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.image("mainmenu/rings/" + categories[i].toLowerCase()));
+            var item:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.image("menustuff/rings/" + categories[i].toLowerCase(), 'sadfox'));
             item.setGraphicSize(Std.int(item.width * 0.8));
+            item.updateHitbox();
 			item.screenCenter();
+            item.antialiasing = true;
             //item.x = spikyThing.getGraphicMidpoint().x - item.width / 2;
             menuItems.add(item);
             item.ID = i;
         }
 
-        leftArrow = new FlxSprite().loadGraphic(Paths.image("mainmenu/main/arrow"));
+        leftArrow = new FlxSprite().loadGraphic(Paths.image("menustuff/main/arrow", 'sadfox'));
         leftArrow.y = 270;
         leftArrow.x = 0;
 
-        rightArrow = new FlxSprite().loadGraphic(Paths.image("mainmenu/main/arrow"));
+        rightArrow = new FlxSprite().loadGraphic(Paths.image("menustuff/main/arrow", 'sadfox'));
         rightArrow.y = 270;
         rightArrow.x = 1150;
         rightArrow.flipX = true;
@@ -134,6 +136,7 @@ class FreeplayCategoriesState extends MusicBeatState
 
             if (controls.ACCEPT)
             {
+                curSelected = 0;
                 selectedSomethin = true;
                 FlxG.sound.play(Paths.sound('confirmMenu'));
 
@@ -161,26 +164,6 @@ class FreeplayCategoriesState extends MusicBeatState
                         {
                             var daChoice:String = categories[curSelected];
                             MusicBeatState.switchState(new FreeplayState());
-
-                            /*
-                            switch (daChoice)
-                            {
-                                case 'story mode':
-                                    MusicBeatState.switchState(new StoryMenuState());
-                                case 'freeplay':
-                                    MusicBeatState.switchState(new FreeplayState());
-                                #if MODS_ALLOWED
-                                case 'mods':
-                                    MusicBeatState.switchState(new ModsMenuState());
-                                #end
-                                case 'awards':
-                                    MusicBeatState.switchState(new AchievementsMenuState());
-                                case 'credits':
-                                    MusicBeatState.switchState(new CreditsState());
-                                case 'options':
-                                    LoadingState.loadAndSwitchState(new options.OptionsState());
-                            }
-                            */
                         });
                     }
                 });

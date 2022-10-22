@@ -1,19 +1,19 @@
 {
 	"songs": [
-		["Bopeebo", "dad", [146, 113, 253]],
-		["Fresh", "dad", [146, 113, 253]],
-		["Dad Battle", "dad", [146, 113, 253]]
+		["Chasing", "tailsH", [255, 166, 0]],
+		["Darkness", "tailsEXE", [41, 35, 35]],
+		["Sidekick", "sonic", [199, 0, 0]]
 	],
 
 	"weekCharacters": [
-		"dad",
+		"",
 		"bf",
 		"gf"
 	],
-	"weekBackground": "stage",
+	"weekBackground": "",
 
-	"storyName": "Daddy Dearest",
-	"weekBefore": "tutorial",
+	"storyName": "SAD TOX REAL",
+	"weekBefore": "week1",
 	"weekName": "Week 1",
 	"startUnlocked": true,
 

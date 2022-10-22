@@ -1,0 +1,89 @@
+{
+	"animations": [
+		{
+			"loop": false,
+			"offsets": [
+				0,
+				0
+			],
+			"anim": "idle",
+			"fps": 24,
+			"name": "Soic Idle",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				1,
+				0
+			],
+			"anim": "singLEFT",
+			"fps": 24,
+			"name": "Soic Left sexso",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				5,
+				-30
+			],
+			"anim": "singDOWN",
+			"fps": 24,
+			"name": "Soic Down",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				0,
+				7
+			],
+			"anim": "singUP",
+			"fps": 24,
+			"name": "Soic Up",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-30,
+				0
+			],
+			"anim": "singRIGHT",
+			"fps": 24,
+			"name": "Soic Right",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				0,
+				0
+			],
+			"anim": "action",
+			"fps": 24,
+			"name": "Soic Action",
+			"indices": []
+		}
+	],
+	"no_antialiasing": false,
+	"image": "characters/soic",
+	"position": [
+		30,
+		320
+	],
+	"healthicon": "soic",
+	"flip_x": false,
+	"healthbar_colors": [
+		0,
+		0,
+		255
+	],
+	"camera_position": [
+		0,
+		0
+	],
+	"sing_duration": 6.1,
+	"scale": 1
+}

@@ -69,16 +69,16 @@ class MainMenuState extends MusicBeatState
 
 		persistentUpdate = persistentDraw = true;
 
-		bg = new FlxSprite(0, 0).loadGraphic(Paths.image("mainmenu/bgFreeplay"));
+		bg = new FlxSprite(0, 0).loadGraphic(Paths.image("menustuff/bgFreeplay", 'sadfox'));
 		bg.setGraphicSize(Std.int(bg.width * 1.12));
 		bg.screenCenter();
 		bg.antialiasing = false;
 		add(bg);
 
-		spikyThing = new FlxSprite(0, 720 - 144).loadGraphic(Paths.image("mainmenu/main/spikes"));
+		spikyThing = new FlxSprite(0, 720 - 144).loadGraphic(Paths.image("menustuff/main/spikes", 'sadfox'));
 		add(spikyThing);
 
-		var vignette:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.image("mainmenu/RedVG"));
+		var vignette:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.image("menustuff/RedVG", 'sadfox'));
 		add(vignette);
 		vignette.alpha = 0.275;
 
@@ -90,18 +90,18 @@ class MainMenuState extends MusicBeatState
 
 		for (i in 0...optionShit.length)
 		{
-			var item:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.image("mainmenu/main/" + optionShit[i].toUpperCase()));
+			var item:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.image("menustuff/main/" + optionShit[i].toUpperCase(), 'sadfox'));
 			menuItems.add(item);
 			item.x = spikyThing.getGraphicMidpoint().x - item.width / 2;
 			item.y = 1200;
 			item.ID = i;
 		}
 
-		leftArrow = new FlxSprite().loadGraphic(Paths.image("mainmenu/main/arrow"));
+		leftArrow = new FlxSprite().loadGraphic(Paths.image("menustuff/main/arrow", 'sadfox'));
 		leftArrow.y = spikyThing.getGraphicMidpoint().y - leftArrow.height / 2;
 		leftArrow.x = spikyThing.getGraphicMidpoint().x - leftArrow.width / 2 - 500 / 2;
 
-		rightArrow = new FlxSprite().loadGraphic(Paths.image("mainmenu/main/arrow"));
+		rightArrow = new FlxSprite().loadGraphic(Paths.image("menustuff/main/arrow", 'sadfox'));
 		rightArrow.y = spikyThing.getGraphicMidpoint().y - rightArrow.height / 2;
 		rightArrow.x = spikyThing.getGraphicMidpoint().x - rightArrow.width / 2 + 500 / 2;
 		rightArrow.flipX = true;
@@ -113,7 +113,7 @@ class MainMenuState extends MusicBeatState
 		versionShit.scrollFactor.set();
 		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(versionShit);
-		var versionShit:FlxText = new FlxText(12, FlxG.height - 24, 0, "VS Tails.EXE v2", 12);
+		var versionShit:FlxText = new FlxText(12, FlxG.height - 24, 0, "VS Tails.EXE v2.0", 12);
 		versionShit.scrollFactor.set();
 		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(versionShit);
