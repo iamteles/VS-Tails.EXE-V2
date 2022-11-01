@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="sonicEXEPixel.png">
+	<!-- Created with Adobe Animate version 21.0.3.38773 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="heyBuddy0000" x="0" y="0" width="35" height="44"/>
+	<SubTexture name="heyBuddy0001" x="0" y="0" width="35" height="44"/>
+	<SubTexture name="heyBuddy0002" x="35" y="0" width="35" height="44"/>
+	<SubTexture name="heyBuddy0003" x="35" y="0" width="35" height="44"/>
+	<SubTexture name="heyBuddy0004" x="70" y="0" width="35" height="44"/>
+	<SubTexture name="heyBuddy0005" x="70" y="0" width="35" height="44"/>
+	<SubTexture name="heyBuddy0006" x="105" y="0" width="35" height="44"/>
+	<SubTexture name="heyBuddy0007" x="105" y="0" width="35" height="44"/>
+	<SubTexture name="heyBuddy0008" x="140" y="0" width="35" height="44"/>
+	<SubTexture name="heyBuddy0009" x="140" y="0" width="35" height="44"/>
+	<SubTexture name="heyBuddy0010" x="175" y="0" width="35" height="44"/>
+	<SubTexture name="heyBuddy0011" x="175" y="0" width="35" height="44"/>
+	<SubTexture name="heyBuddy0012" x="210" y="0" width="35" height="44"/>
+	<SubTexture name="heyBuddy0013" x="210" y="0" width="35" height="44"/>
+	<SubTexture name="heyBuddy0014" x="245" y="0" width="35" height="44"/>
+	<SubTexture name="heyBuddy0015" x="245" y="0" width="35" height="44"/>
+	<SubTexture name="heyBuddy0016" x="280" y="0" width="35" height="44"/>
+	<SubTexture name="heyBuddy0017" x="280" y="0" width="35" height="44"/>
+</TextureAtlas>

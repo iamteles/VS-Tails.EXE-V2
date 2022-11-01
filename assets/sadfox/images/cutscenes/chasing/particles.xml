@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="particles.png">
+	<!-- Created with Adobe Animate version 21.0.3.38773 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="brak0000" x="0" y="0" width="48" height="48"/>
+	<SubTexture name="brak0001" x="0" y="0" width="48" height="48"/>
+	<SubTexture name="brak0002" x="48" y="0" width="48" height="48"/>
+	<SubTexture name="brak0003" x="48" y="0" width="48" height="48"/>
+	<SubTexture name="brak0004" x="96" y="0" width="48" height="48"/>
+	<SubTexture name="brak0005" x="96" y="0" width="48" height="48"/>
+	<SubTexture name="brak0006" x="144" y="0" width="48" height="48"/>
+	<SubTexture name="brak0007" x="144" y="0" width="48" height="48"/>
+	<SubTexture name="brak0008" x="192" y="0" width="48" height="48"/>
+	<SubTexture name="brak0009" x="192" y="0" width="48" height="48"/>
+	<SubTexture name="brak0010" x="240" y="0" width="48" height="48"/>
+	<SubTexture name="brak0011" x="240" y="0" width="48" height="48"/>
+	<SubTexture name="brak0012" x="288" y="0" width="48" height="48"/>
+	<SubTexture name="brak0013" x="288" y="0" width="48" height="48"/>
+</TextureAtlas>

@@ -146,19 +146,7 @@ class Note extends FlxSprite
 					}
 					hitCausesMiss = true;
 				case 'Eye Note':
-					ignoreNote = !mustPress;
 					reloadNote('EYE');
-					noteSplashTexture = 'HURTnoteSplashes';
-					colorSwap.hue = 0;
-					colorSwap.saturation = 0;
-					colorSwap.brightness = 0;
-					lowPriority = true;
-
-					if(isSustainNote) {
-						missHealth = 10;
-					} else {
-						missHealth = 10;
-					}
 				case 'Alt Animation':
 					animSuffix = '-alt';
 				case 'No Animation':

@@ -31,6 +31,7 @@ import flixel.system.FlxSound;
 import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
+import flixel.tweens.FlxTween.FlxTweenManager;
 import flixel.ui.FlxBar;
 import flixel.util.FlxCollision;
 import flixel.util.FlxColor;
@@ -61,8 +62,10 @@ import FunkinLua;
 import DialogueBoxPsych;
 import Conductor.Rating;
 
-#if !flash 
+#if !flash
 import flixel.addons.display.FlxRuntimeShader;
+import openfl.display.Shader;
+import openfl.display.GraphicsShader;
 import openfl.filters.ShaderFilter;
 #end
 
@@ -219,6 +222,12 @@ class PlayState extends MusicBeatState
 	public var camIntro:FlxCamera;
 	public var cameraSpeed:Float = 1;
 
+	#if !flash
+	var filters:Array<BitmapFilter> = [];
+	var camfilters:Array<BitmapFilter> = [];
+	private var shadersLoaded:Bool = false;
+	#end
+
 	var dialogue:Array<String> = ['blah blah blah', 'coolswag'];
 	var dialogueJson:DialogueFile = null;
 
@@ -331,6 +340,8 @@ class PlayState extends MusicBeatState
 
 	var blackSkit:FlxSprite;
 	var leCharLol:String = "";
+	private static var InOutThingy:String = 'Special';
+	private var cloneTimeTxt:FlxText;
 
 	var fore:FlxSprite;
 	var fore2:FlxSprite;
@@ -338,6 +349,18 @@ class PlayState extends MusicBeatState
 	var grd2:BGSprite;
 	var lightz:FlxSprite;
 	var shineThing:FlxSprite;
+
+	var staticazzo0:FlxSprite;
+	var staticazzo1:FlxSprite;
+	var staticazzo2:FlxSprite;
+	var vg:FlxSprite;
+	private var animSky:FlxSprite;
+	private var animTerrain:FlxSprite;
+	private var animStuff:FlxSprite;
+	private var tailsPxl:FlxSprite;
+	private var leTail:FlxSprite;
+	private var brakParticle:FlxSprite;
+	private var sonicPxl:FlxSprite;
 
 	override public function create()
 	{
@@ -431,6 +454,14 @@ class PlayState extends MusicBeatState
 		grpNoteSplashes = new FlxTypedGroup<NoteSplash>();
 
 		FlxG.cameras.setDefaultDrawTarget(camGame, true);
+
+		#if !flash
+		camGame.setFilters(filters);
+		camHUD.setFilters(camfilters);
+		camGame.filtersEnabled = true;
+		camHUD.filtersEnabled = true;
+		#end
+
 		CustomFadeTransition.nextCamera = camOther;
 
 		persistentUpdate = true;
@@ -571,12 +602,15 @@ class PlayState extends MusicBeatState
 				grd.antialiasing = ClientPrefs.globalAntialiasing;
 				add(grd);
 
-				fore = new FlxSprite(-300, -100).loadGraphic(Paths.image('stages/ghz/foreHappy', 'sadfox'));
-				fore.setGraphicSize(Std.int(fore.width * 2));
-				fore.updateHitbox();
-				fore.antialiasing = ClientPrefs.globalAntialiasing;
-				fore.scrollFactor.set(1.4, 1.4);
-				fore.active = false;
+				if(!ClientPrefs.lowQuality)
+				{
+					fore = new FlxSprite(-300, -100).loadGraphic(Paths.image('stages/ghz/foreHappy', 'sadfox'));
+					fore.setGraphicSize(Std.int(fore.width * 2));
+					fore.updateHitbox();
+					fore.antialiasing = ClientPrefs.globalAntialiasing;
+					fore.scrollFactor.set(1.4, 1.4);
+					fore.active = false;
+				}
 
 				if (SONG.song.toLowerCase() == 'chasing')
 				{
@@ -594,21 +628,105 @@ class PlayState extends MusicBeatState
 					grd2.visible = false;
 					add(grd2);
 
-					fore2 = new FlxSprite(-300, -100).loadGraphic(Paths.image('stages/burningGhz/foreBurn', 'sadfox'));
-					fore2.setGraphicSize(Std.int(fore2.width * 2));
-					fore2.updateHitbox();
-					fore2.antialiasing = ClientPrefs.globalAntialiasing;
-					fore2.scrollFactor.set(1.4, 1.4);
-					fore2.visible = false;
-					fore2.active = false;
+					if(!ClientPrefs.lowQuality)
+					{
+						fore2 = new FlxSprite(-300, -100).loadGraphic(Paths.image('stages/burningGhz/foreBurn', 'sadfox'));
+						fore2.setGraphicSize(Std.int(fore2.width * 2));
+						fore2.updateHitbox();
+						fore2.antialiasing = ClientPrefs.globalAntialiasing;
+						fore2.scrollFactor.set(1.4, 1.4);
+						fore2.visible = false;
+						fore2.active = false;
 
-					lightz = new FlxSprite(-300, -100).loadGraphic(Paths.image('stages/burningGhz/lightsBurn', 'sadfox'));
-					lightz.setGraphicSize(Std.int(lightz.width * 2));
-					lightz.updateHitbox();
-					lightz.antialiasing = ClientPrefs.globalAntialiasing;
-					lightz.scrollFactor.set(1.4, 1.4);
-					lightz.visible = false;
-					lightz.active = false;
+						lightz = new FlxSprite(-300, -100).loadGraphic(Paths.image('stages/burningGhz/lightsBurn', 'sadfox'));
+						lightz.setGraphicSize(Std.int(lightz.width * 2));
+						lightz.updateHitbox();
+						lightz.antialiasing = ClientPrefs.globalAntialiasing;
+						lightz.scrollFactor.set(1.4, 1.4);
+						lightz.visible = false;
+						lightz.active = false;
+
+						// cutscene stuff
+						animSky = new FlxSprite(-300, -100).loadGraphic(Paths.image('cutscenes/chasing/redSky', 'sadfox'));
+						animSky.setGraphicSize(Std.int(animSky.width * 1.2));
+						animSky.updateHitbox();
+						animSky.y = -150;
+						animSky.antialiasing = false;
+						animSky.cameras = [camOther];
+						// animBG.screenCenter(Y);
+						animSky.visible = false;
+						add(animSky);
+
+						animStuff = new FlxSprite(-3100, 0).loadGraphic(Paths.image('cutscenes/chasing/bgStuff', 'sadfox'));
+						animStuff.setGraphicSize(Std.int(animStuff.width * 4));
+						animStuff.updateHitbox();
+						animStuff.y = -600;
+						animStuff.antialiasing = false;
+						animStuff.cameras = [camOther];
+						// animStuff.screenCenter(Y);
+						animStuff.visible = false;
+						add(animStuff);
+
+						tailsPxl = new FlxSprite(0, 460);
+						tailsPxl.frames = Paths.getSparrowAtlas('cutscenes/chasing/tailsPixel', 'sadfox');
+						tailsPxl.antialiasing = false;
+						tailsPxl.flipX = true;
+						tailsPxl.animation.addByPrefix('idle','idle', 24, true);
+						tailsPxl.animation.addByPrefix('braking','stop0', 24, false);
+						tailsPxl.animation.addByPrefix('loopBraking','stopLoop', 24, true);
+						tailsPxl.animation.addByPrefix('run','run', 24, true);
+						tailsPxl.animation.addByPrefix('surprised','surprised', 24, true);
+						tailsPxl.animation.play('idle');
+						tailsPxl.setGraphicSize(Std.int(tailsPxl.width * 5));
+						tailsPxl.updateHitbox();
+						tailsPxl.cameras = [camOther];
+						tailsPxl.screenCenter(X);
+						tailsPxl.visible = false;
+
+						leTail = new FlxSprite(tailsPxl.x + 70, tailsPxl.y + 30);
+						leTail.frames = Paths.getSparrowAtlas('cutscenes/chasing/tailsPixel', 'sadfox');
+						leTail.antialiasing = false;
+						leTail.flipX = true;
+						leTail.animation.addByPrefix('brakTail','tailStop', 24, true);
+						leTail.animation.addByPrefix('defaultTail','tailDefault', 24, true);
+						leTail.setGraphicSize(Std.int(leTail.width * 5));
+						leTail.updateHitbox();
+						leTail.cameras = [camOther];
+						leTail.visible = false;
+						add(leTail);
+						add(tailsPxl);
+
+						sonicPxl = new FlxSprite(200, tailsPxl.y - 60);
+						sonicPxl.frames = Paths.getSparrowAtlas('cutscenes/chasing/sonicEXEPixel', 'sadfox');
+						sonicPxl.animation.addByPrefix('hiTails','heyBuddy', 24, false);
+						sonicPxl.antialiasing = false;
+						sonicPxl.setGraphicSize(Std.int(sonicPxl.width * 5));
+						sonicPxl.updateHitbox();
+						sonicPxl.cameras = [camOther];
+						sonicPxl.visible = false;
+						add(sonicPxl);
+
+						brakParticle = new FlxSprite(tailsPxl.x - 58, tailsPxl.y - 44);
+						brakParticle.frames = Paths.getSparrowAtlas('cutscenes/chasing/particles', 'sadfox');
+						brakParticle.animation.addByPrefix('stopMan','brak', 24, true);
+						brakParticle.antialiasing = false;
+						brakParticle.setGraphicSize(Std.int(brakParticle.width * 4));
+						brakParticle.updateHitbox();
+						brakParticle.cameras = [camOther];
+						brakParticle.visible = false;
+						brakParticle.alpha = 0.9;
+						add(brakParticle);
+
+						animTerrain = new FlxSprite(-3100, 0).loadGraphic(Paths.image('cutscenes/chasing/bgTerrain', 'sadfox'));
+						animTerrain.setGraphicSize(Std.int(animTerrain.width * 4));
+						animTerrain.updateHitbox();
+						animTerrain.y = -600;
+						animTerrain.antialiasing = false;
+						animTerrain.cameras = [camOther];
+						// animTerrain.screenCenter(Y);
+						animTerrain.visible = false;
+						add(animTerrain);
+					}
 				}
 			case 'burningGhz':
 				var bg:BGSprite = new BGSprite('stages/burningGhz/skyBurn', -550, -300, 0.3, 0.3);
@@ -623,19 +741,22 @@ class PlayState extends MusicBeatState
 				grd.antialiasing = ClientPrefs.globalAntialiasing;
 				add(grd);
 
-				fore2 = new FlxSprite(-300, -100).loadGraphic(Paths.image('stages/burningGhz/foreBurn', 'sadfox'));
-				fore2.setGraphicSize(Std.int(fore2.width * 2));
-				fore2.updateHitbox();
-				fore2.antialiasing = ClientPrefs.globalAntialiasing;
-				fore2.scrollFactor.set(1.4, 1.4);
-				fore2.active = false;
+				if(!ClientPrefs.lowQuality)
+				{
+					fore2 = new FlxSprite(-300, -100).loadGraphic(Paths.image('stages/burningGhz/foreBurn', 'sadfox'));
+					fore2.setGraphicSize(Std.int(fore2.width * 2));
+					fore2.updateHitbox();
+					fore2.antialiasing = ClientPrefs.globalAntialiasing;
+					fore2.scrollFactor.set(1.4, 1.4);
+					fore2.active = false;
 
-				lightz = new FlxSprite(-300, -100).loadGraphic(Paths.image('stages/burningGhz/lightsBurn', 'sadfox'));
-				lightz.setGraphicSize(Std.int(lightz.width * 2));
-				lightz.updateHitbox();
-				lightz.antialiasing = ClientPrefs.globalAntialiasing;
-				lightz.scrollFactor.set(1.4, 1.4);
-				lightz.active = false;
+					lightz = new FlxSprite(-300, -100).loadGraphic(Paths.image('stages/burningGhz/lightsBurn', 'sadfox'));
+					lightz.setGraphicSize(Std.int(lightz.width * 2));
+					lightz.updateHitbox();
+					lightz.antialiasing = ClientPrefs.globalAntialiasing;
+					lightz.scrollFactor.set(1.4, 1.4);
+					lightz.active = false;
+				}
 			case 'ghzSun':
 				var bg:BGSprite = new BGSprite('stages/ghzSun/sky', -350, 0, 0.3, 0.3);
 				bg.setGraphicSize(Std.int(bg.width * 1.8));
@@ -687,19 +808,77 @@ class PlayState extends MusicBeatState
 		switch(curStage)
 		{
 			case 'ghz':
-				add(fore);
+				blackSkit.cameras = [camOther];
+				blackSkit.x = 0;
+				blackSkit.y = 0;
+				add(blackSkit);
+
+				if(!ClientPrefs.lowQuality)
+					add(fore);
+
 				if (SONG.song.toLowerCase() == 'chasing')
 				{
-					add(fore2);
-					add(lightz);
+					if(!ClientPrefs.lowQuality)
+					{
+						add(fore2);
+						add(lightz);
+					}
+
+					// effects
+					staticazzo0 = new FlxSprite(0,0);
+					staticazzo0.frames = Paths.getSparrowAtlas('delfino/glitchAnim', 'sadfox');
+					staticazzo0.setGraphicSize(FlxG.width, FlxG.height);
+					staticazzo0.updateHitbox();
+					staticazzo0.screenCenter();
+					staticazzo0.animation.addByPrefix('canna','g', 24, false);
+					staticazzo0.animation.play('canna');
+					staticazzo0.cameras = [camHUD];
+					staticazzo0.alpha = 0.1;
+					staticazzo0.visible = false;
+					add(staticazzo0);
+
+					staticazzo1 = new FlxSprite(0,0);
+					staticazzo1.frames = Paths.getSparrowAtlas('delfino/STATIC', 'sadfox');
+					staticazzo1.setGraphicSize(FlxG.width, FlxG.height);
+					staticazzo1.updateHitbox();
+					staticazzo1.screenCenter();
+					staticazzo1.animation.addByPrefix('cannella','staticBackground', 24, true);
+					staticazzo1.cameras = [camHUD];
+					staticazzo1.alpha = 0;
+					staticazzo1.visible = false;
+					add(staticazzo1);
+
+					staticazzo2 = new FlxSprite(0,0);
+					staticazzo2.frames = Paths.getSparrowAtlas('delfino/sheeto2', 'sadfox');
+					staticazzo2.color = FlxColor.RED;
+					staticazzo2.setGraphicSize(FlxG.width, FlxG.height);
+					staticazzo2.updateHitbox();
+					staticazzo2.screenCenter();
+					staticazzo2.animation.addByPrefix('cane','n', 24, true);
+					staticazzo2.animation.play('cane');
+					staticazzo2.cameras = [camHUD];
+					staticazzo2.alpha = 0.3;
+					staticazzo2.visible = false;
+					add(staticazzo2);
+
+					vg = new FlxSprite().loadGraphic(Paths.image('RedVG', 'sadfox'));
+					vg.alpha = 1;
+					vg.cameras = [camHUD];
+					vg.visible = false;
+					add(vg);
 				}
 			case 'burningGhz':
-				add(fore);
-				add(lightz);
+				if(!ClientPrefs.lowQuality)
+				{
+					add(fore);
+					add(lightz);
+				}
 			case 'ghzSun':
 				add(shineThing);
 			case 'blast':
 				boyfriend.visible = false;
+			case 'blank':
+				add(blackSkit);
 		}
 
 		#if LUA_ALLOWED
@@ -871,6 +1050,14 @@ class PlayState extends MusicBeatState
 		add(timeTxt);
 		timeBarBG.sprTracker = timeBar;
 
+		cloneTimeTxt = new FlxText(STRUM_X + (FlxG.width / 2) - 248, 19, 400, "", 32);
+		cloneTimeTxt.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		cloneTimeTxt.scrollFactor.set();
+		cloneTimeTxt.borderSize = 2;
+		cloneTimeTxt.visible = false;
+		if(ClientPrefs.downScroll) cloneTimeTxt.y = FlxG.height - 44;
+		add(cloneTimeTxt);
+
 		strumLineNotes = new FlxTypedGroup<StrumNote>();
 		add(strumLineNotes);
 		add(grpNoteSplashes);
@@ -983,6 +1170,8 @@ class PlayState extends MusicBeatState
 		timeBarBG.cameras = [camHUD];
 		timeTxt.cameras = [camHUD];
 		doof.cameras = [camHUD];
+
+		cloneTimeTxt.cameras = [camHUD];
 
 		// if (SONG.song == 'South')
 		// FlxG.camera.alpha = 0.7;
@@ -1140,9 +1329,11 @@ class PlayState extends MusicBeatState
 
 				case 'ugh' | 'guns' | 'stress':
 					tankIntro();
-
+					
+				case 'chasing':
+					InOutThingy == 'Special';
+					sonecIntro();
 				case 'soic':
-					add(blackSkit);
 					camHUD.alpha = 0;
 					
 					dad.alpha = 0;
@@ -1159,8 +1350,10 @@ class PlayState extends MusicBeatState
 		{
 			switch (daSong)
 			{
+				case 'chasing':
+					InOutThingy == 'Special';
+					sonecIntro();
 				case 'soic':
-					add(blackSkit);
 					camHUD.alpha = 0;
 					
 					dad.alpha = 0;
@@ -1933,7 +2126,7 @@ class PlayState extends MusicBeatState
 		giallol.cameras = [camIntro];
 		add(giallol);
 
-		var redshit:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.image('UI/default/base/redthing'));
+		var redshit:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.image('redthing', 'sadfox'));
 		redshit.setGraphicSize(FlxG.width, FlxG.height);
 		redshit.x = -2000;
 		redshit.updateHitbox();
@@ -2779,6 +2972,11 @@ class PlayState extends MusicBeatState
 	var canPause:Bool = true;
 	var limoSpeed:Float = 0;
 
+	private var chromOn:Bool = false;
+	var ch = 2 / 1000;
+
+	var stupidGuy:Bool = false;
+
 	override public function update(elapsed:Float)
 	{
 		/*if (FlxG.keys.justPressed.NINE)
@@ -2786,6 +2984,29 @@ class PlayState extends MusicBeatState
 			iconP1.swapOldIcon();
 		}*/
 		callOnLuas('onUpdate', [elapsed]);
+
+		if (chromOn)
+		{
+			#if !flash
+			if(!ClientPrefs.lowQuality)
+			{
+				ch = FlxG.random.int(1,5) / 1000;
+				ch = FlxG.random.int(1,5) / 1000;
+				Shaders.setChrome(ch);
+			}
+			#end
+		}
+		else
+			Shaders.setChrome(0);
+
+		if (cloneTimeTxt.visible)
+			cloneTimeTxt.text = FlxStringUtil.formatTime(FlxG.random.int(100, 999), false);
+
+		if (stupidGuy && tailsPxl.animation.curAnim.finished)
+		{
+			tailsPxl.animation.play('loopBraking');
+			stupidGuy = false;
+		}
 
 		switch (curStage)
 		{
@@ -4425,7 +4646,14 @@ class PlayState extends MusicBeatState
 			}
 		});
 		combo = 0;
-		health -= daNote.missHealth * healthLoss;
+		switch(daNote.noteType)
+		{
+			case 'Eye Note':
+				trace('its eye note');
+				health -= 1;
+			default:
+				health -= daNote.missHealth * healthLoss;
+		}
 		
 		if(instakillOnMiss)
 		{
@@ -4874,15 +5102,34 @@ class PlayState extends MusicBeatState
 		}
 	}
 
-	function switchToHell():Void
+	function switchToHell(burningSwitch:Bool):Void
 	{
 		if (curStage == 'ghz')
 		{
-			fore.destroy();
-			bg2.visible = true;
-			grd2.visible = true;
-			fore2.visible = true;
-			lightz.visible = true;
+			if (burningSwitch)
+			{
+				if(!ClientPrefs.lowQuality)
+				{
+					remove(fore);
+					fore2.visible = true;
+					lightz.visible = true;
+				}
+				bg2.visible = true;
+				grd2.visible = true;
+			}
+			else if (!burningSwitch)
+			{
+				if(!ClientPrefs.lowQuality)
+				{
+					add(fore);
+					fore2.visible = false;
+					lightz.visible = false;
+				}
+				bg2.visible = false;
+				grd2.visible = false;
+			}
+			else
+				trace("man wth");
 		}
 	}
 
@@ -4914,6 +5161,88 @@ class PlayState extends MusicBeatState
 		FlxG.sound.music.fadeTween = null;
 	}
 
+	private function springNoteThing():Void
+	{
+		if (InOutThingy == 'In')
+		{
+			for (i in 0...opponentStrums.length)
+			{
+				FlxTween.tween(opponentStrums.members[0], {x: opponentStrums.members[0].x + 80}, Conductor.crochet / 200, {ease: FlxEase.quadOut});
+				FlxTween.tween(opponentStrums.members[1], {x: opponentStrums.members[1].x + 40}, Conductor.crochet / 200, {ease: FlxEase.quadOut});
+				FlxTween.tween(opponentStrums.members[2], {x: opponentStrums.members[2].x - 40}, Conductor.crochet / 200, {ease: FlxEase.quadOut});
+				FlxTween.tween(opponentStrums.members[3], {x: opponentStrums.members[3].x - 80}, Conductor.crochet / 200, {ease: FlxEase.quadOut});
+			}
+
+			for (i in 0...playerStrums.length)
+			{
+				FlxTween.tween(playerStrums.members[0], {x: playerStrums.members[0].x + 80}, Conductor.crochet / 200, {ease: FlxEase.quadOut});
+				FlxTween.tween(playerStrums.members[1], {x: playerStrums.members[1].x + 40}, Conductor.crochet / 200, {ease: FlxEase.quadOut});
+				FlxTween.tween(playerStrums.members[2], {x: playerStrums.members[2].x - 40}, Conductor.crochet / 200, {ease: FlxEase.quadOut});
+				FlxTween.tween(playerStrums.members[3], {x: playerStrums.members[3].x - 80}, Conductor.crochet / 200, {ease: FlxEase.quadOut});
+			}
+			InOutThingy = 'Out';
+		}
+		else if (InOutThingy == 'Out')
+		{
+			for (i in 0...opponentStrums.length)
+			{
+				FlxTween.tween(opponentStrums.members[0], {x: opponentStrums.members[0].x - 80}, Conductor.crochet / 200, {ease: FlxEase.quadOut});
+				FlxTween.tween(opponentStrums.members[1], {x: opponentStrums.members[1].x - 40}, Conductor.crochet / 200, {ease: FlxEase.quadOut});
+				FlxTween.tween(opponentStrums.members[2], {x: opponentStrums.members[2].x + 40}, Conductor.crochet / 200, {ease: FlxEase.quadOut});
+				FlxTween.tween(opponentStrums.members[3], {x: opponentStrums.members[3].x + 80}, Conductor.crochet / 200, {ease: FlxEase.quadOut});
+			}
+
+			for (i in 0...playerStrums.length)
+			{
+				FlxTween.tween(playerStrums.members[0], {x: playerStrums.members[0].x - 80}, Conductor.crochet / 200, {ease: FlxEase.quadOut});
+				FlxTween.tween(playerStrums.members[1], {x: playerStrums.members[1].x - 40}, Conductor.crochet / 200, {ease: FlxEase.quadOut});
+				FlxTween.tween(playerStrums.members[2], {x: playerStrums.members[2].x + 40}, Conductor.crochet / 200, {ease: FlxEase.quadOut});
+				FlxTween.tween(playerStrums.members[3], {x: playerStrums.members[3].x + 80}, Conductor.crochet / 200, {ease: FlxEase.quadOut});
+			}
+			InOutThingy = 'In';
+		}
+		else if (InOutThingy == 'Special')
+		{
+			for (i in 0...opponentStrums.length)
+			{
+				FlxTween.tween(opponentStrums.members[0], {x: opponentStrums.members[0].x + 40}, Conductor.crochet / 200, {ease: FlxEase.quadOut});
+				FlxTween.tween(opponentStrums.members[1], {x: opponentStrums.members[1].x + 20}, Conductor.crochet / 200, {ease: FlxEase.quadOut});
+				FlxTween.tween(opponentStrums.members[2], {x: opponentStrums.members[2].x - 20}, Conductor.crochet / 200, {ease: FlxEase.quadOut});
+				FlxTween.tween(opponentStrums.members[3], {x: opponentStrums.members[3].x - 40}, Conductor.crochet / 200, {ease: FlxEase.quadOut});
+			}
+
+			for (i in 0...playerStrums.length)
+			{
+				FlxTween.tween(playerStrums.members[0], {x: playerStrums.members[0].x + 40}, Conductor.crochet / 200, {ease: FlxEase.quadOut});
+				FlxTween.tween(playerStrums.members[1], {x: playerStrums.members[1].x + 20}, Conductor.crochet / 200, {ease: FlxEase.quadOut});
+				FlxTween.tween(playerStrums.members[2], {x: playerStrums.members[2].x - 20}, Conductor.crochet / 200, {ease: FlxEase.quadOut});
+				FlxTween.tween(playerStrums.members[3], {x: playerStrums.members[3].x - 40}, Conductor.crochet / 200, {ease: FlxEase.quadOut});
+			}
+			InOutThingy = 'Out';
+		}
+		else if (InOutThingy == 'Ending')
+		{
+			for (i in 0...opponentStrums.length)
+			{
+				FlxTween.tween(opponentStrums.members[0], {x: opponentStrums.members[0].x - 40}, Conductor.crochet / 200, {ease: FlxEase.quadOut});
+				FlxTween.tween(opponentStrums.members[1], {x: opponentStrums.members[1].x - 20}, Conductor.crochet / 200, {ease: FlxEase.quadOut});
+				FlxTween.tween(opponentStrums.members[2], {x: opponentStrums.members[2].x + 20}, Conductor.crochet / 200, {ease: FlxEase.quadOut});
+				FlxTween.tween(opponentStrums.members[3], {x: opponentStrums.members[3].x + 40}, Conductor.crochet / 200, {ease: FlxEase.quadOut});
+			}
+
+			for (i in 0...playerStrums.length)
+			{
+				FlxTween.tween(playerStrums.members[0], {x: playerStrums.members[0].x - 40}, Conductor.crochet / 200, {ease: FlxEase.quadOut});
+				FlxTween.tween(playerStrums.members[1], {x: playerStrums.members[1].x - 20}, Conductor.crochet / 200, {ease: FlxEase.quadOut});
+				FlxTween.tween(playerStrums.members[2], {x: playerStrums.members[2].x + 20}, Conductor.crochet / 200, {ease: FlxEase.quadOut});
+				FlxTween.tween(playerStrums.members[3], {x: playerStrums.members[3].x + 40}, Conductor.crochet / 200, {ease: FlxEase.quadOut});
+			}
+			InOutThingy = 'Special';
+		}
+		else
+			trace("doesnt seem you can do that");
+	}
+
 	var lastStepHit:Int = -1;
 	override function stepHit()
 	{
@@ -4931,20 +5260,223 @@ class PlayState extends MusicBeatState
 		switch (SONG.song.toLowerCase())
 		{
 			case 'chasing':
-				// im still coding the events :skull:
-				// essential events lol
+				// there were pidgeons making out while i coded this :troll: -TonnoBuono
 				switch (curStep)
 				{
+					case 1:
+						FlxTween.tween(blackSkit, {alpha: 0.984375}, Conductor.crochet / 200, {ease: FlxEase.quadInOut});
+					case 16:
+						FlxTween.tween(blackSkit, {alpha: 0.96875}, Conductor.crochet / 200, {ease: FlxEase.quadInOut});
+						camZooming = true;
+					case 32:
+						FlxTween.tween(blackSkit, {alpha: 0.93432}, Conductor.crochet / 200, {ease: FlxEase.quadInOut});
+					case 48:
+						FlxTween.tween(blackSkit, {alpha: 0.90216}, Conductor.crochet / 200, {ease: FlxEase.quadInOut});
+					case 64:
+						FlxTween.tween(blackSkit, {alpha: 0.875}, Conductor.crochet / 200, {ease: FlxEase.quadInOut});
+					case 80:
+						FlxTween.tween(blackSkit, {alpha: 0.625}, Conductor.crochet / 200, {ease: FlxEase.quadInOut});
+					case 96:
+						FlxTween.tween(blackSkit, {alpha: 0.3}, Conductor.crochet / 200, {ease: FlxEase.quadInOut});
+					case 112:
+						FlxTween.tween(blackSkit, {alpha: 0}, Conductor.crochet / 200, {ease: FlxEase.quadInOut});
+					case 128 | 152 | 176 | 216 | 256 | 272 | 296 | 312 | 332 | 360 | 376:
+						defaultCamZoom = 0.5;
+					case 144 | 160 | 208 | 224 | 240 | 258 | 288 | 304 | 320 | 368:
+						defaultCamZoom += 0.1;
+					case 336 | 848:
+						defaultCamZoom += 0.2;
+					case 352:
+						defaultCamZoom -= 0.1;
+					case 384:
+						staticazzo0.animation.play('canna');
+						staticazzo0.visible = true;
+					case 385:
+						staticazzo0.visible = false;
 					case 400:
-						FlxTween.tween(camGame, {alpha: 0}, Conductor.crochet / 1000, {ease: FlxEase.quadInOut});
-						FlxTween.tween(camHUD, {alpha: 0}, Conductor.crochet / 1000, {ease: FlxEase.quadInOut});
+						FlxTween.tween(camGame, {alpha: 0}, Conductor.crochet / 1000, {ease: FlxEase.linear});
+						FlxTween.tween(camHUD, {alpha: 0}, Conductor.crochet / 1000, {ease: FlxEase.linear});
+						FlxTween.tween(camOther, {alpha: 0}, Conductor.crochet / 1000, {ease: FlxEase.linear});
+					case 408:
+						triggerEventNote('Change Character', 'dad', 'tailsEXE');
+						switchToHell(true);
+					case 412:
+						FlxTween.tween(camOther, {alpha: 1}, Conductor.crochet / 1000, {ease: FlxEase.linear});
+						// animation
+						if(!ClientPrefs.lowQuality)
+						{
+							animStuff.visible = true;
+							animTerrain.visible = true;
+							animSky.visible = true;
+							tailsPxl.animation.play('run');
+							tailsPxl.visible = true;
+						
+							FlxTween.tween(animStuff, {x: -200}, Conductor.crochet / 500, {ease: FlxEase.linear});
+							FlxTween.tween(animTerrain, {x: -200}, Conductor.crochet / 500, {ease: FlxEase.linear});
+							FlxTween.tween(animSky, {x: -30}, Conductor.crochet / 500, {ease: FlxEase.linear});
+						}
+					case 420:
+						if(!ClientPrefs.lowQuality)
+						{
+							tailsPxl.animation.stop();
+							tailsPxl.animation.play('braking');
+							brakParticle.visible = true;
+							brakParticle.animation.play('stopMan');
+							leTail.x = leTail.x + 40;
+							leTail.y = leTail.y + 30;
+							leTail.visible = true;
+							leTail.animation.play('brakTail');
+							stupidGuy = true;
+
+							FlxTween.tween(animStuff, {x: -100}, Conductor.crochet / 1000, {ease: FlxEase.expoOut});
+							FlxTween.tween(animTerrain, {x: -100}, Conductor.crochet / 1000, {ease: FlxEase.expoOut});
+							FlxTween.tween(animSky, {x: 0}, Conductor.crochet / 500, {ease: FlxEase.expoOut});
+						}
+					case 425:
+						if(!ClientPrefs.lowQuality)
+						{
+							tailsPxl.animation.play('idle');
+							brakParticle.visible = false;
+							leTail.x = leTail.x - 30;
+							leTail.y = leTail.y - 35;
+							leTail.animation.stop();
+							leTail.animation.play('defaultTail');
+						}
+					case 426:
+						if(!ClientPrefs.lowQuality)
+						{
+							sonicPxl.x = tailsPxl.x - 180;
+							sonicPxl.animation.play('hiTails');
+							sonicPxl.visible = true;
+						}
+					case 433:
+						if(!ClientPrefs.lowQuality)
+						{
+							tailsPxl.animation.play('surprised');
+							leTail.animation.finish();
+							animStuff.visible = false;
+							// animTerrain.visible = false;
+							animSky.visible = false;
+						}
 					case 436:
 						camIntro.flash(FlxColor.RED, 3);
-						triggerEventNote('Change Character', 'dad', 'tailsEXE');
-						switchToHell();
+						if(!ClientPrefs.lowQuality)
+						{
+							animStuff.destroy();
+							animTerrain.destroy();
+							animSky.destroy();
+							tailsPxl.destroy();
+							leTail.destroy();
+							sonicPxl.destroy();
+							brakParticle.destroy();
+						}
 					case 464:
-						FlxTween.tween(camGame, {alpha: 1}, Conductor.crochet / 1000, {ease: FlxEase.quadInOut});
-						FlxTween.tween(camHUD, {alpha: 1}, Conductor.crochet / 1000, {ease: FlxEase.quadInOut});
+						FlxTween.tween(camHUD, {alpha: 1}, Conductor.crochet / 200, {ease: FlxEase.linear});
+						// FlxTween.tween(camOther, {alpha: 1}, Conductor.crochet / 200, {ease: FlxEase.linear});
+						defaultCamZoom = 2;
+						triggerEventNote('Camera Follow Pos', Std.string(boyfriend.getMidpoint().x - dad.getMidpoint().x + 500), '-500');
+					case 480:
+						chromOn = true;
+						FlxG.camera.shake(0.010, 0.1);
+						camHUD.shake(0.008, 0.1);
+						FlxTween.tween(camGame, {alpha: 1}, Conductor.crochet / 1000, {ease: FlxEase.linear});
+					case 484 | 500 | 516 | 532 | 548 | 564 | 580 | 596:
+						chromOn = false;
+					case 496 | 528 | 560:
+						chromOn = true;
+						FlxG.camera.shake(0.010, 0.1);
+						camHUD.shake(0.008, 0.1);
+						// switchToHell(false);
+					case 512 | 544 | 576:
+						chromOn = true;
+						FlxG.camera.shake(0.010, 0.1);
+						camHUD.shake(0.008, 0.1);
+						// switchToHell(true);
+					case 592:
+						chromOn = true;
+						FlxG.camera.shake(0.010, 0.1);
+						camHUD.shake(0.008, 0.1);
+						staticazzo1.animation.play('cannella');
+						staticazzo1.visible = true;
+						FlxTween.tween(staticazzo1, {alpha: 1}, Conductor.crochet / 200, {ease: FlxEase.quadIn});
+					case 608:
+						triggerEventNote('Camera Follow Pos', '', '');
+						staticazzo1.visible = false;
+						defaultCamZoom = 0.55;
+						camHUD.flash(FlxColor.RED, Conductor.crochet / 1000);
+					case 624:
+						staticazzo2.animation.play('cane');
+						staticazzo2.visible = true;
+					case 632 | 640 | 662 | 668 | 768 | 792 | 888 | 896 | 918 | 924 | 1016 | 1024 | 1052:
+						staticazzo2.visible = false;
+					case 636 | 660 | 664 | 752 | 784 | 880 | 892 | 916 | 920 | 1008 | 1020 | 1048:
+						staticazzo2.visible = true;
+					case 720 | 976 | 1104 | 1136 | 1168 | 1200 | 1232:
+						defaultCamZoom += 0.3;
+					case 1152 | 1184 | 1216:
+						defaultCamZoom = 0.55;
+					case 736 | 992:
+						camHUD.flash(FlxColor.WHITE, Conductor.crochet / 1000);
+						defaultCamZoom = 0.55;
+					case 864:
+						camHUD.flash(FlxColor.RED, Conductor.crochet / 1000);
+						defaultCamZoom = 0.55;
+					case 1120:
+						camHUD.flash(FlxColor.RED, Conductor.crochet / 1000);
+						defaultCamZoom = 0.55;
+						vg.visible = true;
+						FlxTween.tween(vg, {alpha: 0}, Conductor.crochet / 200, {type: PINGPONG});
+					case 1248:
+						camHUD.flash(FlxColor.RED, Conductor.crochet / 1000);
+						springNoteThing();
+						defaultCamZoom = 0.55;
+					case 1264 | 1296 | 1328 | 1360:
+						springNoteThing();
+						defaultCamZoom += 0.3;
+					case 1280 | 1312 | 1344 | 1392 | 1424 | 1456 | 1488 | 1520 | 1552 | 1584:
+						springNoteThing();
+						defaultCamZoom = 0.55;
+					case 1376:
+						springNoteThing();
+						camHUD.flash(FlxColor.RED, Conductor.crochet / 1000);
+						// timer pazzo
+						timeTxt.visible = false;
+						cloneTimeTxt.visible = true;
+						// FlxTween.cancelTweensOf(vg);
+						// FlxTween.tween(vg, {alpha: 0}, Conductor.crochet / 1000, {type: PINGPONG});
+					case 1408 | 1440 | 1472 | 1504 | 1536 | 1568:
+						springNoteThing();
+						defaultCamZoom += 0.3;
+						camHUD.flash(FlxColor.RED, Conductor.crochet / 1000);
+					case 1600:
+						springNoteThing();
+						camHUD.flash(FlxColor.RED, Conductor.crochet / 1000);
+						triggerEventNote('Camera Follow Pos', Std.string(boyfriend.getMidpoint().x - dad.getMidpoint().x), Std.string(boyfriend.getMidpoint().y));
+					case 1616:
+						InOutThingy = 'Special';
+						springNoteThing();
+						triggerEventNote('Camera Follow Pos', '', '');
+					case 1632:
+						camHUD.flash(FlxColor.WHITE, Conductor.crochet / 1000);
+						triggerEventNote('Camera Follow Pos', Std.string(boyfriend.getMidpoint().x - dad.getMidpoint().x + 500), '900');
+						FlxTween.cancelTweensOf(vg);
+						vg.destroy();
+						timeTxt.visible = true;
+						cloneTimeTxt.visible = false;
+					case 1656:
+						FlxG.camera.fade(FlxColor.BLACK, Conductor.crochet / 1000, false);
+						FlxTween.tween(camHUD, {alpha: 0}, Conductor.crochet / 200, {ease: FlxEase.expoOut});
+					case 1700:
+						FlxG.sound.play(Paths.sound('cazzoRidi', 'sadfox'));
+				}
+
+				if (curStep >= 112 && curStep < 128 || curStep >= 1632 && curStep < 1656)
+				{
+					defaultCamZoom += 0.01;
+				}
+				if (curStep >= 480 && curStep < 592)
+				{
+					defaultCamZoom -= 0.008;
 				}
 			case 'soic':
 				switch (curStep)
@@ -5019,6 +5551,16 @@ class PlayState extends MusicBeatState
 		{
 			notes.sort(FlxSort.byY, ClientPrefs.downScroll ? FlxSort.ASCENDING : FlxSort.DESCENDING);
 		}
+
+		#if !flash
+		if (curBeat >= 0 && !shadersLoaded)
+		{
+			shadersLoaded = true;
+
+			filters.push(Shaders.chromaticAberration);
+			camfilters.push(Shaders.chromaticAberration);
+		}
+		#end
 
 		iconP1.scale.set(1.2, 1.2);
 		iconP2.scale.set(1.2, 1.2);
@@ -5112,7 +5654,7 @@ class PlayState extends MusicBeatState
 			FlxG.camera.zoom += 0.015;
 			camHUD.zoom += 0.03;
 		}
-		if (curSong.toLowerCase() == 'chasing' && curBeat >= 276 && curBeat < 312 && FlxG.camera.zoom < 1.35 && ClientPrefs.camZooms)
+		if (curSong.toLowerCase() == 'chasing' && curBeat >= 276 && curBeat < 280 && FlxG.camera.zoom < 1.35 && ClientPrefs.camZooms)
 		{
 			FlxG.camera.zoom += 0.03;
 			camHUD.zoom += 0.04;
