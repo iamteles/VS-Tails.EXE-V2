@@ -875,8 +875,6 @@ class PlayState extends MusicBeatState
 				}
 			case 'ghzSun':
 				add(shineThing);
-			case 'blast':
-				boyfriend.visible = false;
 			case 'blank':
 				add(blackSkit);
 		}
@@ -988,6 +986,8 @@ class PlayState extends MusicBeatState
 			case 'schoolEvil':
 				var evilTrail = new FlxTrail(dad, null, 4, 24, 0.3, 0.069); //nice
 				addBehindDad(evilTrail);
+			case 'blast':
+				boyfriend.visible = false; // because it was null object referencing when upper
 		}
 
 		var file:String = Paths.json(songName + '/dialogue'); //Checks for json/Psych Engine dialogue
