@@ -345,6 +345,7 @@ class PlayState extends MusicBeatState
 
 	var fore:FlxSprite;
 	var fore2:FlxSprite;
+	var gradient:FlxSprite;
 	var bg2:BGSprite;
 	var grd2:BGSprite;
 	var lightz:FlxSprite;
@@ -561,8 +562,15 @@ class PlayState extends MusicBeatState
 		dadGroup = new FlxSpriteGroup(DAD_X, DAD_Y);
 		gfGroup = new FlxSpriteGroup(GF_X, GF_Y);
 
+		
+		gradient = new FlxSprite().loadGraphic(Paths.image('stages/burningGhz/gradientBurn2', 'sadfox'));
+		gradient.alpha = 0;
+
 		switch (curStage)
 		{
+			case 'pixel':
+				var bg:BGSprite = new BGSprite('stages/pixel/the', 0, 0, 1, 1);
+				add(bg);
 			case 'stage': //Week 1
 				var bg:BGSprite = new BGSprite('stageback', -600, -200, 0.9, 0.9);
 				add(bg);
@@ -726,6 +734,14 @@ class PlayState extends MusicBeatState
 						// animTerrain.screenCenter(Y);
 						animTerrain.visible = false;
 						add(animTerrain);
+
+						lightz = new FlxSprite(-300, -100).loadGraphic(Paths.image('stages/burningGhz/lightsBurn', 'sadfox'));
+						lightz.setGraphicSize(Std.int(lightz.width * 2));
+						lightz.updateHitbox();
+						lightz.antialiasing = ClientPrefs.globalAntialiasing;
+						lightz.scrollFactor.set(1.4, 1.4);
+						lightz.active = false;
+						lightz.visible = false;
 					}
 				}
 			case 'burningGhz':
@@ -757,6 +773,8 @@ class PlayState extends MusicBeatState
 					lightz.scrollFactor.set(1.4, 1.4);
 					lightz.active = false;
 				}
+
+				gradient.alpha = 1;
 			case 'ghzSun':
 				var bg:BGSprite = new BGSprite('stages/ghzSun/sky', -350, 0, 0.3, 0.3);
 				bg.setGraphicSize(Std.int(bg.width * 1.8));
@@ -1156,6 +1174,9 @@ class PlayState extends MusicBeatState
 		if(ClientPrefs.downScroll) {
 			botplayTxt.y = timeBarBG.y - 78;
 		}
+
+		gradient.cameras = [camHUD];
+		add(gradient);
 
 		strumLineNotes.cameras = [camHUD];
 		grpNoteSplashes.cameras = [camHUD];
@@ -3939,7 +3960,7 @@ class PlayState extends MusicBeatState
 	}
 
 	function moveCameraSection():Void {
-		if(SONG.notes[curSection] == null) return;
+		if(SONG.notes[curSection] == null || isPixelStage) return;
 
 		if (gf != null && SONG.notes[curSection].gfSection)
 		{
@@ -4322,9 +4343,9 @@ class PlayState extends MusicBeatState
 
 		if (!PlayState.isPixelStage)
 		{
-			rating.setGraphicSize(Std.int(rating.width * 0.6));
+			rating.setGraphicSize(Std.int(rating.width * 0.7));
 			rating.antialiasing = ClientPrefs.globalAntialiasing;
-			comboSpr.setGraphicSize(Std.int(comboSpr.width * 0.6));
+			comboSpr.setGraphicSize(Std.int(comboSpr.width * 0.7));
 			comboSpr.antialiasing = ClientPrefs.globalAntialiasing;
 		}
 		else
@@ -4336,7 +4357,6 @@ class PlayState extends MusicBeatState
 		comboSpr.updateHitbox();
 		rating.updateHitbox();
 
-		/*
 		var seperatedScore:Array<Int> = [];
 
 		if(combo >= 1000) {
@@ -4345,7 +4365,6 @@ class PlayState extends MusicBeatState
 		seperatedScore.push(Math.floor(combo / 100) % 10);
 		seperatedScore.push(Math.floor(combo / 10) % 10);
 		seperatedScore.push(combo % 10);
-		*/
 
 		var daLoop:Int = 0;
 		var xThing:Float = 0;
@@ -4366,7 +4385,6 @@ class PlayState extends MusicBeatState
 				lastScore.remove(lastScore[0]);
 			}
 		}
-		/*
 		for (i in seperatedScore)
 		{
 			var numScore:FlxSprite = new FlxSprite().loadGraphic(Paths.image(pixelShitPart1 + 'num' + Std.int(i) + pixelShitPart2));
@@ -4386,7 +4404,7 @@ class PlayState extends MusicBeatState
 			if (!PlayState.isPixelStage)
 			{
 				numScore.antialiasing = ClientPrefs.globalAntialiasing;
-				numScore.setGraphicSize(Std.int(numScore.width * 0.3));
+				numScore.setGraphicSize(Std.int(numScore.width * 0.5));
 			}
 			else
 			{
@@ -4414,15 +4432,11 @@ class PlayState extends MusicBeatState
 			daLoop++;
 			if(numScore.x > xThing) xThing = numScore.x;
 		}
-		*/
 		comboSpr.x = xThing + 50;
-		/*
-			trace(combo);
-			trace(seperatedScore);
-		 */
-
+		trace(combo);
+		trace(seperatedScore);
 		//coolText.text = Std.string(seperatedScore);
-		// add(coolText);
+		//add(coolText);
 
 		FlxTween.tween(rating, {alpha: 0}, 0.2 / playbackRate, {
 			startDelay: Conductor.crochet * 0.001 / playbackRate
@@ -5124,6 +5138,7 @@ class PlayState extends MusicBeatState
 				}
 				bg2.visible = true;
 				grd2.visible = true;
+				gradient.alpha = 1;
 			}
 			else if (!burningSwitch)
 			{
@@ -5135,6 +5150,7 @@ class PlayState extends MusicBeatState
 				}
 				bg2.visible = false;
 				grd2.visible = false;
+				gradient.alpha = 0;
 			}
 			else
 				trace("man wth");
@@ -5750,7 +5766,8 @@ class PlayState extends MusicBeatState
 				moveCameraSection();
 			}
 
-			if (camZooming && FlxG.camera.zoom < 1.35 && ClientPrefs.camZooms)
+
+			if (camZooming && FlxG.camera.zoom < 1.35 && ClientPrefs.camZooms && !isPixelStage)
 			{
 				FlxG.camera.zoom += 0.015 * camZoomingMult;
 				camHUD.zoom += 0.03 * camZoomingMult;
