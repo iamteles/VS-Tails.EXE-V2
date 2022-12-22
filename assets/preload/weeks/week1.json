@@ -1,22 +1,44 @@
 {
-	"songs": [
-		["Chasing", "tailsH", [255, 166, 0]],
-		["Darkness", "tailsEXE", [41, 35, 35]],
-		["Sidekick", "sonic", [199, 0, 0]]
-	],
-
+	"storyName": "SAD TOX REAL",
+	"difficulties": "Normal",
+	"hideFreeplay": false,
+	"weekBackground": "",
+	"weekBefore": "week1",
+	"startUnlocked": true,
 	"weekCharacters": [
 		"",
 		"bf",
 		"gf"
 	],
-	"weekBackground": "",
-
-	"storyName": "SAD TOX REAL",
-	"weekBefore": "week1",
-	"weekName": "Week 1",
-	"startUnlocked": true,
-
+	"songs": [
+		[
+			"Chasing",
+			"tailsH",
+			[
+				255,
+				166,
+				0
+			]
+		],
+		[
+			"Darkness",
+			"tailsEXE",
+			[
+				41,
+				35,
+				35
+			]
+		],
+		[
+			"Sidekick",
+			"sonic",
+			[
+				199,
+				0,
+				0
+			]
+		]
+	],
 	"hideStoryMode": false,
-	"hideFreeplay": false
+	"weekName": "Week 1"
 }

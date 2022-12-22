@@ -569,8 +569,13 @@ class PlayState extends MusicBeatState
 		switch (curStage)
 		{
 			case 'pixel':
-				var bg:BGSprite = new BGSprite('stages/pixel/the', 0, 0, 1, 1);
+				var bg:BGSprite = new BGSprite('stages/pixel/ground', 0, 0, 1, 1);
+				bg.antialiasing = false;
 				add(bg);
+
+				var cloud:BGSprite = new BGSprite('stages/pixel/clouds', 0, 0, 1, 1);
+				cloud.antialiasing = false;
+				add(cloud);
 			case 'stage': //Week 1
 				var bg:BGSprite = new BGSprite('stageback', -600, -200, 0.9, 0.9);
 				add(bg);
@@ -3960,7 +3965,7 @@ class PlayState extends MusicBeatState
 	}
 
 	function moveCameraSection():Void {
-		if(SONG.notes[curSection] == null || isPixelStage) return;
+		if(SONG.notes[curSection] == null) return;
 
 		if (gf != null && SONG.notes[curSection].gfSection)
 		{

@@ -1,77 +1,77 @@
 {
 	"animations": [
 		{
+			"loop": false,
 			"offsets": [
-				50,
-				60
+				60,
+				73
 			],
-			"indices": [],
-			"fps": 24,
 			"anim": "singDOWN",
-			"loop": false,
-			"name": "exe down"
+			"fps": 24,
+			"name": "exe down",
+			"indices": []
 		},
 		{
+			"loop": false,
 			"offsets": [
-				109,
-				80
+				116,
+				93
 			],
-			"indices": [],
-			"fps": 24,
 			"anim": "singLEFT",
-			"loop": false,
-			"name": "exe left"
-		},
-		{
-			"offsets": [
-				70,
-				72
-			],
-			"indices": [],
 			"fps": 24,
-			"anim": "singRIGHT",
-			"loop": false,
-			"name": "exe right"
+			"name": "exe left",
+			"indices": []
 		},
 		{
+			"loop": false,
 			"offsets": [
 				30,
-				40
+				80
 			],
-			"indices": [],
+			"anim": "singRIGHT",
 			"fps": 24,
-			"anim": "singUP",
-			"loop": false,
-			"name": "exe up"
+			"name": "exe right",
+			"indices": []
 		},
 		{
+			"loop": false,
 			"offsets": [
-				25,
+				24,
+				46
+			],
+			"anim": "singUP",
+			"fps": 24,
+			"name": "exe up",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				26,
 				64
 			],
-			"indices": [],
-			"fps": 24,
 			"anim": "idle",
-			"loop": false,
-			"name": "exe idle"
+			"fps": 24,
+			"name": "exe idle",
+			"indices": []
 		}
 	],
 	"no_antialiasing": false,
 	"image": "characters/tailsFULL",
 	"position": [
 		-170,
-		0
+		-20
 	],
 	"healthicon": "tailsEXE",
 	"flip_x": false,
 	"healthbar_colors": [
-		161,
-		161,
-		161
+		81,
+		81,
+		81
 	],
 	"camera_position": [
 		90,
-		140
+		120
 	],
 	"sing_duration": 6.1,
 	"scale": 0.8

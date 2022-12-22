@@ -1,8 +1,20 @@
 {
+	"storyName": "Your New Week",
+	"difficulties": "Normal",
+	"hideFreeplay": false,
+	"weekBackground": "stage",
+	"weekBefore": "tutorial",
+	"freeplayColor": [
+		146,
+		113,
+		253
+	],
+	"startUnlocked": true,
+	"hideStoryMode": true,
 	"songs": [
 		[
 			"Coughing",
-			"dad",
+			"octails",
 			[
 				146,
 				113,
@@ -11,7 +23,7 @@
 		],
 		[
 			"Starshine",
-			"dad",
+			"tails-pixel",
 			[
 				146,
 				113,
@@ -20,7 +32,7 @@
 		],
 		[
 			"Hatch",
-			"dad",
+			"eggOG",
 			[
 				146,
 				113,
@@ -29,40 +41,28 @@
 		],
 		[
 			"Levitating",
-			"dad",
+			"head",
 			[
-				146,
-				113,
-				253
+				60,
+				93,
+				173
 			]
 		],
 		[
 			"Soic",
-			"dad",
+			"soic",
 			[
-				146,
-				113,
+				0,
+				73,
 				253
 			]
 		]
 	],
-	"hiddenUntilUnlocked": false,
-	"hideFreeplay": false,
-	"weekBackground": "stage",
-	"difficulties": "",
 	"weekCharacters": [
 		"dad",
 		"bf",
 		"gf"
 	],
-	"storyName": "Your New Week",
-	"weekName": "Custom Week",
-	"freeplayColor": [
-		146,
-		113,
-		253
-	],
-	"hideStoryMode": false,
-	"weekBefore": "tutorial",
-	"startUnlocked": true
+	"hiddenUntilUnlocked": false,
+	"weekName": "Custom Week"
 }
