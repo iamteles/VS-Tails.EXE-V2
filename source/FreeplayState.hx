@@ -17,6 +17,7 @@ import flixel.tweens.FlxTween;
 import lime.utils.Assets;
 import flixel.system.FlxSound;
 import openfl.utils.Assets as OpenFlAssets;
+import flixel.addons.display.FlxBackdrop;
 import WeekData;
 #if MODS_ALLOWED
 import sys.FileSystem;
@@ -46,7 +47,7 @@ class FreeplayState extends MusicBeatState
 
 	private var iconArray:Array<HealthIcon> = [];
 
-	var bg:FlxSprite;
+	var bg:FlxBackdrop;
 	var intendedColor:Int;
 	var colorTween:FlxTween;
 
@@ -101,17 +102,18 @@ class FreeplayState extends MusicBeatState
 			}
 		}*/
 
-		bg = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
-		bg.antialiasing = ClientPrefs.globalAntialiasing;
-		add(bg);
-		bg.screenCenter();
+		bg = new FlxBackdrop(Paths.image("menustuff/greyd", 'sadfox'), 8, 8, true, true, 1, 1);
+        bg.velocity.set(FlxG.random.bool(50) ? 90 : -90, FlxG.random.bool(50) ? 90 : -90);
+       	bg.screenCenter();
+        bg.alpha = 0.4;
+        add(bg);
 
 		grpSongs = new FlxTypedGroup<Alphabet>();
 		add(grpSongs);
 
 		for (i in 0...songs.length)
 		{
-			var songText:Alphabet = new Alphabet(90, 320, songs[i].songName, true);
+			var songText:Alphabet = new Alphabet(90, 320, SongUnlock.getUnlock(songs[i].songName) ? songs[i].songName : "???", true);
 			songText.isMenuItem = true;
 			songText.targetY = i - curSelected;
 			grpSongs.add(songText);
@@ -126,6 +128,9 @@ class FreeplayState extends MusicBeatState
 			Paths.currentModDirectory = songs[i].folder;
 			var icon:HealthIcon = new HealthIcon(songs[i].songCharacter);
 			icon.sprTracker = songText;
+
+			if(!SongUnlock.getUnlock(songs[i].songName))
+				icon.color = FlxColor.BLACK;
 
 			// using a FlxGroup is too much fuss!
 			iconArray.push(icon);

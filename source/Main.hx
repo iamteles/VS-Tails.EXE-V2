@@ -72,6 +72,8 @@ class Main extends Sprite
 		var stageWidth:Int = Lib.current.stage.stageWidth;
 		var stageHeight:Int = Lib.current.stage.stageHeight;
 
+		SongUnlock.initialize();
+
 		if (zoom == -1)
 		{
 			var ratioX:Float = stageWidth / gameWidth;

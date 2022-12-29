@@ -1,59 +1,59 @@
 {
 	"animations": [
 		{
+			"loop": false,
 			"offsets": [
 				0,
 				0
 			],
-			"indices": [],
-			"fps": 24,
 			"anim": "idle",
-			"loop": false,
-			"name": "TailsIdle"
+			"fps": 24,
+			"name": "TailsIdle",
+			"indices": []
 		},
 		{
+			"loop": false,
 			"offsets": [
 				19,
 				33
 			],
-			"indices": [],
-			"fps": 24,
 			"anim": "singLEFT",
-			"loop": false,
-			"name": "TailsLeft"
+			"fps": 24,
+			"name": "TailsLeft",
+			"indices": []
 		},
 		{
+			"loop": false,
 			"offsets": [
 				126,
 				-110
 			],
-			"indices": [],
-			"fps": 24,
 			"anim": "singDOWN",
-			"loop": false,
-			"name": "TailsDown"
+			"fps": 24,
+			"name": "TailsDown",
+			"indices": []
 		},
 		{
+			"loop": false,
 			"offsets": [
 				25,
 				48
 			],
-			"indices": [],
-			"fps": 24,
 			"anim": "singUP",
-			"loop": false,
-			"name": "TailsUp"
+			"fps": 24,
+			"name": "TailsUp",
+			"indices": []
 		},
 		{
+			"loop": false,
 			"offsets": [
 				-30,
 				-8
 			],
-			"indices": [],
-			"fps": 24,
 			"anim": "singRIGHT",
-			"loop": false,
-			"name": "TailsRight"
+			"fps": 24,
+			"name": "TailsRight",
+			"indices": []
 		}
 	],
 	"no_antialiasing": false,
@@ -62,12 +62,12 @@
 		-110,
 		120
 	],
-	"healthicon": "alvaro",
+	"healthicon": "octails",
 	"flip_x": false,
 	"healthbar_colors": [
-		175,
-		102,
-		206
+		253,
+		172,
+		32
 	],
 	"camera_position": [
 		0,

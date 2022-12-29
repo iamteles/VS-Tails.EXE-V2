@@ -1,0 +1,78 @@
+{
+	"animations": [
+		{
+			"loop": false,
+			"offsets": [
+				-4,
+				124
+			],
+			"anim": "idle",
+			"fps": 24,
+			"name": "eggy idle",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-8,
+				46
+			],
+			"anim": "singDOWN",
+			"fps": 24,
+			"name": "eggy down",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				186,
+				133
+			],
+			"anim": "singLEFT",
+			"fps": 24,
+			"name": "eggy left",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-70,
+				90
+			],
+			"anim": "singRIGHT",
+			"fps": 24,
+			"name": "eggy right",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-6,
+				416
+			],
+			"anim": "singUP",
+			"fps": 24,
+			"name": "eggy up",
+			"indices": []
+		}
+	],
+	"no_antialiasing": false,
+	"image": "characters/origin",
+	"position": [
+		-170,
+		-20
+	],
+	"healthicon": "origin",
+	"flip_x": false,
+	"healthbar_colors": [
+		81,
+		81,
+		81
+	],
+	"camera_position": [
+		90,
+		120
+	],
+	"sing_duration": 6.1,
+	"scale": 2
+}

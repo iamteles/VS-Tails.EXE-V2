@@ -3,49 +3,35 @@
 	"difficulties": "Normal",
 	"hideFreeplay": false,
 	"weekBackground": "stage",
-	"weekBefore": "tutorial",
 	"freeplayColor": [
 		146,
 		113,
 		253
 	],
+	"weekBefore": "tutorial",
 	"startUnlocked": true,
-	"hideStoryMode": true,
+	"weekCharacters": [
+		"dad",
+		"bf",
+		"gf"
+	],
 	"songs": [
 		[
 			"Coughing",
 			"octails",
 			[
-				146,
-				113,
-				253
-			]
-		],
-		[
-			"Starshine",
-			"tails-pixel",
-			[
-				146,
-				113,
-				253
+				255,
+				160,
+				0
 			]
 		],
 		[
 			"Hatch",
-			"eggOG",
+			"eggy",
 			[
-				146,
-				113,
-				253
-			]
-		],
-		[
-			"Levitating",
-			"head",
-			[
-				60,
-				93,
-				173
+				255,
+				255,
+				255
 			]
 		],
 		[
@@ -53,16 +39,12 @@
 			"soic",
 			[
 				0,
-				73,
-				253
+				93,
+				255
 			]
 		]
 	],
-	"weekCharacters": [
-		"dad",
-		"bf",
-		"gf"
-	],
-	"hiddenUntilUnlocked": false,
-	"weekName": "Custom Week"
+	"hideStoryMode": true,
+	"weekName": "Custom Week",
+	"hiddenUntilUnlocked": false
 }

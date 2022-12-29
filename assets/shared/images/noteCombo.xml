@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="combo.png">
+	<!-- Created with Adobe Animate version 21.0.5.40714 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="note combo!0000" x="582" y="1183" width="538" height="259" frameX="-7" frameY="-182" frameWidth="1122" frameHeight="506"/>
+	<SubTexture name="note combo!0001" x="582" y="1183" width="538" height="259" frameX="-7" frameY="-182" frameWidth="1122" frameHeight="506"/>
+	<SubTexture name="note combo!0002" x="582" y="418" width="537" height="359" frameX="-10" frameY="-140" frameWidth="1122" frameHeight="506"/>
+	<SubTexture name="note combo!0003" x="904" y="30" width="557" height="346" frameX="0" frameY="-148" frameWidth="1122" frameHeight="506"/>
+	<SubTexture name="note combo!0004" x="904" y="30" width="557" height="346" frameX="0" frameY="-148" frameWidth="1122" frameHeight="506"/>
+	<SubTexture name="note combo!0005" x="582" y="807" width="557" height="346" frameX="0" frameY="-148" frameWidth="1122" frameHeight="506"/>
+	<SubTexture name="note combo!0006" x="1149" y="406" width="547" height="346" frameX="-5" frameY="-148" frameWidth="1122" frameHeight="506"/>
+	<SubTexture name="note combo!0007" x="1149" y="406" width="547" height="346" frameX="-5" frameY="-148" frameWidth="1122" frameHeight="506"/>
+	<SubTexture name="note combo!0008" x="1169" y="782" width="547" height="346" frameX="-5" frameY="-148" frameWidth="1122" frameHeight="506"/>
+	<SubTexture name="note combo!0009" x="1169" y="782" width="547" height="346" frameX="-5" frameY="-148" frameWidth="1122" frameHeight="506"/>
+	<SubTexture name="note combo!0010" x="30" y="1183" width="522" height="328" frameX="-17" frameY="-155" frameWidth="1122" frameHeight="506"/>
+	<SubTexture name="note combo!0011" x="30" y="1183" width="522" height="328" frameX="-17" frameY="-155" frameWidth="1122" frameHeight="506"/>
+	<SubTexture name="note combo!0012" x="30" y="1183" width="522" height="328" frameX="-17" frameY="-155" frameWidth="1122" frameHeight="506"/>
+	<SubTexture name="note combo!0013" x="30" y="1183" width="522" height="328" frameX="-17" frameY="-155" frameWidth="1122" frameHeight="506"/>
+	<SubTexture name="note combo!0014" x="30" y="1183" width="522" height="328" frameX="-17" frameY="-155" frameWidth="1122" frameHeight="506"/>
+	<SubTexture name="note combo!0015" x="30" y="1183" width="522" height="328" frameX="-17" frameY="-155" frameWidth="1122" frameHeight="506"/>
+	<SubTexture name="note combo!0016" x="30" y="1183" width="522" height="328" frameX="-17" frameY="-155" frameWidth="1122" frameHeight="506"/>
+	<SubTexture name="note combo!0017" x="30" y="1183" width="522" height="328" frameX="-17" frameY="-155" frameWidth="1122" frameHeight="506"/>
+	<SubTexture name="note combo!0018" x="30" y="1183" width="522" height="328" frameX="-17" frameY="-155" frameWidth="1122" frameHeight="506"/>
+	<SubTexture name="note combo!0019" x="30" y="1183" width="522" height="328" frameX="-17" frameY="-155" frameWidth="1122" frameHeight="506"/>
+	<SubTexture name="note combo!0020" x="30" y="1183" width="522" height="328" frameX="-17" frameY="-155" frameWidth="1122" frameHeight="506"/>
+	<SubTexture name="note combo!0021" x="30" y="1183" width="522" height="328" frameX="-17" frameY="-155" frameWidth="1122" frameHeight="506"/>
+	<SubTexture name="note combo!0022" x="1169" y="1158" width="522" height="336" frameX="-17" frameY="-151" frameWidth="1122" frameHeight="506"/>
+	<SubTexture name="note combo!0023" x="30" y="418" width="522" height="372" frameX="-17" frameY="-134" frameWidth="1122" frameHeight="506"/>
+	<SubTexture name="note combo!0024" x="582" y="1183" width="538" height="259" frameX="-7" frameY="-182" frameWidth="1122" frameHeight="506"/>
+	<SubTexture name="note combo!0025" x="30" y="30" width="844" height="358" frameX="-278" frameY="0" frameWidth="1122" frameHeight="506"/>
+	<SubTexture name="note combo!0026" x="30" y="30" width="0" height="0" frameX="0" frameY="0" frameWidth="1122" frameHeight="506"/>
+</TextureAtlas>

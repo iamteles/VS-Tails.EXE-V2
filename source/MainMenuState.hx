@@ -19,6 +19,7 @@ import flixel.util.FlxColor;
 import lime.app.Application;
 import Achievements;
 import editors.MasterEditorMenu;
+import flixel.addons.display.FlxBackdrop;
 import flixel.input.keyboard.FlxKey;
 
 using StringTools;
@@ -31,13 +32,11 @@ class MainMenuState extends MusicBeatState
 	var menuItems:FlxTypedGroup<FlxSprite>;
 	private var camGame:FlxCamera;
 	
-	public var optionShit:Array<String> = ['story mode', 'freeplay', 'credits', 'options'];
+	public var optionShit:Array<String> = [/*'story mode',*/ 'freeplay', 'credits', 'options'];
 
 	public var forceCenter:Bool = true;
 
 	public var menuItemScale:Int = 1;
-
-	public var bg:FlxSprite;
 
 	var spikyThing:FlxSprite;
 	var leftArrow:FlxSprite;
@@ -69,11 +68,11 @@ class MainMenuState extends MusicBeatState
 
 		persistentUpdate = persistentDraw = true;
 
-		bg = new FlxSprite(0, 0).loadGraphic(Paths.image("menustuff/bgFreeplay", 'sadfox'));
-		bg.setGraphicSize(Std.int(bg.width * 1.12));
-		bg.screenCenter();
-		bg.antialiasing = false;
-		add(bg);
+		var backdrop:FlxBackdrop = new FlxBackdrop(Paths.image("menustuff/grid", 'sadfox'), 8, 8, true, true, 1, 1);
+        backdrop.velocity.set(FlxG.random.bool(50) ? 90 : -90, FlxG.random.bool(50) ? 90 : -90);
+        backdrop.screenCenter();
+        backdrop.alpha = 0.4;
+        add(backdrop);
 
 		spikyThing = new FlxSprite(0, 720 - 144).loadGraphic(Paths.image("menustuff/main/spikes", 'sadfox'));
 		add(spikyThing);
@@ -113,7 +112,7 @@ class MainMenuState extends MusicBeatState
 		versionShit.scrollFactor.set();
 		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(versionShit);
-		var versionShit:FlxText = new FlxText(12, FlxG.height - 24, 0, "VS Tails.EXE v2.0", 12);
+		var versionShit:FlxText = new FlxText(12, FlxG.height - 24, 0, "VS Tails.EXE v2.0 - WIP", 12);
 		versionShit.scrollFactor.set();
 		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(versionShit);

@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="eggy assetsassets.png">
+	<!-- Created with Adobe Animate version 22.0.1.105 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="eggy down0000" x="0" y="0" width="502" height="404" frameX="-3" frameY="-11" frameWidth="505" frameHeight="417"/>
+	<SubTexture name="eggy down0001" x="502" y="0" width="503" height="409" frameX="-1" frameY="-6" frameWidth="505" frameHeight="417"/>
+	<SubTexture name="eggy down0002" x="502" y="0" width="503" height="409" frameX="-1" frameY="-6" frameWidth="505" frameHeight="417"/>
+	<SubTexture name="eggy down0003" x="1005" y="0" width="503" height="409" frameX="-1" frameY="-6" frameWidth="505" frameHeight="417"/>
+	<SubTexture name="eggy down0004" x="1005" y="0" width="503" height="409" frameX="-1" frameY="-6" frameWidth="505" frameHeight="417"/>
+	<SubTexture name="eggy down0005" x="1508" y="0" width="503" height="412" frameX="0" frameY="-5" frameWidth="505" frameHeight="417"/>
+	<SubTexture name="eggy down0006" x="1508" y="0" width="503" height="412" frameX="0" frameY="-5" frameWidth="505" frameHeight="417"/>
+	<SubTexture name="eggy down0007" x="2011" y="0" width="503" height="412" frameX="0" frameY="-5" frameWidth="505" frameHeight="417"/>
+	<SubTexture name="eggy down0008" x="2011" y="0" width="503" height="412" frameX="0" frameY="-5" frameWidth="505" frameHeight="417"/>
+	<SubTexture name="eggy down0009" x="2011" y="0" width="503" height="412" frameX="0" frameY="-5" frameWidth="505" frameHeight="417"/>
+	<SubTexture name="eggy down0010" x="2514" y="0" width="503" height="417" frameX="0" frameY="0" frameWidth="505" frameHeight="417"/>
+	<SubTexture name="eggy down0011" x="2514" y="0" width="503" height="417" frameX="0" frameY="0" frameWidth="505" frameHeight="417"/>
+	<SubTexture name="eggy down0012" x="2514" y="0" width="503" height="417" frameX="0" frameY="0" frameWidth="505" frameHeight="417"/>
+	<SubTexture name="eggy down0013" x="2514" y="0" width="503" height="417" frameX="0" frameY="0" frameWidth="505" frameHeight="417"/>
+	<SubTexture name="eggy down0014" x="2514" y="0" width="503" height="417" frameX="0" frameY="0" frameWidth="505" frameHeight="417"/>
+	<SubTexture name="eggy idle0000" x="3017" y="0" width="502" height="419" frameX="-14" frameY="-35" frameWidth="516" frameHeight="454"/>
+	<SubTexture name="eggy idle0001" x="3519" y="0" width="501" height="435" frameX="-5" frameY="-19" frameWidth="516" frameHeight="454"/>
+	<SubTexture name="eggy idle0002" x="0" y="435" width="501" height="435" frameX="-5" frameY="-19" frameWidth="516" frameHeight="454"/>
+	<SubTexture name="eggy idle0003" x="501" y="435" width="501" height="439" frameX="-5" frameY="-15" frameWidth="516" frameHeight="454"/>
+	<SubTexture name="eggy idle0004" x="501" y="435" width="501" height="439" frameX="-5" frameY="-15" frameWidth="516" frameHeight="454"/>
+	<SubTexture name="eggy idle0005" x="501" y="435" width="501" height="439" frameX="-5" frameY="-15" frameWidth="516" frameHeight="454"/>
+	<SubTexture name="eggy idle0006" x="1002" y="435" width="499" height="454" frameX="-6" frameY="0" frameWidth="516" frameHeight="454"/>
+	<SubTexture name="eggy idle0007" x="1501" y="435" width="499" height="453" frameX="-1" frameY="-1" frameWidth="516" frameHeight="454"/>
+	<SubTexture name="eggy idle0008" x="2000" y="435" width="499" height="450" frameX="-1" frameY="-4" frameWidth="516" frameHeight="454"/>
+	<SubTexture name="eggy idle0009" x="2000" y="435" width="499" height="450" frameX="-1" frameY="-4" frameWidth="516" frameHeight="454"/>
+	<SubTexture name="eggy idle0010" x="2499" y="435" width="499" height="451" frameX="0" frameY="-3" frameWidth="516" frameHeight="454"/>
+	<SubTexture name="eggy idle0011" x="2499" y="435" width="499" height="451" frameX="0" frameY="-3" frameWidth="516" frameHeight="454"/>
+	<SubTexture name="eggy idle0012" x="2499" y="435" width="499" height="451" frameX="0" frameY="-3" frameWidth="516" frameHeight="454"/>
+	<SubTexture name="eggy idle0013" x="2499" y="435" width="499" height="451" frameX="0" frameY="-3" frameWidth="516" frameHeight="454"/>
+	<SubTexture name="eggy idle0014" x="2499" y="435" width="499" height="451" frameX="0" frameY="-3" frameWidth="516" frameHeight="454"/>
+	<SubTexture name="eggy left0000" x="2998" y="435" width="552" height="459" frameX="-3" frameY="0" frameWidth="560" frameHeight="459"/>
+	<SubTexture name="eggy left0001" x="0" y="894" width="554" height="458" frameX="-4" frameY="-1" frameWidth="560" frameHeight="459"/>
+	<SubTexture name="eggy left0002" x="554" y="894" width="560" height="459"/>
+	<SubTexture name="eggy left0003" x="554" y="894" width="560" height="459"/>
+	<SubTexture name="eggy left0004" x="554" y="894" width="560" height="459"/>
+	<SubTexture name="eggy left0005" x="554" y="894" width="560" height="459"/>
+	<SubTexture name="eggy left0006" x="1114" y="894" width="553" height="457" frameX="-4" frameY="-2" frameWidth="560" frameHeight="459"/>
+	<SubTexture name="eggy left0007" x="1114" y="894" width="553" height="457" frameX="-4" frameY="-2" frameWidth="560" frameHeight="459"/>
+	<SubTexture name="eggy left0008" x="1667" y="894" width="546" height="454" frameX="-14" frameY="-5" frameWidth="560" frameHeight="459"/>
+	<SubTexture name="eggy left0009" x="2213" y="894" width="530" height="456" frameX="-25" frameY="-3" frameWidth="560" frameHeight="459"/>
+	<SubTexture name="eggy left0010" x="2213" y="894" width="530" height="456" frameX="-25" frameY="-3" frameWidth="560" frameHeight="459"/>
+	<SubTexture name="eggy left0011" x="2743" y="894" width="503" height="456" frameX="-44" frameY="-3" frameWidth="560" frameHeight="459"/>
+	<SubTexture name="eggy left0012" x="2743" y="894" width="503" height="456" frameX="-44" frameY="-3" frameWidth="560" frameHeight="459"/>
+	<SubTexture name="eggy left0013" x="2743" y="894" width="503" height="456" frameX="-44" frameY="-3" frameWidth="560" frameHeight="459"/>
+	<SubTexture name="eggy left0014" x="2743" y="894" width="503" height="456" frameX="-44" frameY="-3" frameWidth="560" frameHeight="459"/>
+	<SubTexture name="eggy right0000" x="3246" y="894" width="503" height="435" frameX="-28" frameY="-3" frameWidth="531" frameHeight="438"/>
+	<SubTexture name="eggy right0001" x="0" y="1353" width="502" height="435" frameX="-16" frameY="-3" frameWidth="531" frameHeight="438"/>
+	<SubTexture name="eggy right0002" x="0" y="1353" width="502" height="435" frameX="-16" frameY="-3" frameWidth="531" frameHeight="438"/>
+	<SubTexture name="eggy right0003" x="502" y="1353" width="502" height="435" frameX="-11" frameY="-3" frameWidth="531" frameHeight="438"/>
+	<SubTexture name="eggy right0004" x="502" y="1353" width="502" height="435" frameX="-11" frameY="-3" frameWidth="531" frameHeight="438"/>
+	<SubTexture name="eggy right0005" x="502" y="1353" width="502" height="435" frameX="-11" frameY="-3" frameWidth="531" frameHeight="438"/>
+	<SubTexture name="eggy right0006" x="1004" y="1353" width="502" height="433" frameX="-9" frameY="-5" frameWidth="531" frameHeight="438"/>
+	<SubTexture name="eggy right0007" x="1004" y="1353" width="502" height="433" frameX="-9" frameY="-5" frameWidth="531" frameHeight="438"/>
+	<SubTexture name="eggy right0008" x="1506" y="1353" width="500" height="433" frameX="-4" frameY="-5" frameWidth="531" frameHeight="438"/>
+	<SubTexture name="eggy right0009" x="2006" y="1353" width="500" height="433" frameX="-4" frameY="-5" frameWidth="531" frameHeight="438"/>
+	<SubTexture name="eggy right0010" x="2506" y="1353" width="502" height="438" frameX="0" frameY="0" frameWidth="531" frameHeight="438"/>
+	<SubTexture name="eggy right0011" x="2506" y="1353" width="502" height="438" frameX="0" frameY="0" frameWidth="531" frameHeight="438"/>
+	<SubTexture name="eggy right0012" x="2506" y="1353" width="502" height="438" frameX="0" frameY="0" frameWidth="531" frameHeight="438"/>
+	<SubTexture name="eggy right0013" x="2506" y="1353" width="502" height="438" frameX="0" frameY="0" frameWidth="531" frameHeight="438"/>
+	<SubTexture name="eggy right0014" x="2506" y="1353" width="502" height="438" frameX="0" frameY="0" frameWidth="531" frameHeight="438"/>
+	<SubTexture name="eggy up0000" x="3008" y="1353" width="494" height="607"/>
+	<SubTexture name="eggy up0001" x="3008" y="1353" width="494" height="607"/>
+	<SubTexture name="eggy up0002" x="3502" y="1353" width="494" height="590" frameX="0" frameY="-15" frameWidth="494" frameHeight="607"/>
+	<SubTexture name="eggy up0003" x="3502" y="1353" width="494" height="590" frameX="0" frameY="-15" frameWidth="494" frameHeight="607"/>
+	<SubTexture name="eggy up0004" x="0" y="1960" width="494" height="575" frameX="0" frameY="-29" frameWidth="494" frameHeight="607"/>
+	<SubTexture name="eggy up0005" x="0" y="1960" width="494" height="575" frameX="0" frameY="-29" frameWidth="494" frameHeight="607"/>
+	<SubTexture name="eggy up0006" x="0" y="1960" width="494" height="575" frameX="0" frameY="-29" frameWidth="494" frameHeight="607"/>
+	<SubTexture name="eggy up0007" x="0" y="1960" width="494" height="575" frameX="0" frameY="-29" frameWidth="494" frameHeight="607"/>
+	<SubTexture name="eggy up0008" x="0" y="1960" width="494" height="575" frameX="0" frameY="-29" frameWidth="494" frameHeight="607"/>
+	<SubTexture name="eggy up0009" x="0" y="1960" width="494" height="575" frameX="0" frameY="-29" frameWidth="494" frameHeight="607"/>
+	<SubTexture name="eggy up0010" x="0" y="1960" width="494" height="575" frameX="0" frameY="-29" frameWidth="494" frameHeight="607"/>
+	<SubTexture name="eggy up0011" x="0" y="1960" width="494" height="575" frameX="0" frameY="-29" frameWidth="494" frameHeight="607"/>
+	<SubTexture name="eggy up0012" x="0" y="1960" width="494" height="575" frameX="0" frameY="-29" frameWidth="494" frameHeight="607"/>
+	<SubTexture name="eggy up0013" x="0" y="1960" width="494" height="575" frameX="0" frameY="-29" frameWidth="494" frameHeight="607"/>
+	<SubTexture name="eggy up0014" x="0" y="1960" width="494" height="575" frameX="0" frameY="-29" frameWidth="494" frameHeight="607"/>
+</TextureAtlas>
