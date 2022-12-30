@@ -54,8 +54,16 @@ class GraphicsSettingsSubState extends BaseOptionsMenu
 		addOption(option);
 
 		var option:Option = new Option('Shaders', //Name
-			'If unchecked, disables shaders.\nIt\'s used for some visual effects, and also CPU intensive for weaker PCs.', //Description
+			'If unchecked, disables shaders.\nIt\'s used for some visual effects, and also CPU intensive for weaker PCs. (Also disabled Bloom)', //Description
 			'shaders', //Save data variable name
+			'bool', //Variable type
+			true); //Default value
+		option.onChange = onChangeShaders;
+		addOption(option);
+
+		var option:Option = new Option('Bloom', //Name
+			'If unchecked, disables bloom.\nIt\'s a visual effect. If shaders are disabled, same will happen to this.', //Description
+			'bloom', //Save data variable name
 			'bool', //Variable type
 			true); //Default value
 		addOption(option);
@@ -87,6 +95,12 @@ class GraphicsSettingsSubState extends BaseOptionsMenu
 				sprite.antialiasing = ClientPrefs.globalAntialiasing;
 			}
 		}
+	}
+
+	function onChangeShaders()
+	{
+		if(!ClientPrefs.shaders)
+			ClientPrefs.bloom = false;
 	}
 
 	function onChangeFramerate()

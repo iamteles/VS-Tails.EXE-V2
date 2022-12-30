@@ -343,7 +343,6 @@ class PlayState extends MusicBeatState
 
 	// tails exe stuff
 	var blackSkit:FlxSprite;
-	var leCharLol:String = "";
 	private static var InOutThingy:String = 'Special';
 	private var cloneTimeTxt:FlxText;
 
@@ -403,13 +402,6 @@ class PlayState extends MusicBeatState
 		// for the epic intro
 		blackSkit = new FlxSprite(-300, -575).makeGraphic(Std.int(FlxG.width * 5), Std.int(FlxG.height * 5), FlxColor.BLACK);
 		blackSkit.scrollFactor.set();
-
-		if (SONG.player1.startsWith('bf'))
-			leCharLol = "BOYFRIEND";
-		else if (SONG.player1.startsWith('pico'))
-			leCharLol = "PICO";
-		else
-			leCharLol = SONG.player1;
 
 		//Ratings
 		ratingsData.push(new Rating('sick')); //default rating
@@ -862,8 +854,8 @@ class PlayState extends MusicBeatState
 		add(gfGroup); //Needed for blammed lights
 
 		// Shitty layering but whatev it works LOL
-		if (curStage == 'limo')
-			add(limo);
+		if (curStage == 'blank')
+			add(blackSkit);
 
 		add(dadGroup);
 		add(boyfriendGroup);
@@ -938,8 +930,6 @@ class PlayState extends MusicBeatState
 				}
 			case 'ghzSun':
 				add(shineThing);
-			case 'blank':
-				add(blackSkit);
 		}
 
 		#if LUA_ALLOWED
@@ -1339,7 +1329,7 @@ class PlayState extends MusicBeatState
 		#end
 
 		// he's the one who likes all our pretty songs and he likes to sing along and he likes to shoot his gun but he knows not what it means :   )
-		if(ClientPrefs.shaders)
+		if(ClientPrefs.bloom)
 		{
 			var epicShader:FlxRuntimeShader = new FlxRuntimeShader(File.getContent(Paths.shaderFragment('bloom')));
 			FlxG.camera.setFilters([new ShaderFilter(epicShader)]);
@@ -2233,39 +2223,55 @@ class PlayState extends MusicBeatState
 		add(bacazzo);
 		add(sonecazzo);
 
-		var persocazzo:FlxText = new FlxText(0, FlxG.height * 0.8, 0, leCharLol, 50);
+		var persocazzo:FlxText = new FlxText(0, FlxG.height * 0.8, 0, 'BOYFRIEND', 50);
 		persocazzo.setFormat(Paths.font("avanzato.ttf"), 50, FlxColor.BLACK, RIGHT);
 		persocazzo.x = 2000;
 		persocazzo.updateHitbox();
 		persocazzo.cameras = [camIntro];
 		add(persocazzo);
+		#if desktop
+		if(FileSystem.exists(Paths.txt(SONG.song.toLowerCase() + "/info")))
+		{
+			var songInfoArtist:String = (CoolUtil.coolTextFile(Paths.txt(curSong.toLowerCase() + "/info"))[0]).toUpperCase();
+			persocazzo.text = songInfoArtist;
+		}
+		#end
 
+		// there should have been better code i swear
 		var machecazz:Bool = false;
-
 		new FlxTimer().start(1, function(tmr:FlxTimer)
 		{
 			if (!machecazz)
 			{
-				FlxTween.tween(blulol, {y: 0}, 0.9, {ease: FlxEase.linear});
-				FlxTween.tween(giallol, {y: FlxG.height * 0.8}, 0.9, {ease: FlxEase.linear});
-				FlxTween.tween(redshit, {x: 0}, 0.9, {ease: FlxEase.linear});
-				FlxTween.tween(sonecazzo, {x: FlxG.width * 0.6}, 0.9, {ease: FlxEase.linear});
-				FlxTween.tween(bacazzo, {x: FlxG.width * 0.6}, 0.9, {ease: FlxEase.linear});
-				FlxTween.tween(persocazzo, {x: FlxG.width * 0.7}, 0.9, {ease: FlxEase.linear});
+				FlxTween.tween(blulol, {y: 0}, 0.4, {ease: FlxEase.linear});
+				FlxTween.tween(giallol, {y: FlxG.height * 0.8}, 0.5, {ease: FlxEase.linear});
+				FlxTween.tween(persocazzo, {x: FlxG.width * 0.7}, 0.5, {ease: FlxEase.linear});
+				FlxTween.tween(redshit, {x: 0}, 0.7, {ease: FlxEase.quintIn});
+				FlxTween.tween(sonecazzo, {x: FlxG.width * 0.6}, 0.9, {ease: FlxEase.quintIn});
+				FlxTween.tween(bacazzo, {x: FlxG.width * 0.6 + 10}, 0.9, {ease: FlxEase.quintIn});
 				machecazz = true;
-				tmr.reset(1.2);
+				tmr.reset(1.5);
 			}
 			else
 			{
-				FlxTween.tween(blulol, {alpha: 0}, 1, {ease: FlxEase.linear});
-				FlxTween.tween(giallol, {alpha: 0}, 1, {ease: FlxEase.linear});
-				FlxTween.tween(redshit, {alpha: 0}, 1, {ease: FlxEase.linear});
-				FlxTween.tween(black, {alpha: 0}, 1, {ease: FlxEase.linear});
-				FlxTween.tween(sonecazzo, {alpha: 0}, 1, {ease: FlxEase.linear});
-				FlxTween.tween(bacazzo, {alpha: 0}, 1, {ease: FlxEase.linear});
-				FlxTween.tween(persocazzo, {alpha: 0}, 1, {ease: FlxEase.linear});
-				inCutscene = false;
-				startCountdown();
+				black.destroy();
+				FlxTween.tween(redshit, {x: -2000}, 0.2, {ease: FlxEase.linear});
+				FlxTween.tween(giallol, {x: 2000}, 0.3, {ease: FlxEase.sineIn});
+				FlxTween.tween(persocazzo, {x: 2000}, 0.3, {
+					ease: FlxEase.sineIn,
+					onComplete: function(twn:FlxTween)
+					{
+						redshit.destroy();
+						giallol.destroy();
+						persocazzo.kill();
+
+						skipCountdown = true;
+						startCountdown();
+						FlxTween.tween(blulol, {y: -2000}, 0.5, {ease: FlxEase.quadIn});
+						FlxTween.tween(sonecazzo, {x: -2000}, 1, {ease: FlxEase.quintIn});
+						FlxTween.tween(bacazzo, {x: 2000}, 1, {ease: FlxEase.quintIn});
+					}
+				});
 			}
 		});
 	}
@@ -5312,36 +5318,33 @@ class PlayState extends MusicBeatState
 		}
 
 	}
+
 	function switchToHell(burningSwitch:Bool):Void
 	{
 		if (curStage == 'ghz')
 		{
 			if (burningSwitch)
 			{
-				startBurning();
+				// startBurning();
 				if(!ClientPrefs.lowQuality)
 				{
 					remove(fore);
 					fore2.visible = true;
-					//lightz.visible = true;
 				}
 				bg2.visible = true;
 				grd2.visible = true;
 				blackvg.alpha = 0.4;
-				//gradient.alpha = 1;
 			}
 			else if (!burningSwitch)
 			{
-				startBurning();
+				// startBurning();
 				if(!ClientPrefs.lowQuality)
 				{
 					add(fore);
 					fore2.visible = false;
-				//	lightz.visible = false;
 				}
 				bg2.visible = false;
 				grd2.visible = false;
-				//gradient.alpha = 0;
 			}
 			else
 				trace("man wth");
@@ -5614,12 +5617,10 @@ class PlayState extends MusicBeatState
 						chromOn = true;
 						FlxG.camera.shake(0.010, 0.1);
 						camHUD.shake(0.008, 0.1);
-						// switchToHell(false);
 					case 512 | 544 | 576:
 						chromOn = true;
 						FlxG.camera.shake(0.010, 0.1);
 						camHUD.shake(0.008, 0.1);
-						// switchToHell(true);
 					case 592:
 						chromOn = true;
 						FlxG.camera.shake(0.010, 0.1);
@@ -5710,6 +5711,7 @@ class PlayState extends MusicBeatState
 				switch (curStep)
 				{
 					case 80:
+						defaultCamZoom = 1;
 						FlxTween.tween(dad, {alpha: 1}, 1.5, {ease: FlxEase.quadInOut});
 						dad.playAnim('action');
 						dad.specialAnim = true;
@@ -5718,6 +5720,7 @@ class PlayState extends MusicBeatState
 						FlxTween.tween(camHUD, {alpha: 1}, 0.5, {ease: FlxEase.linear});
 						FlxTween.tween(boyfriend, {alpha: 1}, 0.5, {ease: FlxEase.linear});
 						FlxTween.tween(gf, {alpha: 1}, 0.5, {ease: FlxEase.linear});
+						defaultCamZoom = 0.7;
 					case 128 | 240 | 368 | 903 | 1008 | 1520 | 1648 | 1680:
 						defaultCamZoom = 0.7;
 					case 416:
@@ -5735,25 +5738,21 @@ class PlayState extends MusicBeatState
 					case 896 | 1664:
 						defaultCamZoom = 0.85;
 				}
-		}
 
+				if(curStep >= 115 && curStep < 127 || curStep >= 224 && curStep < 240 || curStep >= 352 && curStep < 368 || curStep >= 992 && curStep < 1008 || curStep >= 1504 && curStep < 1520 || curStep >= 1632 && curStep < 1648)
+				{
+					defaultCamZoom += 0.01;
+				}
 
-		if(curSong.toLowerCase() == 'soic')
-		{
-			if(curStep >= 115 && curStep < 127 || curStep >= 224 && curStep < 240 || curStep >= 352 && curStep < 368 || curStep >= 992 && curStep < 1008 || curStep >= 1504 && curStep < 1520 || curStep >= 1632 && curStep < 1648)
-			{
-				defaultCamZoom += 0.01;
-			}
+				if(curStep >= 1648 && curStep < 1664)
+				{
+					defaultCamZoom -= 0.005;
+				}
 
-			if(curStep >= 1648 && curStep < 1664)
-			{
-				defaultCamZoom -= 0.005;
-			}
-
-			if(curStep >= 192 && curStep < 200 || curStep >= 204 && curStep < 212 || curStep >= 216 && curStep < 220 || curStep >= 352 && curStep < 368 || curStep >= 448 && curStep < 456 || curStep >= 460 && curStep < 468 || curStep >= 472 && curStep < 476 || curStep >= 480 && curStep < 496 || curStep >= 760 && curStep < 764 || curStep >= 960 && curStep < 968 || curStep >= 972 && curStep < 980 || curStep >= 984 && curStep < 988 || curStep >= 1400 && curStep < 1404 || curStep >= 1472 && curStep < 1480 || curStep >= 1484 && curStep < 1492 || curStep >= 1496 && curStep < 1500 || curStep >= 1600 && curStep < 1608 || curStep >= 1612 && curStep < 1620 || curStep >= 1624 && curStep < 1628)
-			{
-				FlxG.camera.zoom += 0.035;
-			}
+				if(curStep >= 192 && curStep < 200 || curStep >= 204 && curStep < 212 || curStep >= 216 && curStep < 220 || curStep >= 352 && curStep < 368 || curStep >= 448 && curStep < 456 || curStep >= 460 && curStep < 468 || curStep >= 472 && curStep < 476 || curStep >= 480 && curStep < 496 || curStep >= 760 && curStep < 764 || curStep >= 960 && curStep < 968 || curStep >= 972 && curStep < 980 || curStep >= 984 && curStep < 988 || curStep >= 1400 && curStep < 1404 || curStep >= 1472 && curStep < 1480 || curStep >= 1484 && curStep < 1492 || curStep >= 1496 && curStep < 1500 || curStep >= 1600 && curStep < 1608 || curStep >= 1612 && curStep < 1620 || curStep >= 1624 && curStep < 1628)
+				{
+					FlxG.camera.zoom += 0.035;
+				}
 		}
 
 		lastStepHit = curStep;

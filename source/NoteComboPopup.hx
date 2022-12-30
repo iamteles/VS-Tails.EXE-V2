@@ -15,7 +15,7 @@ class NoteComboPopup extends FlxSprite
 	public function preloadStuff() {
 		frames = Paths.getSparrowAtlas('noteCombo');
 		antialiasing = ClientPrefs.globalAntialiasing;
-		animation.addByPrefix('pop', 'note combo!');
+		animation.addByPrefix('pop', 'note combo!', 24, false);
 		alpha = 0;
 	}
 

@@ -253,7 +253,8 @@ class TitleState extends MusicBeatState
 		// bg.setGraphicSize(Std.int(bg.width * 0.6));
 		// bg.updateHitbox();
 		add(bg);
-
+		
+		// new flixel-addons | backdrop = new FlxBackdrop(Paths.image('title/grid'), XY, 0, 0);
 		backdrop = new FlxBackdrop(Paths.image('title/grid'), 1, 1, true, true, 1, 1);
 		backdrop.velocity.set(300, 0);
 		backdrop.screenCenter(X);
