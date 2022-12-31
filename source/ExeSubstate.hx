@@ -56,7 +56,7 @@ class ExeSubstate extends MusicBeatSubstate
     
             if (controls.BACK)
             {
-                FlxG.sound.music.stop();
+                spookyMusic.destroy();
                 PlayState.deathCounter = 0;
                 PlayState.seenCutscene = false;
                 PlayState.chartingMode = false;
@@ -89,7 +89,7 @@ class ExeSubstate extends MusicBeatSubstate
 		{
 			isEnding = true;
             spookyMusic.destroy();
-            FlxG.sound.play(Paths.music("gameOverEnd"));
+            FlxG.sound.play(Paths.music("confirmMenu"));
 
 			new FlxTimer().start(0.7, function(tmr:FlxTimer)
             {

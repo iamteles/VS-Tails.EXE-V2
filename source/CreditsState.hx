@@ -13,6 +13,7 @@ import flixel.text.FlxText;
 import flixel.util.FlxColor;
 import flixel.tweens.FlxTween;
 import flixel.tweens.FlxEase;
+import flixel.addons.display.FlxBackdrop;
 #if MODS_ALLOWED
 import sys.FileSystem;
 import sys.io.File;
@@ -24,18 +25,21 @@ using StringTools;
 class CreditsState extends MusicBeatState
 {
 	var curSelected:Int = -1;
+	var curIcon:Int = 1;
 
 	private var grpOptions:FlxTypedGroup<Alphabet>;
 	private var iconArray:Array<AttachedSprite> = [];
 	private var creditsStuff:Array<Array<String>> = [];
 
-	var bg:FlxSprite;
+	var bg:FlxBackdrop;
 	var descText:FlxText;
 	var intendedColor:Int;
 	var colorTween:FlxTween;
 	var descBox:AttachedSprite;
 
 	var offsetThing:Float = -75;
+
+
 
 	override function create()
 	{
@@ -45,12 +49,69 @@ class CreditsState extends MusicBeatState
 		#end
 
 		persistentUpdate = true;
-		bg = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
-		add(bg);
-		bg.screenCenter();
+		bg = new FlxBackdrop(Paths.image("menustuff/greyd", 'sadfox'), 8, 8, true, true, 1, 1);
+        bg.velocity.set(FlxG.random.bool(50) ? 90 : -90, FlxG.random.bool(50) ? 90 : -90);
+       	bg.screenCenter();
+        bg.alpha = 0.4;
+        add(bg);
 		
 		grpOptions = new FlxTypedGroup<Alphabet>();
 		add(grpOptions);
+
+		var pisspoop:Array<Array<String>> = [ //Name - Icon name - Description - Link - BG Color
+			['VS Tails.EXE Team'],
+			['teles', 'teles', 'Director, Musician, Coder, Animator\n1 year, i cant believe it', 'https://www.youtube.com/channel/UCHK83AQBjAc9sy0lE6m8e3A', '444444'],
+			['Astro_Galaxy', 'astro' ,'Artist, Animator\nSpace Journey when?', 'https://www.youtube.com/channel/UChhiMUkcTdDDpOiMPY0td5w', '444444'],
+			['FenixTheCat', 'fenix' ,'Artist\ninsert text here', 'https://twitter.com/CatTheFenix', '444444'],
+			['Coco puffs', 'corruption' ,'Artist, Animator\nThree times did the cheese move sideways to Switzerland by radio, but..she never licked that parking permit', 'https://twitter.com/file_corruption', '444444'],		
+			['Crispy', 'crispy' ,'Artist\nel pepe', 'https://twitter.com/ZapatoImbecil', '444444'],
+			['GoodieBag', 'goodie' ,'Artist\nErm what the scallop', 'https://twitter.com/GoodieBag78', '444444'],
+			['Deflio', 'deflio' ,'Artist, Animator\nOH YEAH THIS IS HAPPENING', 'https://www.youtube.com/channel/UCGqkiga9ZQX8AhTTs8oyh9Q', '444444'],
+			['MA - 1AJ', 'ma' ,'Artist\nthe person no one knows', 'https://twitter.com/1aj_ma', '444444'],
+			['Sar', 'sar' ,'Artist\nsar. only.', 'https://www.twitter.com/KalsperSar', '444444'],
+			['c0_rps3', 'c0', "Artist, animator\nGuys I'm making a sonic.exe mod restored!", 'https://twitter.com/o_c0rps3', '444444'],
+			['Tan', 'tan' ,'Artist, Animator\nIt aint easy being cheesy', 'https://twitter.com/TanDoesStuff', '444444'],
+			['Trikunari', 'face' ,'Artist', 'https://twitter.com/Trikunari', '444444'],
+			['Anakim', 'anakim' ,'Musician\ncw_amen04 170', 'https://www.youtube.com/@Anakim2', '444444'],
+			['ROCKY', 'rocky' ,'Musician\n:neutral_face:', 'https://www.youtube.com/@rocky4772', '444444'],
+			['Rai', 'face' ,'Voice Acting (Tails, Coughing Tails)', 'https://twitter.com/RaiGuyyy', '444444'],
+			['Mustard', 'mustard', "Voice Acting (Origin Eggman)\nI came", 'https://twitter.com/Squijay1', '444444'],
+			['TonnoBuono', 'tuna' ,'Coding\nHow to press WASD', 'https://www.youtube.com/channel/UCaDJOerpCAIT7uUP28OKoZQ', '444444'],
+			['YaBoiJustin', 'justin' ,'Events Helper\nits me awesome', 'https://twitter.com/YaBoiJustinGG', '444444'],
+			['HarryLTS', 'harry' ,'Charter\ntails.exe for life', 'https://twitter.com/harry_lts', '444444'],
+			['Xarion', 'xar' ,'Charter\nplay vs jeremy NOW', 'https://twitter.com/Xar1on', '444444'],
+			[''],
+			['Special Thanks'],
+			['The rest of the team', 'team', 'Thanks to whoever didnt get their work featured in the demo', '', '444444'],
+			['Sakurnyaw', 'sakurnyaw', "Eggy's Icon", 'https://twitter.com/Sakurnyaw', '444444'],
+			['DiogoTV', 'diogo', 'Coding advice', 'https://twitter.com/DiogoTVV', '444444'],
+			['Unholywanderer04', 'unholy' ,'Combos Lua Script', 'https://gamebanana.com/members/1908754', '444444'],
+			//['BeastlyGhost', 'ghost', "Original idea for prepare sprite (from their engine Funkin' Feather)", 'https://twitter.com/BeastlyGabi', '444444'],
+			[''],
+			['Psych Engine Team'],
+			['Shadow Mario',		'shadowmario',		'Main Programmer of Psych Engine',								'https://twitter.com/Shadow_Mario_',	'444444'],
+			['RiverOaken',			'river',			'Main Artist/Animator of Psych Engine',							'https://twitter.com/RiverOaken',		'B42F71'],
+			['shubs',				'shubs',			'Additional Programmer of Psych Engine',						'https://twitter.com/yoshubs',			'5E99DF'],
+			[''],
+			['Former Engine Members'],
+			['bb-panzu',			'bb',				'Ex-Programmer of Psych Engine',								'https://twitter.com/bbsub3',			'3E813A'],
+			[''],
+			['Engine Contributors'],
+			['iFlicky',				'flicky',			'Composer of Psync and Tea Time\nMade the Dialogue Sounds',		'https://twitter.com/flicky_i',			'9E29CF'],
+			['SqirraRNG',			'sqirra',			'Crash Handler and Base code for\nChart Editor\'s Waveform',	'https://twitter.com/gedehari',			'E1843A'],
+			['EliteMasterEric',		'mastereric',		'Runtime Shaders support',										'https://twitter.com/EliteMasterEric',	'FFBD40'],
+			['PolybiusProxy',		'proxy',			'.MP4 Video Loader Library (hxCodec)',							'https://twitter.com/polybiusproxy',	'DCD294'],
+			['KadeDev',				'kade',				'Fixed some cool stuff on Chart Editor\nand other PRs',			'https://twitter.com/kade0912',			'64A250'],
+			['Keoiki',				'keoiki',			'Note Splash Animations',										'https://twitter.com/Keoiki_',			'D2D2D2'],
+			['Nebula the Zorua',	'nebula',			'LUA JIT Fork and some Lua reworks',							'https://twitter.com/Nebula_Zorua',		'7D40B2'],
+			['Smokey',				'smokey',			'Sprite Atlas Support',											'https://twitter.com/Smokey_5_',		'483D92'],
+			[''],
+			["Funkin' Crew"],
+			['ninjamuffin99',		'ninjamuffin99',	"Programmer of Friday Night Funkin'",							'https://twitter.com/ninja_muffin99',	'CF2D2D'],
+			['PhantomArcade',		'phantomarcade',	"Animator of Friday Night Funkin'",								'https://twitter.com/PhantomArcade3K',	'FADC45'],
+			['evilsk8r',			'evilsk8r',			"Artist of Friday Night Funkin'",								'https://twitter.com/evilsk8r',			'5ABD4B'],
+			['kawaisprite',			'kawaisprite',		"Composer of Friday Night Funkin'",								'https://twitter.com/kawaisprite',		'378FC7']
+		];
 
 		#if MODS_ALLOWED
 		var path:String = 'modsList.txt';
@@ -79,60 +140,6 @@ class CreditsState extends MusicBeatState
 			pushModCreditsToList(folder);
 		}
 		#end
-
-		var pisspoop:Array<Array<String>> = [ //Name - Icon name - Description - Link - BG Color
-			['VS Tails.EXE Team'],
-			['teles', 'teles', 'Director, Musician, Coder, Animator\n1 year, i cant believe it', 'https://www.youtube.com/channel/UCHK83AQBjAc9sy0lE6m8e3A', '444444'],
-			['Astro_Galaxy', 'astro' ,'Artist, Animator\nSpace Journey when?', 'https://www.youtube.com/channel/UChhiMUkcTdDDpOiMPY0td5w', '444444'],
-			['FenixTheCat', 'fenix' ,'Artist\ninsert text here', 'https://twitter.com/CatTheFenix', '444444'],
-			['Coco puffs', 'corruption' ,'Artist, Animator\nThree times did the cheese move sideways to Switzerland by radio, but..she never licked that parking permit', 'https://twitter.com/file_corruption', '444444'],		
-			['Crispy', 'crispy' ,'Artist\nel pepe', 'https://twitter.com/ZapatoImbecil', '444444'],
-			['GoodieBag', 'goodie' ,'Artist\nErm what the scallop', 'https://twitter.com/GoodieBag78', '444444'],
-			['Deflio', 'deflio' ,'Artist, Animator\nOH YEAH THIS IS HAPPENING', 'https://www.youtube.com/channel/UCGqkiga9ZQX8AhTTs8oyh9Q', '444444'],
-			['MA - 1AJ', 'ma' ,'Artist\nthe person no one knows', 'https://twitter.com/1aj_ma', '444444'],
-			['Sar', 'sar' ,'Artist\nsar. only.', 'https://www.twitter.com/KalsperSar', '444444'],
-			/*['-', '' ,'', '', '444444'],*/
-			['Tan', 'tan' ,'Artist, Animator\nIt aint easy being cheesy', 'https://twitter.com/TanDoesStuff', '444444'],
-			['Trikunari', 'triku' ,'Artist', 'https://twitter.com/Trikunari', '444444'],
-			['Anakim', 'anakim' ,'Musician\ncw_amen04 170', 'https://www.youtube.com/@Anakim2', '444444'],
-			['ROCKY', 'rocky' ,'Musician\n:neutral_face:', 'https://www.youtube.com/@rocky4772', '444444'],
-			['Rai', 'rai' ,'Voice Acting', 'https://twitter.com/RaiGuyyy', '444444'],
-			['TonnoBuono', 'tuna' ,'Coding\nHow to press WASD', 'https://www.youtube.com/channel/UCaDJOerpCAIT7uUP28OKoZQ', '444444'],
-			['YaBoiJustin', 'justin' ,'Events Helper\nits me awesome', 'https://twitter.com/YaBoiJustinGG', '444444'],
-			['HarryLTS', 'harry' ,'Charter\ntails.exe for life', 'https://twitter.com/harry_lts', '444444'],
-			['Xarion', 'xar' ,'Charter\nplay vs jeremy NOW', 'https://twitter.com/Xar1on', '444444'],
-			[''],
-			['Special Thanks'],
-			['The rest of the team', 'team', 'Thanks to whoever didnt get their work featured in the demo', '', '444444'],
-			['Sakurnyaw', 'saku', "Eggy's Icon", 'https://twitter.com/Sakurnyaw', '444444'],
-			['DiogoTV', 'diogo', 'Coding advice', 'https://twitter.com/DiogoTVV', '444444'],
-			['Unholywanderer04', 'unholy' ,'Combos Lua Script', 'https://gamebanana.com/members/1908754', '444444'],
-			['BeastlyGhost', 'ghost', "Original idea for prepare sprite (from their engine Funkin' Feather)", 'https://twitter.com/BeastlyGabi', '444444'],
-			[''],
-			['Psych Engine Team'],
-			['Shadow Mario',		'shadowmario',		'Main Programmer of Psych Engine',								'https://twitter.com/Shadow_Mario_',	'444444'],
-			['RiverOaken',			'river',			'Main Artist/Animator of Psych Engine',							'https://twitter.com/RiverOaken',		'B42F71'],
-			['shubs',				'shubs',			'Additional Programmer of Psych Engine',						'https://twitter.com/yoshubs',			'5E99DF'],
-			[''],
-			['Former Engine Members'],
-			['bb-panzu',			'bb',				'Ex-Programmer of Psych Engine',								'https://twitter.com/bbsub3',			'3E813A'],
-			[''],
-			['Engine Contributors'],
-			['iFlicky',				'flicky',			'Composer of Psync and Tea Time\nMade the Dialogue Sounds',		'https://twitter.com/flicky_i',			'9E29CF'],
-			['SqirraRNG',			'sqirra',			'Crash Handler and Base code for\nChart Editor\'s Waveform',	'https://twitter.com/gedehari',			'E1843A'],
-			['EliteMasterEric',		'mastereric',		'Runtime Shaders support',										'https://twitter.com/EliteMasterEric',	'FFBD40'],
-			['PolybiusProxy',		'proxy',			'.MP4 Video Loader Library (hxCodec)',							'https://twitter.com/polybiusproxy',	'DCD294'],
-			['KadeDev',				'kade',				'Fixed some cool stuff on Chart Editor\nand other PRs',			'https://twitter.com/kade0912',			'64A250'],
-			['Keoiki',				'keoiki',			'Note Splash Animations',										'https://twitter.com/Keoiki_',			'D2D2D2'],
-			['Nebula the Zorua',	'nebula',			'LUA JIT Fork and some Lua reworks',							'https://twitter.com/Nebula_Zorua',		'7D40B2'],
-			['Smokey',				'smokey',			'Sprite Atlas Support',											'https://twitter.com/Smokey_5_',		'483D92'],
-			[''],
-			["Funkin' Crew"],
-			['ninjamuffin99',		'ninjamuffin99',	"Programmer of Friday Night Funkin'",							'https://twitter.com/ninja_muffin99',	'CF2D2D'],
-			['PhantomArcade',		'phantomarcade',	"Animator of Friday Night Funkin'",								'https://twitter.com/PhantomArcade3K',	'FADC45'],
-			['evilsk8r',			'evilsk8r',			"Artist of Friday Night Funkin'",								'https://twitter.com/evilsk8r',			'5ABD4B'],
-			['kawaisprite',			'kawaisprite',		"Composer of Friday Night Funkin'",								'https://twitter.com/kawaisprite',		'378FC7']
-		];
 		
 		for(i in pisspoop){
 			creditsStuff.push(i);
@@ -270,6 +277,16 @@ class CreditsState extends MusicBeatState
 	function changeSelection(change:Int = 0)
 	{
 		FlxG.sound.play(Paths.sound('scrollMenu'), 0.4);
+
+		if(!unselectableCheck(curSelected))
+			{
+				curIcon += change;
+				if (curIcon < 0)
+					curIcon = creditsStuff.length - 1;
+				if (curIcon >= creditsStuff.length)
+					curIcon = 0;
+			}
+
 		do {
 			curSelected += change;
 			if (curSelected < 0)
@@ -341,12 +358,8 @@ class CreditsState extends MusicBeatState
 	}
 	#end
 
-	function getCurrentBGColor() {
-		var bgColor:String = creditsStuff[curSelected][4];
-		if(!bgColor.startsWith('0x')) {
-			bgColor = '0xFF' + bgColor;
-		}
-		return Std.parseInt(bgColor);
+	function getCurrentBGColor(?icon:HealthIcon) {
+		return (iconArray[curIcon - 1] != null && creditsStuff[curSelected][0] != "Xarion") ? FlxColor.fromInt(CoolUtil.dominantColor(iconArray[curIcon - 1])) : FlxColor.WHITE;
 	}
 
 	private function unselectableCheck(num:Int):Bool {

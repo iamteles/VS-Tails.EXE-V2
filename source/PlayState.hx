@@ -606,10 +606,10 @@ class PlayState extends MusicBeatState
 				var ground:BGSprite = new BGSprite('stages/angel/ground', -600, -200, 1, 1);
 				add(ground);
 
-				var upper:BGSprite = new BGSprite('stages/angel/up', -600, -200, 1.2, 1.2);
+				var upper:BGSprite = new BGSprite('stages/angel/up', -700, 40, 1.2, 1.2);
 				add(upper);
 
-				var weed:BGSprite = new BGSprite('stages/angel/weed', -600, -200, 1.3, 1.3);
+				var weed:BGSprite = new BGSprite('stages/angel/weed', -750, -150, 1.3, 1.3);
 				add(weed);
 
 			case 'stage': //Week 1
@@ -998,13 +998,15 @@ class PlayState extends MusicBeatState
 			SONG.gfVersion = gfVersion; //Fix for the Chart Editor
 		}
 
-		if (!stageData.hide_girlfriend)
+		gf = new Character(0, 0, gfVersion);
+		startCharacterPos(gf);
+		gf.scrollFactor.set(0.95, 0.95);
+		gfGroup.add(gf);
+		startCharacterLua(gf.curCharacter);
+
+		if (stageData.hide_girlfriend)
 		{
-			gf = new Character(0, 0, gfVersion);
-			startCharacterPos(gf);
-			gf.scrollFactor.set(0.95, 0.95);
-			gfGroup.add(gf);
-			startCharacterLua(gf.curCharacter);
+			gf.alpha = 0; // OK EXPLANATION TIME. basically when you turn gf off in the json the camera breaks on intro
 		}
 
 		dad = new Character(0, 0, SONG.player2);
@@ -1043,7 +1045,7 @@ class PlayState extends MusicBeatState
 				boyfriend.visible = false; // because it was null object referencing when upper
 		}
 
-		comboPopup = new NoteComboPopup(boyfriend.x - 200, boyfriend.y - 50);
+		comboPopup = new NoteComboPopup(boyfriend.x - 450, boyfriend.y - 50);
 		add(comboPopup);
 
 		var file:String = Paths.json(songName + '/dialogue'); //Checks for json/Psych Engine dialogue
@@ -2514,7 +2516,7 @@ class PlayState extends MusicBeatState
 	public function updateScore(miss:Bool = false)
 	{
 		scoreTxt.text = 'Score: ' + songScore
-		+ ' • Accuracy: ' + ratingName
+		+ ' • Grade: ' + ratingName
 		+ (ratingName != '?' ? ' (${Highscore.floorDecimal(ratingPercent * 100, 2)}%)' : '')
 		+ ' • Misses: ' + songMisses;
 
@@ -4269,11 +4271,13 @@ class PlayState extends MusicBeatState
 			}
 			playbackRate = 1;
 
+			/*
 			if (chartingMode)
 			{
 				openChartEditor();
 				return;
 			}
+			*/
 
 			if (isStoryMode)
 			{
@@ -4354,8 +4358,13 @@ class PlayState extends MusicBeatState
 				if(FlxTransitionableState.skipNextTransIn) {
 					CustomFadeTransition.nextCamera = null;
 				}
-				MusicBeatState.switchState(new FreeplayState());
-				FlxG.sound.playMusic(Paths.music('freakyMenu'));
+				if(curSong.toLowerCase() == 'darkness')
+					MusicBeatState.switchState(new ComingSoonScreen());
+				else {
+					MusicBeatState.switchState(new FreeplayState());
+					FlxG.sound.playMusic(Paths.music('freakyMenu'));
+				}
+
 				changedDifficulty = false;
 			}
 			transitioning = true;
@@ -5325,7 +5334,7 @@ class PlayState extends MusicBeatState
 		{
 			if (burningSwitch)
 			{
-				// startBurning();
+				startBurning();
 				if(!ClientPrefs.lowQuality)
 				{
 					remove(fore);
@@ -5337,7 +5346,7 @@ class PlayState extends MusicBeatState
 			}
 			else if (!burningSwitch)
 			{
-				// startBurning();
+				startBurning();
 				if(!ClientPrefs.lowQuality)
 				{
 					add(fore);
