@@ -5518,6 +5518,7 @@ class PlayState extends MusicBeatState
 				{
 					case 896:
 						camIntro.flash(FlxColor.WHITE, 0.7);
+						triggerEventNote('Change Character', 'dad', 'eggy2');
 						egg.alpha = 1;
 				}
 			case 'chasing':
