@@ -53,6 +53,7 @@ class Note extends FlxSprite
 
 	public var animSuffix:String = '';
 	public var gfNote:Bool = false;
+	public var eggNote:Bool = false;
 	public var earlyHitMult:Float = 0.5;
 	public var lateHitMult:Float = 1;
 	public var lowPriority:Bool = false;
@@ -152,6 +153,8 @@ class Note extends FlxSprite
 				case 'No Animation':
 					noAnimation = true;
 					noMissAnimation = true;
+				case 'eggnote':
+					eggNote = true;
 				case 'GF Sing':
 					gfNote = true;
 			}

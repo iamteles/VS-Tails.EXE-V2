@@ -31,6 +31,7 @@ import flixel.system.FlxSound;
 import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
+import flixel.tweens.misc.ColorTween;
 import flixel.tweens.FlxTween.FlxTweenManager;
 import flixel.ui.FlxBar;
 import flixel.util.FlxCollision;
@@ -86,16 +87,16 @@ class PlayState extends MusicBeatState
 	public static var STRUM_X_MIDDLESCROLL = -278;
 
 	public static var ratingStuff:Array<Dynamic> = [
-		['You Suck!', 0.2], //From 0% to 19%
+		['Chasing', 0.2], //From 0% to 19%
 		['Shit', 0.4], //From 20% to 39%
 		['Bad', 0.5], //From 40% to 49%
-		['Bruh', 0.6], //From 50% to 59%
-		['Meh', 0.69], //From 60% to 68%
+		['Not Good', 0.6], //From 50% to 59%
+		['Fine', 0.69], //From 60% to 68%
 		['Nice', 0.7], //69%
 		['Good', 0.8], //From 70% to 79%
 		['Great', 0.9], //From 80% to 89%
-		['Sick!', 1], //From 90% to 99%
-		['Perfect!!', 1] //The value on this one isn't used actually, since Perfect is always "1"
+		['Outstanding!', 1], //From 90% to 99%
+		['Amazing!!', 1] //The value on this one isn't used actually, since Perfect is always "1"
 	];
 
 	//event variables
@@ -157,6 +158,8 @@ class PlayState extends MusicBeatState
 	public var dad:Character = null;
 	public var gf:Character = null;
 	public var boyfriend:Boyfriend = null;
+
+	public var egg:Character = null;
 
 	public var notes:FlxTypedGroup<Note>;
 	public var unspawnNotes:Array<Note> = [];
@@ -1009,6 +1012,13 @@ class PlayState extends MusicBeatState
 			gf.alpha = 0; // OK EXPLANATION TIME. basically when you turn gf off in the json the camera breaks on intro
 		}
 
+		if(SONG.song.toLowerCase() == 'hatch')
+		{
+			egg = new Character(-300, 100, "origin eggman");
+			egg.alpha = 0;
+			add(egg);
+		}
+
 		dad = new Character(0, 0, SONG.player2);
 		startCharacterPos(dad, true);
 		dadGroup.add(dad);
@@ -1073,7 +1083,7 @@ class PlayState extends MusicBeatState
 
 		var showTime:Bool = (ClientPrefs.timeBarType != 'Disabled');
 		timeTxt = new FlxText(STRUM_X + (FlxG.width / 2) - 248, 19, 400, "", 32);
-		timeTxt.setFormat(Paths.font("hud.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		timeTxt.setFormat(Paths.font("hud.ttf"), 32, FlxColor.fromRGB(dad.healthColorArray[0], dad.healthColorArray[1], dad.healthColorArray[2]), CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		timeTxt.scrollFactor.set();
 		timeTxt.alpha = 0;
 		timeTxt.borderSize = 2;
@@ -1109,7 +1119,7 @@ class PlayState extends MusicBeatState
 		timeBarBG.sprTracker = timeBar;
 
 		cloneTimeTxt = new FlxText(STRUM_X + (FlxG.width / 2) - 248, 19, 400, "", 32);
-		cloneTimeTxt.setFormat(Paths.font("hud.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		cloneTimeTxt.setFormat(Paths.font("hud.ttf"), 32, FlxColor.fromRGB(dad.healthColorArray[0], dad.healthColorArray[1], dad.healthColorArray[2]), CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		cloneTimeTxt.scrollFactor.set();
 		cloneTimeTxt.borderSize = 2;
 		cloneTimeTxt.visible = false;
@@ -1200,14 +1210,14 @@ class PlayState extends MusicBeatState
 		reloadHealthBarColors();
 
 		scoreTxt = new FlxText(0, healthBarBG.y + 36, FlxG.width, "", 20);
-		scoreTxt.setFormat(Paths.font("hud.ttf"), 20, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		scoreTxt.setFormat(Paths.font("hud.ttf"), 20, FlxColor.fromRGB(dad.healthColorArray[0], dad.healthColorArray[1], dad.healthColorArray[2]), CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		scoreTxt.scrollFactor.set();
 		scoreTxt.borderSize = 1.25;
 		scoreTxt.visible = !ClientPrefs.hideHud;
 		add(scoreTxt);
 
 		botplayTxt = new FlxText(400, timeBarBG.y + 55, FlxG.width - 800, "BOTPLAY", 32);
-		botplayTxt.setFormat(Paths.font("hud.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		botplayTxt.setFormat(Paths.font("hud.ttf"), 32, FlxColor.fromRGB(dad.healthColorArray[0], dad.healthColorArray[1], dad.healthColorArray[2]), CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		botplayTxt.scrollFactor.set();
 		botplayTxt.borderSize = 1.25;
 		botplayTxt.visible = cpuControlled;
@@ -2336,6 +2346,10 @@ class PlayState extends MusicBeatState
 				{
 					dad.dance();
 				}
+				if (egg != null && tmr.loopsLeft % egg.danceEveryNumBeats == 0 && egg.animation.curAnim != null && !egg.animation.curAnim.name.startsWith('sing') && !egg.stunned)
+				{
+					egg.dance();
+				}
 
 				var introAssets:Map<String, Array<String>> = new Map<String, Array<String>>();
 				introAssets.set('default', ['ready', 'set', 'go', 'prepare']);
@@ -2518,8 +2532,7 @@ class PlayState extends MusicBeatState
 		scoreTxt.text = 'Score: ' + songScore
 		+ ' • Grade: ' + ratingName
 		+ (ratingName != '?' ? ' (${Highscore.floorDecimal(ratingPercent * 100, 2)}%)' : '')
-		+ ' • Misses: ' + songMisses;
-
+		+ ' • Combo Breaks: ' + songMisses;
 
 		if(ClientPrefs.scoreZoom && !miss && !cpuControlled)
 		{
@@ -2533,6 +2546,10 @@ class PlayState extends MusicBeatState
 					scoreTxtTween = null;
 				}
 			});
+
+			/*
+
+			*/
 		}
 		callOnLuas('onUpdateScore', [miss]);
 	}
@@ -3325,10 +3342,9 @@ class PlayState extends MusicBeatState
 		}
 
 
-
 		if(!inCutscene) {
-			var lerpVal:Float = CoolUtil.boundTo(elapsed * 2.4 * cameraSpeed * playbackRate, 0, 1);
-			camFollowPos.setPosition(FlxMath.lerp(camFollowPos.x, camFollow.x + camDisplaceX, lerpVal), FlxMath.lerp(camFollowPos.y, camFollow.y + camDisplaceY, lerpVal));
+			var lerpVal:Float = 0.04;//CoolUtil.boundTo(elapsed * 2.4 * cameraSpeed * playbackRate, 0, 1);
+			camFollowPos.setPosition(CoolUtil.coolLerp(camFollowPos.x, camFollow.x + camDisplaceX, lerpVal), CoolUtil.coolLerp(camFollowPos.y, camFollow.y + camDisplaceY, lerpVal));
 			if(!startingSong && !endingSong && boyfriend.animation.curAnim != null && boyfriend.animation.curAnim.name.startsWith('idle')) {
 				boyfriendIdleTime += elapsed;
 				if(boyfriendIdleTime >= 0.15) { // Kind of a mercy thing for making the achievement easier to get as it's apparently frustrating to some playerss
@@ -4960,6 +4976,9 @@ class PlayState extends MusicBeatState
 			if(note.gfNote) {
 				char = gf;
 			}
+			else if(note.eggNote) {
+				char = egg;
+			}
 
 			if(char != null)
 			{
@@ -5067,6 +5086,7 @@ class PlayState extends MusicBeatState
 						gf.heyTimer = 0.6;
 					}
 				}
+
 			}
 
 			if(cpuControlled) {
@@ -5498,6 +5518,7 @@ class PlayState extends MusicBeatState
 				{
 					case 896:
 						camIntro.flash(FlxColor.WHITE, 0.7);
+						egg.alpha = 1;
 				}
 			case 'chasing':
 				// there were pidgeons making out while i coded this :troll: -TonnoBuono
@@ -5815,6 +5836,11 @@ class PlayState extends MusicBeatState
 		if (curBeat % dad.danceEveryNumBeats == 0 && dad.animation.curAnim != null && !dad.animation.curAnim.name.startsWith('sing') && !dad.stunned)
 		{
 			dad.dance();
+		}
+
+		if (egg != null && curBeat % egg.danceEveryNumBeats == 0 && egg.animation.curAnim != null && !egg.animation.curAnim.name.startsWith('sing') && !egg.stunned)
+		{
+			egg.dance();
 		}
 
 

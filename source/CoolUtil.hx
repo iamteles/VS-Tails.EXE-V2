@@ -140,16 +140,18 @@ class CoolUtil
 		#end
 	}
 
-	// CODE BY TR1NGLE -- not used anywhere thats not the menu lmao
+	// CODE BY TR1NGLE -- not used anywhere thats not the menu lmao  (lies)
 	public static function camLerpShit(a:Float):Float
 	{
 		return FlxG.elapsed / 0.016666666666666666 * a;
+		
 	}
 	public static function coolLerp(a:Float, b:Float, c:Float):Float
 	{
 		return a + CoolUtil.camLerpShit(c) * (b - a);
 	}
-	public static function smoothColorChange(from:FlxColor, to:FlxColor, speed:Float = 0.045):FlxColor
+
+	public static function smoothColorChange(from:FlxColor, to:FlxColor, ?speed:Float = 0.045):FlxColor
 	{
 
 		var result:FlxColor = FlxColor.fromRGBFloat
