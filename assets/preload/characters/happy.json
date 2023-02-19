@@ -1,69 +1,69 @@
 {
 	"animations": [
 		{
+			"loop": false,
 			"offsets": [
 				0,
 				0
 			],
-			"indices": [],
-			"fps": 24,
 			"anim": "idle",
-			"loop": false,
-			"name": "Tails IDLE"
+			"fps": 24,
+			"name": "Tails IDLE",
+			"indices": []
 		},
 		{
+			"loop": false,
 			"offsets": [
 				136,
 				-12
 			],
-			"indices": [],
-			"fps": 24,
 			"anim": "singLEFT",
-			"loop": false,
-			"name": "Tails LEFT"
+			"fps": 24,
+			"name": "Tails LEFT",
+			"indices": []
 		},
 		{
+			"loop": false,
 			"offsets": [
 				26,
 				-47
 			],
-			"indices": [],
-			"fps": 24,
 			"anim": "singDOWN",
-			"loop": false,
-			"name": "Tails DOWN"
+			"fps": 24,
+			"name": "Tails DOWN",
+			"indices": []
 		},
 		{
+			"loop": false,
 			"offsets": [
 				19,
 				41
 			],
-			"indices": [],
-			"fps": 24,
 			"anim": "singUP",
-			"loop": false,
-			"name": "Tails UP"
+			"fps": 24,
+			"name": "Tails UP",
+			"indices": []
 		},
 		{
+			"loop": false,
 			"offsets": [
 				-49,
 				-17
 			],
-			"indices": [],
-			"fps": 24,
 			"anim": "singRIGHT",
-			"loop": false,
-			"name": "Tails RIGHT"
+			"fps": 24,
+			"name": "Tails RIGHT",
+			"indices": []
 		}
 	],
 	"no_antialiasing": false,
 	"image": "characters/old/happe",
 	"position": [
-		30,
-		320
+		-190,
+		310
 	],
 	"healthicon": "eggy",
-	"flip_x": false,
+	"flip_x": true,
 	"healthbar_colors": [
 		255,
 		255,

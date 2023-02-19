@@ -60,6 +60,7 @@ class GraphicsSettingsSubState extends BaseOptionsMenu
 			true); //Default value
 		option.onChange = onChangeShaders;
 		addOption(option);
+		
 
 		var option:Option = new Option('Bloom', //Name
 			'If unchecked, disables bloom.\nIt\'s a visual effect. If shaders are disabled, same will happen to this.', //Description

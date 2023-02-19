@@ -531,6 +531,7 @@ class PlayState extends MusicBeatState
 				girlfriend: [400, 130],
 				opponent: [100, 100],
 				hide_girlfriend: false,
+				hide_opponent: false,
 
 				camera_boyfriend: [0, 0],
 				camera_opponent: [0, 0],
@@ -1007,10 +1008,7 @@ class PlayState extends MusicBeatState
 		gfGroup.add(gf);
 		startCharacterLua(gf.curCharacter);
 
-		if (stageData.hide_girlfriend)
-		{
-			gf.alpha = 0; // OK EXPLANATION TIME. basically when you turn gf off in the json the camera breaks on intro
-		}
+
 
 		if(SONG.song.toLowerCase() == 'hatch')
 		{
@@ -1028,6 +1026,15 @@ class PlayState extends MusicBeatState
 		startCharacterPos(boyfriend);
 		boyfriendGroup.add(boyfriend);
 		startCharacterLua(boyfriend.curCharacter);
+
+		if (stageData.hide_girlfriend)
+		{
+			gf.alpha = 0; // OK EXPLANATION TIME. basically when you turn gf off in the json the camera breaks on intro
+		}
+		if (stageData.hide_opponent)
+		{
+			dad.alpha = 0;
+		}
 
 		var camPos:FlxPoint = new FlxPoint(girlfriendCameraOffset[0], girlfriendCameraOffset[1]);
 		if(gf != null)
