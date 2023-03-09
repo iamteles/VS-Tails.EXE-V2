@@ -254,8 +254,11 @@ class TitleState extends MusicBeatState
 		// bg.updateHitbox();
 		add(bg);
 		
-		// new flixel-addons | backdrop = new FlxBackdrop(Paths.image('title/grid'), XY, 0, 0);
-		backdrop = new FlxBackdrop(Paths.image('title/grid'), 1, 1, true, true, 1, 1);
+		#if (flixel > "5.0.0")
+		backdrop = new FlxBackdrop(Paths.image("title/grid"), XY, 0, 0);
+		#else
+		backdrop = new FlxBackdrop(Paths.image("title/grid"), 8, 8, true, true, 1, 1);
+		#end
 		backdrop.velocity.set(300, 0);
 		backdrop.screenCenter(X);
 		backdrop.alpha = (32 / 255);

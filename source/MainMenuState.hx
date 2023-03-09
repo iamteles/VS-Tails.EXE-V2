@@ -69,8 +69,11 @@ class MainMenuState extends MusicBeatState
 		persistentUpdate = persistentDraw = true;
 
 		var backdrop:FlxBackdrop;
-		// new flixel-addons | backdrop = new FlxBackdrop(Paths.image("menustuff/grid", 'sadfox'), XY, 0, 0);
+		#if (flixel > "5.0.0")
+		backdrop = new FlxBackdrop(Paths.image("menustuff/grid", 'sadfox'), XY, 0, 0);
+		#else
 		backdrop = new FlxBackdrop(Paths.image("menustuff/grid", 'sadfox'), 8, 8, true, true, 1, 1);
+		#end
         backdrop.velocity.set(FlxG.random.bool(50) ? 90 : -90, FlxG.random.bool(50) ? 90 : -90);
         backdrop.screenCenter();
         backdrop.alpha = 0.4;

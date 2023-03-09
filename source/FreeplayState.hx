@@ -102,9 +102,11 @@ class FreeplayState extends MusicBeatState
 				addSong(songArray[0], 0, songArray[1], Std.parseInt(songArray[2]));
 			}
 		}*/
-		
-		// new flixel-addons | bg = new FlxBackdrop(Paths.image("menustuff/greyd", 'sadfox'), XY, 0, 0); // flixel addons recent
+		#if (flixel > "5.0.0")
+		bg = new FlxBackdrop(Paths.image("menustuff/greyd", 'sadfox'), XY, 0, 0);
+		#else
 		bg = new FlxBackdrop(Paths.image("menustuff/greyd", 'sadfox'), 8, 8, true, true, 1, 1);
+		#end
         bg.velocity.set(FlxG.random.bool(50) ? 90 : -90, FlxG.random.bool(50) ? 90 : -90);
        	bg.screenCenter();
         bg.alpha = 0.4;

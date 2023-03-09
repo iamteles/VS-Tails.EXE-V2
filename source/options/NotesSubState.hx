@@ -47,8 +47,11 @@ class NotesSubState extends MusicBeatSubstate
 		super();
 		
 		var bg:FlxBackdrop;
-		// new flixel-addons | bg = new FlxBackdrop(Paths.image("menustuff/greyd", 'sadfox'), XY, 0, 0);
+		#if (flixel > "5.0.0")
+		bg = new FlxBackdrop(Paths.image("menustuff/greyd", 'sadfox'), XY, 0, 0);
+		#else
 		bg = new FlxBackdrop(Paths.image("menustuff/greyd", 'sadfox'), 8, 8, true, true, 1, 1);
+		#end
         bg.velocity.set(FlxG.random.bool(50) ? 90 : -90, FlxG.random.bool(50) ? 90 : -90);
 		bg.screenCenter();
         //bg.alpha = 0.4;
