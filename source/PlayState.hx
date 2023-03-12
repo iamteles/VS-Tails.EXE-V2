@@ -3307,11 +3307,9 @@ class PlayState extends MusicBeatState
 			{
 
 				case 'singLEFT':
-					//FlxTween.tween(camGame, {angle: -1}, 0.8, {ease: FlxEase.elasticOut});
 					camDisplaceX = - cameraMoveItensity;
 					camDisplaceY = 0;
 				case 'singRIGHT':
-					//FlxTween.tween(camGame, {angle: 1}, 0.8, {ease: FlxEase.elasticOut});
 					camDisplaceX = cameraMoveItensity;
 					camDisplaceY = 0;
 				case 'singUP':
@@ -3329,11 +3327,9 @@ class PlayState extends MusicBeatState
 			switch (dad.animation.curAnim.name)
 			{
 				case 'singLEFT':
-					//FlxTween.tween(camGame, {angle: -1}, 0.8, {ease: FlxEase.elasticOut});
 					camDisplaceX = - cameraMoveItensity;
 					camDisplaceY = 0;
 				case 'singRIGHT':
-					//FlxTween.tween(camGame, {angle: 1}, 0.8, {ease: FlxEase.elasticOut});
 					camDisplaceX = cameraMoveItensity;
 					camDisplaceY = 0;
 				case 'singUP':
