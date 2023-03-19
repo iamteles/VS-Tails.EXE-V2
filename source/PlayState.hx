@@ -700,7 +700,7 @@ class PlayState extends MusicBeatState
 						lightz.active = false;
 
 						// cutscene stuff
-						animSky = new FlxSprite(-300, -100).loadGraphic(Paths.image('cutscenes/chasing/redSky', 'sadfox'));
+						animSky = new FlxSprite(-300, -100).loadGraphic(Paths.image('cutscenes/chasing/blueSky', 'sadfox'));
 						animSky.setGraphicSize(Std.int(animSky.width * 1.2));
 						animSky.updateHitbox();
 						animSky.y = -150;
@@ -710,10 +710,10 @@ class PlayState extends MusicBeatState
 						animSky.visible = false;
 						add(animSky);
 
-						animStuff = new FlxSprite(-3100, 0).loadGraphic(Paths.image('cutscenes/chasing/bgStuff', 'sadfox'));
-						animStuff.setGraphicSize(Std.int(animStuff.width * 4));
+						animStuff = new FlxSprite(-3100, 0).loadGraphic(Paths.image('cutscenes/chasing/bgGreen', 'sadfox'));
+						animStuff.setGraphicSize(Std.int(animStuff.width * 5));
 						animStuff.updateHitbox();
-						animStuff.y = -600;
+						animStuff.y = -900;
 						animStuff.antialiasing = false;
 						animStuff.cameras = [camOther];
 						// animStuff.screenCenter(Y);
@@ -770,7 +770,7 @@ class PlayState extends MusicBeatState
 						brakParticle.alpha = 0.9;
 						add(brakParticle);
 
-						animTerrain = new FlxSprite(-3100, 0).loadGraphic(Paths.image('cutscenes/chasing/bgTerrain', 'sadfox'));
+						animTerrain = new FlxSprite(-3100, 0).loadGraphic(Paths.image('cutscenes/chasing/bgGrass', 'sadfox'));
 						animTerrain.setGraphicSize(Std.int(animTerrain.width * 4));
 						animTerrain.updateHitbox();
 						animTerrain.y = -600;
