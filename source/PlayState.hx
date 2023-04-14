@@ -1003,6 +1003,11 @@ class PlayState extends MusicBeatState
 			egg = new Character(-300, 100, "origin eggman");
 			egg.alpha = 0;
 			add(egg);
+			gf = new Character(0, 0, gfVersion);
+			startCharacterPos(gf);
+			gf.scrollFactor.set(0.95, 0.95);
+			gfGroup.add(gf);
+			startCharacterLua(gf.curCharacter);
 		}
 
 		dad = new Character(0, 0, SONG.player2);
