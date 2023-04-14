@@ -184,6 +184,7 @@ class TitleState extends MusicBeatState
 		MusicBeatState.switchState(new ChartingState());
 		#else
 		if (!FlxG.save.data.watchedSegaIntroShitSonic){
+		if (!ClientPrefs.segaSonic){
 			MusicBeatState.switchState(new SonicTitleState());
 		} else if(FlxG.save.data.flashing == null && !FlashingState.leftState) {
 			FlxTransitionableState.skipNextTransIn = true;

@@ -33,6 +33,8 @@ class SonicTitleState extends MusicBeatState
 	var logo1:FlxSprite;
 	var sonec:FlxSprite;
 	var code:FlxSprite;
+
+	var sonic2Music:FlxSound;
 	
 	override public function create():Void
 	{
@@ -162,7 +164,8 @@ class SonicTitleState extends MusicBeatState
 
 	function shitAppears():Void
 	{
-		FlxG.sound.playMusic(Paths.music('sonic2menu'));
+		sonic2Music = new FlxSound().loadEmbedded(Paths.music("sonic2menu"));
+		sonic2Music.play();
 		starsAppear();
 		
 		FlxTween.tween(logo0, {alpha: 1}, 0.5, {ease: FlxEase.linear, startDelay: 1.34});
@@ -250,8 +253,9 @@ class SonicTitleState extends MusicBeatState
 				tmr.reset(1);
 			case 3:
 				coglionata++;
-				FlxG.sound.music.stop();
-				FlxG.save.data.watchedSegaIntroShitSonic = true;
+				sonic2Music.stop();
+				ClientPrefs.segaSonic = true;
+				ClientPrefs.saveSettings();
 				FlxTransitionableState.skipNextTransIn = true;
 				FlxTransitionableState.skipNextTransOut = true;
 				MusicBeatState.switchState(new TitleState());
