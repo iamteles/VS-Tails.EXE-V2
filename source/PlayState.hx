@@ -607,8 +607,10 @@ class PlayState extends MusicBeatState
 				var ground:BGSprite = new BGSprite('stages/angel/ground', -600, -200, 1, 1);
 				add(ground);
 
+				var upper:BGSprite = new BGSprite('stages/angel/up', -600, -200, 1.2, 1.2);
 				add(upper);
 
+				var weed:BGSprite = new BGSprite('stages/angel/weed', -600, -200, 1.3, 1.3);
 				add(weed);
 
 			case 'stage': //Week 1
