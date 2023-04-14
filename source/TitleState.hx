@@ -86,6 +86,10 @@ class TitleState extends MusicBeatState
 
 	override public function create():Void
 	{
+		#if debug
+		if (FlxG.save.data.watchedSegaIntroShitSonic) FlxG.save.data.watchedSegaIntroShitSonic = false;
+		#end
+
 		Paths.clearStoredMemory();
 		Paths.clearUnusedMemory();
 
@@ -179,24 +183,22 @@ class TitleState extends MusicBeatState
 		#elseif CHARTING
 		MusicBeatState.switchState(new ChartingState());
 		#else
-		
-		#if desktop
-		if (!DiscordClient.isInitialized)
-		{
-			DiscordClient.initialize();
-			Application.current.onExit.add (function (exitCode) {
-				DiscordClient.shutdown();
-			});
-		}
-		#end
-
-		MusicBeatState.switchState(new TailsState());
-		
-		if(FlxG.save.data.flashing == null && !FlashingState.leftState) {
+		if (!FlxG.save.data.watchedSegaIntroShitSonic){
+			MusicBeatState.switchState(new SonicTitleState());
+		} else if(FlxG.save.data.flashing == null && !FlashingState.leftState) {
 			FlxTransitionableState.skipNextTransIn = true;
 			FlxTransitionableState.skipNextTransOut = true;
-			MusicBeatState.switchState(new TailsState());
+			MusicBeatState.switchState(new FlashingState());
 		} else {
+			#if desktop
+			if (!DiscordClient.isInitialized)
+			{
+				DiscordClient.initialize();
+				Application.current.onExit.add (function (exitCode) {
+					DiscordClient.shutdown();
+				});
+			}
+			#end
 
 			if (initialized)
 				startIntro();
@@ -545,69 +547,88 @@ class TitleState extends MusicBeatState
 			switch (sickBeats)
 			{
 				case 1:
-					//FlxG.sound.music.stop();
 					FlxG.sound.playMusic(Paths.music('freakyMenu'), 0);
 					FlxG.sound.music.fadeIn(4, 0, 0.7);
 				case 2:
-					#if PSYCH_WATERMARKS
-					createCoolText(['Psych Engine by'], 15);
-					#else
-					createCoolText(['ninjamuffin99', 'phantomArcade', 'kawaisprite', 'evilsk8er']);
-					#end
-				// credTextShit.visible = true;
+					createCoolText(['teles']);
+				case 3:
+					addMoreText('Astro_Galaxy');
 				case 4:
-					#if PSYCH_WATERMARKS
-					addMoreText('Shadow Mario', 15);
-					addMoreText('RiverOaken', 15);
-					addMoreText('shubs', 15);
-					#else
-					addMoreText('present');
-					#end
-				// credTextShit.text += '\npresent...';
-				// credTextShit.addText();
+					addMoreText('FenixTheCat');
 				case 5:
-					deleteCoolText();
-				// credTextShit.visible = false;
-				// credTextShit.text = 'In association \nwith';
-				// credTextShit.screenCenter();
+					addMoreText('Cocopuffs');
 				case 6:
-					#if PSYCH_WATERMARKS
-					createCoolText(['Not associated', 'with'], -40);
-					#else
-					createCoolText(['In association', 'with'], -40);
-					#end
+					deleteCoolText();
+					createCoolText(['Crispy', 'Astro_Galaxy', 'FenixTheCat', 'Cocopuffs']);
+				case 7:
+					deleteCoolText();
+					createCoolText(['Crispy', 'Goodiebag', 'FenixTheCat', 'Cocopuffs']);
 				case 8:
-					addMoreText('newgrounds', -40);
-					ngSpr.visible = true;
-				// credTextShit.text += '\nNewgrounds';
+					deleteCoolText();
+					createCoolText(['Crispy', 'Goodiebag', 'Deflio', 'Cocopuffs']);
 				case 9:
 					deleteCoolText();
-					ngSpr.visible = false;
-				// credTextShit.visible = false;
-
-				// credTextShit.text = 'Shoutouts Tom Fulp';
-				// credTextShit.screenCenter();
+					createCoolText(['Crispy', 'Goodiebag', 'Deflio', 'MA - 1AJ']);
 				case 10:
-					createCoolText([curWacky[0]]);
-				// credTextShit.visible = true;
+					deleteCoolText();
+					createCoolText(['Sar', 'Goodiebag', 'Deflio', 'MA - 1AJ']);
+				case 11:
+					deleteCoolText();
+					createCoolText(['Sar', 'Tan', 'Deflio', 'MA - 1AJ']);
 				case 12:
-					addMoreText(curWacky[1]);
-				// credTextShit.text += '\nlmao';
+					deleteCoolText();
+					createCoolText(['Sar', 'Tan', 'Trikunari', 'MA - 1AJ']);
 				case 13:
 					deleteCoolText();
-				// credTextShit.visible = false;
-				// credTextShit.text = "Friday";
-				// credTextShit.screenCenter();
+					createCoolText(['Sar', 'Tan', 'Trikunari', 'Anakim']);
 				case 14:
-					addMoreText('Friday');
-				// credTextShit.visible = true;
+					deleteCoolText();
+					createCoolText(['Rocky', 'Tan', 'Trikunari', 'Anakim']);
 				case 15:
-					addMoreText('Night');
-				// credTextShit.text += '\nNight';
+					deleteCoolText();
+					createCoolText(['Rocky', 'Rai', 'Trikunari', 'Anakim']);
 				case 16:
-					addMoreText('Funkin'); // credTextShit.text += '\nFunkin';
-
+					deleteCoolText();
+					createCoolText(['Rocky', 'Rai', 'TonnoBuono', 'Anakim']);
 				case 17:
+					deleteCoolText();
+					createCoolText(['Rocky', 'Rai', 'TonnoBuono', 'Yaboijustin']);
+				case 18:
+					deleteCoolText();
+					createCoolText(['HarryLTS', 'Rai', 'TonnoBuono', 'Yaboijustin']);
+				case 19:
+					deleteCoolText();
+					createCoolText(['HarryLTS', 'Xarion', 'TonnoBuono', 'Yaboijustin']);
+				case 20:
+					deleteCoolText();
+					createCoolText(['HarryLTS', 'Xarion', 'The rest of Team', 'Yaboijustin']);
+				case 21:
+					deleteCoolText();
+					createCoolText(['HarryLTS', 'Xarion', 'The rest of Team', 'and the Contributors']);
+				case 22:
+					deleteCoolText();
+				case 23:
+					createCoolText(['FINALLY'], -40);
+				case 24:
+					addMoreText('FUCKING', -40);
+				case 25:
+					addMoreText('Present', -40);
+				case 26:
+					deleteCoolText();
+				case 27:
+					createCoolText(['The return', 'of'], -40);
+				case 28:
+					addMoreText('the Worst Exe Mod', -40);
+				case 29:
+					deleteCoolText();
+				case 30:
+					addMoreText('FNF');
+				case 31:
+					addMoreText('VS Tails.EXE');
+				case 32:
+					addMoreText('V2 Demo');
+
+				case 33:
 					skipIntro();
 			}
 		}

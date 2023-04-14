@@ -9,6 +9,7 @@ class Shaders
 	// i totally didnt steal it from Tr1Ngle Engine :troll:
 	
 	public static var chromaticAberration:ShaderFilter = new ShaderFilter(new ChromaticAberration());
+	public static var vcrDistortLol:ShaderFilter = new ShaderFilter(new VCRDistortion());
 
 	public static function setChrome(?chromeOffset:Float):Void
 	{

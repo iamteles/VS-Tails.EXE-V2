@@ -87,16 +87,11 @@ class PlayState extends MusicBeatState
 	public static var STRUM_X_MIDDLESCROLL = -278;
 
 	public static var ratingStuff:Array<Dynamic> = [
-		['Chasing', 0.2], //From 0% to 19%
 		['Shit', 0.4], //From 20% to 39%
 		['Bad', 0.5], //From 40% to 49%
-		['Not Good', 0.6], //From 50% to 59%
-		['Fine', 0.69], //From 60% to 68%
 		['Nice', 0.7], //69%
 		['Good', 0.8], //From 70% to 79%
 		['Great', 0.9], //From 80% to 89%
-		['Outstanding!', 1], //From 90% to 99%
-		['Amazing!!', 1] //The value on this one isn't used actually, since Perfect is always "1"
 	];
 
 	//event variables
@@ -228,6 +223,7 @@ class PlayState extends MusicBeatState
 	#if !flash
 	var filters:Array<BitmapFilter> = [];
 	var camfilters:Array<BitmapFilter> = [];
+	var vcrFilters:Array<BitmapFilter> = [];
 	private var shadersLoaded:Bool = false;
 	#end
 
@@ -370,6 +366,7 @@ class PlayState extends MusicBeatState
 	private var leTail:FlxSprite;
 	private var brakParticle:FlxSprite;
 	private var sonicPxl:FlxSprite;
+	private var followTailSprite:Bool = false;
 
 	// note combos
 	var lastMustHit:Bool = false;
@@ -610,10 +607,8 @@ class PlayState extends MusicBeatState
 				var ground:BGSprite = new BGSprite('stages/angel/ground', -600, -200, 1, 1);
 				add(ground);
 
-				var upper:BGSprite = new BGSprite('stages/angel/up', -700, 40, 1.2, 1.2);
 				add(upper);
 
-				var weed:BGSprite = new BGSprite('stages/angel/weed', -750, -150, 1.3, 1.3);
 				add(weed);
 
 			case 'stage': //Week 1
@@ -700,27 +695,25 @@ class PlayState extends MusicBeatState
 						lightz.active = false;
 
 						// cutscene stuff
-						animSky = new FlxSprite(-300, -100).loadGraphic(Paths.image('cutscenes/chasing/blueSky', 'sadfox'));
-						animSky.setGraphicSize(Std.int(animSky.width * 1.2));
+						animSky = new FlxSprite(-300, -100).loadGraphic(Paths.image('cutscenes/chasing/redSky', 'sadfox'));
+						animSky.setGraphicSize(Std.int(animSky.width * 1.3));
 						animSky.updateHitbox();
 						animSky.y = -150;
 						animSky.antialiasing = false;
-						animSky.cameras = [camOther];
-						// animBG.screenCenter(Y);
+						// animSky.cameras = [camHUD];
+						animSky.screenCenter(X);
 						animSky.visible = false;
-						add(animSky);
 
-						animStuff = new FlxSprite(-3100, 0).loadGraphic(Paths.image('cutscenes/chasing/bgGreen', 'sadfox'));
-						animStuff.setGraphicSize(Std.int(animStuff.width * 5));
+						animStuff = new FlxSprite(-3100, 0).loadGraphic(Paths.image('cutscenes/chasing/bgStuff', 'sadfox'));
+						animStuff.setGraphicSize(Std.int(animStuff.width * 4));
 						animStuff.updateHitbox();
-						animStuff.y = -900;
+						animStuff.y = -600;
 						animStuff.antialiasing = false;
-						animStuff.cameras = [camOther];
-						// animStuff.screenCenter(Y);
+						// animStuff.cameras = [camHUD];
+						animStuff.screenCenter(X);
 						animStuff.visible = false;
-						add(animStuff);
 
-						tailsPxl = new FlxSprite(0, 460);
+						tailsPxl = new FlxSprite(2000, 460);
 						tailsPxl.frames = Paths.getSparrowAtlas('cutscenes/chasing/tailsPixel', 'sadfox');
 						tailsPxl.antialiasing = false;
 						tailsPxl.flipX = true;
@@ -732,8 +725,8 @@ class PlayState extends MusicBeatState
 						tailsPxl.animation.play('idle');
 						tailsPxl.setGraphicSize(Std.int(tailsPxl.width * 5));
 						tailsPxl.updateHitbox();
-						tailsPxl.cameras = [camOther];
-						tailsPxl.screenCenter(X);
+						// tailsPxl.cameras = [camHUD];
+						// tailsPxl.screenCenter(X);
 						tailsPxl.visible = false;
 
 						leTail = new FlxSprite(tailsPxl.x + 70, tailsPxl.y + 30);
@@ -744,10 +737,8 @@ class PlayState extends MusicBeatState
 						leTail.animation.addByPrefix('defaultTail','tailDefault', 24, true);
 						leTail.setGraphicSize(Std.int(leTail.width * 5));
 						leTail.updateHitbox();
-						leTail.cameras = [camOther];
+						// leTail.cameras = [camHUD];
 						leTail.visible = false;
-						add(leTail);
-						add(tailsPxl);
 
 						sonicPxl = new FlxSprite(200, tailsPxl.y - 60);
 						sonicPxl.frames = Paths.getSparrowAtlas('cutscenes/chasing/sonicEXEPixel', 'sadfox');
@@ -755,9 +746,8 @@ class PlayState extends MusicBeatState
 						sonicPxl.antialiasing = false;
 						sonicPxl.setGraphicSize(Std.int(sonicPxl.width * 5));
 						sonicPxl.updateHitbox();
-						sonicPxl.cameras = [camOther];
+						// sonicPxl.cameras = [camHUD];
 						sonicPxl.visible = false;
-						add(sonicPxl);
 
 						brakParticle = new FlxSprite(tailsPxl.x - 58, tailsPxl.y - 44);
 						brakParticle.frames = Paths.getSparrowAtlas('cutscenes/chasing/particles', 'sadfox');
@@ -765,20 +755,19 @@ class PlayState extends MusicBeatState
 						brakParticle.antialiasing = false;
 						brakParticle.setGraphicSize(Std.int(brakParticle.width * 4));
 						brakParticle.updateHitbox();
-						brakParticle.cameras = [camOther];
+						// brakParticle.cameras = [camHUD];
 						brakParticle.visible = false;
 						brakParticle.alpha = 0.9;
-						add(brakParticle);
 
-						animTerrain = new FlxSprite(-3100, 0).loadGraphic(Paths.image('cutscenes/chasing/bgGrass', 'sadfox'));
+						animTerrain = new FlxSprite(-3100, 0).loadGraphic(Paths.image('cutscenes/chasing/bgTerrain', 'sadfox'));
 						animTerrain.setGraphicSize(Std.int(animTerrain.width * 4));
 						animTerrain.updateHitbox();
 						animTerrain.y = -600;
 						animTerrain.antialiasing = false;
-						animTerrain.cameras = [camOther];
-						// animTerrain.screenCenter(Y);
+						// animTerrain.cameras = [camHUD];
+						animTerrain.screenCenter(X);
 						animTerrain.visible = false;
-						add(animTerrain);
+						// end lol
 
 						lightz = new FlxSprite(-300, -100).loadGraphic(Paths.image('stages/burningGhz/lightsBurn', 'sadfox'));
 						lightz.setGraphicSize(Std.int(lightz.width * 2));
@@ -849,6 +838,8 @@ class PlayState extends MusicBeatState
 				var blank:FlxSprite = new FlxSprite(-200, -575).makeGraphic(Std.int(FlxG.width * 5), Std.int(FlxG.height * 5), FlxColor.WHITE);
 				blank.scrollFactor.set(0.9, 0.9);
 				add(blank);
+
+				blackSkit.visible = false;
 		}
 
 		if(isPixelStage) {
@@ -867,11 +858,6 @@ class PlayState extends MusicBeatState
 		switch(curStage)
 		{
 			case 'ghz':
-				blackSkit.cameras = [camOther];
-				blackSkit.x = 0;
-				blackSkit.y = 0;
-				add(blackSkit);
-
 				if(!ClientPrefs.lowQuality)
 					add(fore);
 
@@ -885,13 +871,10 @@ class PlayState extends MusicBeatState
 
 					// effects
 					staticazzo0 = new FlxSprite(0,0);
-					staticazzo0.frames = Paths.getSparrowAtlas('delfino/glitchAnim', 'sadfox');
-					staticazzo0.setGraphicSize(FlxG.width, FlxG.height);
-					staticazzo0.updateHitbox();
-					staticazzo0.screenCenter();
-					staticazzo0.animation.addByPrefix('canna','g', 24, false);
-					staticazzo0.animation.play('canna');
+					staticazzo0.makeGraphic(FlxG.width, FlxG.height, FlxColor.RED);
 					staticazzo0.cameras = [camHUD];
+					staticazzo0.screenCenter();
+					staticazzo0.blend = MULTIPLY;
 					staticazzo0.alpha = 0.1;
 					staticazzo0.visible = false;
 					add(staticazzo0);
@@ -916,7 +899,7 @@ class PlayState extends MusicBeatState
 					staticazzo2.animation.addByPrefix('cane','n', 24, true);
 					staticazzo2.animation.play('cane');
 					staticazzo2.cameras = [camHUD];
-					staticazzo2.alpha = 0.3;
+					staticazzo2.alpha = 0.4;
 					staticazzo2.visible = false;
 					add(staticazzo2);
 
@@ -927,6 +910,17 @@ class PlayState extends MusicBeatState
 					add(vg);
 				}
 			case 'burningGhz':
+				staticazzo1 = new FlxSprite(0,0);
+				staticazzo1.frames = Paths.getSparrowAtlas('delfino/STATIC', 'sadfox');
+				staticazzo1.setGraphicSize(FlxG.width, FlxG.height);
+				staticazzo1.updateHitbox();
+				staticazzo1.screenCenter();
+				staticazzo1.animation.addByPrefix('cannella','staticBackground', 24, true);
+				staticazzo1.animation.play('cannella');
+				staticazzo1.cameras = [camOther];
+				staticazzo1.visible = false;
+				add(staticazzo1);
+
 				if(!ClientPrefs.lowQuality)
 				{
 					add(fore);
@@ -1002,15 +996,7 @@ class PlayState extends MusicBeatState
 			SONG.gfVersion = gfVersion; //Fix for the Chart Editor
 		}
 
-		gf = new Character(0, 0, gfVersion);
-		startCharacterPos(gf);
-		gf.scrollFactor.set(0.95, 0.95);
-		gfGroup.add(gf);
-		startCharacterLua(gf.curCharacter);
-
-
-
-		if(SONG.song.toLowerCase() == 'hatch')
+		if (!stageData.hide_girlfriend)
 		{
 			egg = new Character(-300, 100, "origin eggman");
 			egg.alpha = 0;
@@ -1422,9 +1408,15 @@ class PlayState extends MusicBeatState
 					
 				case 'chasing':
 					InOutThingy == 'Special';
+					blackSkit.cameras = [camOther];
+					blackSkit.x = 0;
+					blackSkit.y = 0;
+					add(blackSkit);
+
 					sonecIntro();
 				case 'soic':
 					camHUD.alpha = 0;
+					blackSkit.visible = true;
 					
 					dad.alpha = 0;
 					gf.alpha = 0;
@@ -1442,9 +1434,15 @@ class PlayState extends MusicBeatState
 			{
 				case 'chasing':
 					InOutThingy == 'Special';
+					blackSkit.cameras = [camOther];
+					blackSkit.x = 0;
+					blackSkit.y = 0;
+					add(blackSkit);
+
 					sonecIntro();
 				case 'soic':
 					camHUD.alpha = 0;
+					blackSkit.visible = true;
 					
 					dad.alpha = 0;
 					gf.alpha = 0;
@@ -3123,9 +3121,8 @@ class PlayState extends MusicBeatState
 
 	private var chromOn:Bool = false;
 	private var chromRiser:Bool = false;
+	private var vrcOn:Bool;
 	var ch = 2 / 1000;
-
-	var stupidGuy:Bool = false;
 
 	override public function update(elapsed:Float)
 	{
@@ -3135,15 +3132,12 @@ class PlayState extends MusicBeatState
 		}*/
 		callOnLuas('onUpdate', [elapsed]);
 
-
-
 		if (chromOn)
 		{
 			#if !flash
 			if(!ClientPrefs.lowQuality)
 			{
-				ch = FlxG.random.int(1,5) / 1000;
-				ch = FlxG.random.int(1,5) / 1000;
+				ch = FlxG.random.int(1,10) / 1000;
 				Shaders.setChrome(ch);
 			}
 			#end
@@ -3151,14 +3145,13 @@ class PlayState extends MusicBeatState
 		else
 			Shaders.setChrome(0);
 
-		if (cloneTimeTxt.visible)
-			cloneTimeTxt.text = FlxStringUtil.formatTime(FlxG.random.int(100, 999), false);
-
-		if (stupidGuy && tailsPxl.animation.curAnim.finished)
-		{
-			tailsPxl.animation.play('loopBraking');
-			stupidGuy = false;
+		if (!vrcOn) vcrFilters = [];
+		else{
+			vcrFilters.push(Shaders.vcrDistortLol);
+			vrcOn = false;
 		}
+
+		if (followTailSprite && tailsPxl.visible) triggerEventNote('Camera Follow Pos', Std.string(tailsPxl.x), Std.string(tailsPxl.y - 30));
 
 		switch (curStage)
 		{
@@ -3307,9 +3300,11 @@ class PlayState extends MusicBeatState
 			{
 
 				case 'singLEFT':
+					//FlxTween.tween(camGame, {angle: -1}, 0.8, {ease: FlxEase.elasticOut});
 					camDisplaceX = - cameraMoveItensity;
 					camDisplaceY = 0;
 				case 'singRIGHT':
+					//FlxTween.tween(camGame, {angle: 1}, 0.8, {ease: FlxEase.elasticOut});
 					camDisplaceX = cameraMoveItensity;
 					camDisplaceY = 0;
 				case 'singUP':
@@ -3327,9 +3322,11 @@ class PlayState extends MusicBeatState
 			switch (dad.animation.curAnim.name)
 			{
 				case 'singLEFT':
+					//FlxTween.tween(camGame, {angle: -1}, 0.8, {ease: FlxEase.elasticOut});
 					camDisplaceX = - cameraMoveItensity;
 					camDisplaceY = 0;
 				case 'singRIGHT':
+					//FlxTween.tween(camGame, {angle: 1}, 0.8, {ease: FlxEase.elasticOut});
 					camDisplaceX = cameraMoveItensity;
 					camDisplaceY = 0;
 				case 'singUP':
@@ -3343,6 +3340,7 @@ class PlayState extends MusicBeatState
 					camDisplaceY = 0;
 			}
 		}
+
 
 
 		if(!inCutscene) {
@@ -4290,13 +4288,11 @@ class PlayState extends MusicBeatState
 			}
 			playbackRate = 1;
 
-			/*
 			if (chartingMode)
 			{
 				openChartEditor();
 				return;
 			}
-			*/
 
 			if (isStoryMode)
 			{
@@ -4867,6 +4863,7 @@ class PlayState extends MusicBeatState
 				health -= 1;
 			default:
 				health -= daNote.missHealth * healthLoss;
+				if (SONG.song.toLowerCase() == 'soic') songSpeed += 0.01;
 		}
 		
 		if(instakillOnMiss)
@@ -4957,16 +4954,6 @@ class PlayState extends MusicBeatState
 		} else if(!note.noAnimation) {
 			var altAnim:String = note.animSuffix;
 
-			if (isBurning && health > 0.05)
-			{
-				if (note.isSustainNote)
-					{
-						health -= 0.005;
-					}
-					else
-						health -= 0.025;
-			}
-
 			if (SONG.notes[curSection] != null)
 			{
 				if (SONG.notes[curSection].altAnim && !SONG.notes[curSection].gfSection) {
@@ -4978,9 +4965,6 @@ class PlayState extends MusicBeatState
 			var animToPlay:String = singAnimations[Std.int(Math.abs(note.noteData))] + altAnim;
 			if(note.gfNote) {
 				char = gf;
-			}
-			else if(note.eggNote) {
-				char = egg;
 			}
 
 			if(char != null)
@@ -5089,7 +5073,6 @@ class PlayState extends MusicBeatState
 						gf.heyTimer = 0.6;
 					}
 				}
-
 			}
 
 			if(cpuControlled) {
@@ -5357,7 +5340,7 @@ class PlayState extends MusicBeatState
 		{
 			if (burningSwitch)
 			{
-				startBurning();
+				// startBurning();
 				if(!ClientPrefs.lowQuality)
 				{
 					remove(fore);
@@ -5369,7 +5352,7 @@ class PlayState extends MusicBeatState
 			}
 			else if (!burningSwitch)
 			{
-				startBurning();
+				// startBurning();
 				if(!ClientPrefs.lowQuality)
 				{
 					add(fore);
@@ -5493,6 +5476,25 @@ class PlayState extends MusicBeatState
 			trace("doesnt seem you can do that");
 	}
 
+	function applyVCR(roba:Bool){
+		if (roba){
+			if(!ClientPrefs.lowQuality){
+				camGame.setFilters(vcrFilters);
+				camHUD.setFilters(vcrFilters);
+				vrcOn = true;
+			}
+		}
+		else{
+			if(!ClientPrefs.lowQuality){
+				camGame.setFilters(filters);
+				camHUD.setFilters(camfilters);
+				vrcOn = false;
+			}
+		}
+	}
+
+	var blakkorekt:FlxSprite;
+
 	var lastStepHit:Int = -1;
 	override function stepHit()
 	{
@@ -5505,6 +5507,10 @@ class PlayState extends MusicBeatState
 
 		if(curStep == lastStepHit) {
 			return;
+		}
+
+		if (isBurning){
+			health -= 0.005;
 		}
 
 		switch (SONG.song.toLowerCase())
@@ -5521,8 +5527,6 @@ class PlayState extends MusicBeatState
 				{
 					case 896:
 						camIntro.flash(FlxColor.WHITE, 0.7);
-						triggerEventNote('Change Character', 'dad', 'eggy2');
-						egg.alpha = 1;
 				}
 			case 'chasing':
 				// there were pidgeons making out while i coded this :troll: -TonnoBuono
@@ -5554,19 +5558,35 @@ class PlayState extends MusicBeatState
 					case 352:
 						defaultCamZoom -= 0.1;
 					case 384:
-						staticazzo0.animation.play('canna');
 						staticazzo0.visible = true;
 					case 385:
 						staticazzo0.visible = false;
 					case 400:
 						FlxTween.tween(camGame, {alpha: 0}, Conductor.crochet / 1000, {ease: FlxEase.linear});
 						FlxTween.tween(camHUD, {alpha: 0}, Conductor.crochet / 1000, {ease: FlxEase.linear});
-						FlxTween.tween(camOther, {alpha: 0}, Conductor.crochet / 1000, {ease: FlxEase.linear});
 					case 408:
 						triggerEventNote('Change Character', 'dad', 'tailsEXE');
 						switchToHell(true);
+						blakkorekt = new FlxSprite(-FlxG.width * 2, -FlxG.height * 2).makeGraphic(Std.int(FlxG.width * 5), Std.int(FlxG.height * 5), FlxColor.BLACK);
+						add(blakkorekt);
+						if(!ClientPrefs.lowQuality)
+						{
+							camZooming = false;
+							add(animSky);
+							add(animStuff);
+							add(leTail);
+							add(tailsPxl);
+							add(sonicPxl);
+							add(brakParticle);
+							add(animTerrain);
+							tailsPxl.visible = true;
+							FlxG.camera.zoom += 1;
+							cameraSpeed = 10;
+							followTailSprite = true;
+						}
 					case 412:
-						FlxTween.tween(camOther, {alpha: 1}, Conductor.crochet / 1000, {ease: FlxEase.linear});
+						camGame.alpha = 1;
+						camOther.flash(FlxColor.BLACK, Conductor.crochet / 1000);
 						// animation
 						if(!ClientPrefs.lowQuality)
 						{
@@ -5574,11 +5594,8 @@ class PlayState extends MusicBeatState
 							animTerrain.visible = true;
 							animSky.visible = true;
 							tailsPxl.animation.play('run');
-							tailsPxl.visible = true;
-						
-							FlxTween.tween(animStuff, {x: -200}, Conductor.crochet / 500, {ease: FlxEase.linear});
-							FlxTween.tween(animTerrain, {x: -200}, Conductor.crochet / 500, {ease: FlxEase.linear});
-							FlxTween.tween(animSky, {x: -30}, Conductor.crochet / 500, {ease: FlxEase.linear});
+							
+							FlxTween.tween(tailsPxl, {x: 200}, Conductor.crochet / 500, {ease: FlxEase.linear});
 						}
 					case 420:
 						if(!ClientPrefs.lowQuality)
@@ -5591,11 +5608,12 @@ class PlayState extends MusicBeatState
 							leTail.y = leTail.y + 30;
 							leTail.visible = true;
 							leTail.animation.play('brakTail');
-							stupidGuy = true;
+							tailsPxl.animation.finishCallback = function(whitewhitty:String)
+							{
+								tailsPxl.animation.play('loopBraking');
+							}
 
-							FlxTween.tween(animStuff, {x: -100}, Conductor.crochet / 1000, {ease: FlxEase.expoOut});
-							FlxTween.tween(animTerrain, {x: -100}, Conductor.crochet / 1000, {ease: FlxEase.expoOut});
-							FlxTween.tween(animSky, {x: 0}, Conductor.crochet / 500, {ease: FlxEase.expoOut});
+							FlxTween.tween(tailsPxl, {x: 100}, Conductor.crochet / 1000, {ease: FlxEase.expoOut});
 						}
 					case 425:
 						if(!ClientPrefs.lowQuality)
@@ -5634,17 +5652,22 @@ class PlayState extends MusicBeatState
 							leTail.destroy();
 							sonicPxl.destroy();
 							brakParticle.destroy();
+							followTailSprite = false;
+							triggerEventNote('Camera Follow Pos', '', '');
 						}
 					case 464:
 						FlxTween.tween(camHUD, {alpha: 1}, Conductor.crochet / 200, {ease: FlxEase.linear});
 						// FlxTween.tween(camOther, {alpha: 1}, Conductor.crochet / 200, {ease: FlxEase.linear});
+						camZooming = true;
 						defaultCamZoom = 2;
 						triggerEventNote('Camera Follow Pos', Std.string(boyfriend.getMidpoint().x - dad.getMidpoint().x + 500), '-500');
 					case 480:
 						chromOn = true;
 						FlxG.camera.shake(0.010, 0.1);
 						camHUD.shake(0.008, 0.1);
-						FlxTween.tween(camGame, {alpha: 1}, Conductor.crochet / 1000, {ease: FlxEase.linear});
+						blakkorekt.destroy();
+						camGame.alpha = 1;
+						cameraSpeed = 1;
 					case 484 | 500 | 516 | 532 | 548 | 564 | 580 | 596:
 						chromOn = false;
 					case 496 | 528 | 560:
@@ -5668,11 +5691,14 @@ class PlayState extends MusicBeatState
 						defaultCamZoom = 0.55;
 						camHUD.flash(FlxColor.RED, Conductor.crochet / 1000);
 					case 624:
+						applyVCR(true);
 						staticazzo2.animation.play('cane');
 						staticazzo2.visible = true;
 					case 632 | 640 | 662 | 668 | 768 | 792 | 888 | 896 | 918 | 924 | 1016 | 1024 | 1052:
+						applyVCR(false);
 						staticazzo2.visible = false;
 					case 636 | 660 | 664 | 752 | 784 | 880 | 892 | 916 | 920 | 1008 | 1020 | 1048:
+						applyVCR(true);
 						staticazzo2.visible = true;
 					case 720 | 976 | 1104 | 1136 | 1168 | 1200 | 1232:
 						defaultCamZoom += 0.3;
@@ -5820,6 +5846,7 @@ class PlayState extends MusicBeatState
 
 			filters.push(Shaders.chromaticAberration);
 			camfilters.push(Shaders.chromaticAberration);
+			vcrFilters.push(Shaders.vcrDistortLol);
 		}
 		#end
 
@@ -5840,11 +5867,6 @@ class PlayState extends MusicBeatState
 		if (curBeat % dad.danceEveryNumBeats == 0 && dad.animation.curAnim != null && !dad.animation.curAnim.name.startsWith('sing') && !dad.stunned)
 		{
 			dad.dance();
-		}
-
-		if (egg != null && curBeat % egg.danceEveryNumBeats == 0 && egg.animation.curAnim != null && !egg.animation.curAnim.name.startsWith('sing') && !egg.stunned)
-		{
-			egg.dance();
 		}
 
 
