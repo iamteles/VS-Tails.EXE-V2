@@ -1022,7 +1022,7 @@ class PlayState extends MusicBeatState
 
 		if (stageData.hide_girlfriend)
 		{
-			gf.alpha = 0; // OK EXPLANATION TIME. basically when you turn gf off in the json the camera breaks on intro
+		//	gf.alpha = 0; // OK EXPLANATION TIME. basically when you turn gf off in the json the camera breaks on intro
 		}
 		if (stageData.hide_opponent)
 		{
