@@ -67,6 +67,7 @@ class CreditsState extends MusicBeatState
 			['FenixTheCat', 'fenix' ,'insert text here', 'https://twitter.com/CatTheFenix', 'Artist'],
 			['Coco puffs', 'corruption' ,'Three times did the cheese move sideways to Switzerland by radio, but..she never licked that parking permit', 'https://twitter.com/file_corruption', 'Artist, Animator'],		
 			['Crispy', 'crispy' ,'el pepe', 'https://twitter.com/ZapatoImbecil', 'Artist'],
+			['c0_rps3', 'c0' ,"Wow, ok", 'https://twitter.com/o_c0rps3', 'Artist'],
 			['GoodieBag', 'goodie' ,'Erm what the scallop', 'https://twitter.com/GoodieBag78', 'Artist'],
 			['Deflio', 'deflio' ,'OH YEAH THIS IS HAPPENING', 'https://www.youtube.com/channel/UCGqkiga9ZQX8AhTTs8oyh9Q', 'Artist, Animator'],
 			['MA - 1AJ', 'ma' ,"I'm in an exe mod. The very thing I swore to destroy", 'https://twitter.com/1aj_ma', 'Artist'],
