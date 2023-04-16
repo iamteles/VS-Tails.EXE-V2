@@ -607,10 +607,10 @@ class PlayState extends MusicBeatState
 				var ground:BGSprite = new BGSprite('stages/angel/ground', -600, -200, 1, 1);
 				add(ground);
 
-				var upper:BGSprite = new BGSprite('stages/angel/up', -600, -200, 1.2, 1.2);
+				var upper:BGSprite = new BGSprite('stages/angel/up', -600, 50, 1.2, 1.2);
 				add(upper);
 
-				var weed:BGSprite = new BGSprite('stages/angel/weed', -600, -200, 1.3, 1.3);
+				var weed:BGSprite = new BGSprite('stages/angel/weed', -800, -140, 1.3, 1.3);
 				add(weed);
 
 			case 'stage': //Week 1
@@ -998,17 +998,19 @@ class PlayState extends MusicBeatState
 			SONG.gfVersion = gfVersion; //Fix for the Chart Editor
 		}
 
-		if (!stageData.hide_girlfriend)
-		{
+		if(SONG.song.toLowerCase() == 'hatch') {
 			egg = new Character(-300, 100, "origin eggman");
 			egg.alpha = 0;
 			add(egg);
-			gf = new Character(0, 0, gfVersion);
-			startCharacterPos(gf);
-			gf.scrollFactor.set(0.95, 0.95);
-			gfGroup.add(gf);
-			startCharacterLua(gf.curCharacter);
 		}
+
+
+		gf = new Character(0, 0, gfVersion);
+		startCharacterPos(gf);
+		gf.scrollFactor.set(0.95, 0.95);
+		gfGroup.add(gf);
+		startCharacterLua(gf.curCharacter);
+
 
 		dad = new Character(0, 0, SONG.player2);
 		startCharacterPos(dad, true);
@@ -1022,8 +1024,9 @@ class PlayState extends MusicBeatState
 
 		if (stageData.hide_girlfriend)
 		{
-		//	gf.alpha = 0; // OK EXPLANATION TIME. basically when you turn gf off in the json the camera breaks on intro
+			gf.alpha = 0;
 		}
+
 		if (stageData.hide_opponent)
 		{
 			dad.alpha = 0;
@@ -2358,6 +2361,7 @@ class PlayState extends MusicBeatState
 				{
 					dad.dance();
 				}
+
 				if (egg != null && tmr.loopsLeft % egg.danceEveryNumBeats == 0 && egg.animation.curAnim != null && !egg.animation.curAnim.name.startsWith('sing') && !egg.stunned)
 				{
 					egg.dance();
@@ -5884,7 +5888,7 @@ class PlayState extends MusicBeatState
 		{
 			dad.dance();
 		}
-		if (curBeat % egg.danceEveryNumBeats == 0 && egg.animation.curAnim != null && !egg.animation.curAnim.name.startsWith('sing') && !egg.stunned)
+		if (egg != null && curBeat % egg.danceEveryNumBeats == 0 && egg.animation.curAnim != null && !egg.animation.curAnim.name.startsWith('sing') && !egg.stunned)
 		{
 			egg.dance();
 		}
