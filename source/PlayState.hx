@@ -577,6 +577,11 @@ class PlayState extends MusicBeatState
 
 		switch (curStage)
 		{
+			case 'hall':
+				var bg:BGSprite = new BGSprite('stages/hall/hall', 0, 0, 1, 1);
+				bg.setGraphicSize(Std.int(bg.width * 1.5));
+				bg.antialiasing = false;
+				add(bg);
 			case 'pixel':
 				var bg:BGSprite = new BGSprite('stages/pixel/ground', 0, 0, 1, 1);
 				bg.antialiasing = false;
