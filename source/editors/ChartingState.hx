@@ -79,6 +79,14 @@ class ChartingState extends MusicBeatState
 	var eventStuff:Array<Dynamic> =
 	[
 		['', "Nothing. Yep, that's right."],
+		[' - TAILS.EXE - ', "VS Tails.EXE custom events."],
+		['defaultZoom', "Changes stage zoom."],
+		['flash', "Flashes camera. \n Value 1: Color (Default WHITE)\nValue 2: Time (Default 0.5)"],
+		['fade', "Fades camera. \nValue 1: 0 = Fade TO Black, 1 = Fade FROM Black\nValue 2: Time (Default 0.5)"],
+		['tweenHud', "Tweens HUD alpha in or out.\nValue 1: 0 = Out, 1 = In\nValue 2: Time in seconds."],
+		['notesOnly', "Hides HUD elements that arent the notes.\nValue 1: 0 = Out, 1 = In"],
+		['', "Nothing. Yep, that's right."],
+		[' - Psych - ', "Psych Engine events."],
 		['Dadbattle Spotlight', "Used in Dad Battle,\nValue 1: 0/1 = ON/OFF,\n2 = Target Dad\n3 = Target BF"],
 		['Hey!', "Plays the \"Hey!\" animation from Bopeebo,\nValue 1: BF = Only Boyfriend, GF = Only Girlfriend,\nSomething else = Both.\nValue 2: Custom animation duration,\nleave it blank for 0.6s"],
 		['Set GF Speed', "Sets GF head bopping speed,\nValue 1: 1 = Normal speed,\n2 = 1/2 speed, 4 = 1/4 speed etc.\nUsed on Fresh during the beatbox parts.\n\nWarning: Value must be integer!"],

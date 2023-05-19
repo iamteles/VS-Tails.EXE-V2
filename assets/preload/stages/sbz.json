@@ -1,0 +1,13 @@
+{
+	"directory": "sadfox",
+	"defaultZoom": 0.8,
+	"isPixelStage": false,
+
+	"boyfriend": [1500, 550],
+	"girlfriend": [80, 160],
+	"opponent": [440, 645],
+	"hide_girlfriend": true,
+	"hide_opponent": false,
+	"camera_boyfriend": [100, 0],
+	"camera_opponent": [0, 160]
+}

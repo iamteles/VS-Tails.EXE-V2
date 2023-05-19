@@ -337,8 +337,7 @@ class PlayState extends MusicBeatState
 	//teles's note move on arrow shits
 	var camDisplaceX:Float;
 	var camDisplaceY:Float;
-	var cameraMoveItensity:Float = 40;
-
+	var cameraMoveItensity:Float = 25;
 
 	// tails exe stuff
 	var blackSkit:FlxSprite;
@@ -577,11 +576,10 @@ class PlayState extends MusicBeatState
 
 		switch (curStage)
 		{
+			case 'sbz':
+				blackvg.alpha = 0.6;
 			case 'hall':
-				var bg:BGSprite = new BGSprite('stages/hall/hall', 0, 0, 1, 1);
-				bg.setGraphicSize(Std.int(bg.width * 1.5));
-				bg.antialiasing = false;
-				add(bg);
+				blackvg.alpha = 0.6;
 			case 'pixel':
 				var bg:BGSprite = new BGSprite('stages/pixel/ground', 0, 0, 1, 1);
 				bg.antialiasing = false;
@@ -1234,10 +1232,10 @@ class PlayState extends MusicBeatState
 			botplayTxt.y = timeBarBG.y - 78;
 		}
 
-		gradient.cameras = [camHUD];
+		gradient.cameras = [camOther];
 		add(gradient);
 
-		blackvg.cameras = [camHUD];
+		blackvg.cameras = [camOther];
 		add(blackvg);
 
 		strumLineNotes.cameras = [camHUD];
@@ -1356,7 +1354,14 @@ class PlayState extends MusicBeatState
 		}
 
 
+
 		var daSong:String = Paths.formatToSongPath(curSong);
+
+		switch (daSong) {
+			case 'reverie':
+				camHUD.alpha = 0;
+				dad.alpha = 0;
+		}
 		if (isStoryMode && !seenCutscene)
 		{
 			switch (daSong)
@@ -3778,6 +3783,35 @@ class PlayState extends MusicBeatState
 
 	public function triggerEventNote(eventName:String, value1:String, value2:String) {
 		switch(eventName) {
+			case 'flash':
+				var color:FlxColor = FlxColor.WHITE;
+				var time:Float = Std.parseFloat(value2);
+				if(Math.isNaN(time)) time = 0.5;
+				if(!ClientPrefs.flashing) color.alphaFloat = 0.5;
+
+				camIntro.flash(color, time, null, true);
+			case 'tweenHud':
+				var inorout:Float = Std.parseFloat(value1);
+				var time:Float = Std.parseFloat(value2);
+				FlxTween.tween(camHUD, {alpha: inorout}, time, {ease: FlxEase.sineInOut});
+			case 'fade':
+				var time:Float = Std.parseFloat(value2);
+				var converted:Float = Std.parseFloat(value1);
+				var inOrOut:Bool = false;
+				if(converted == 1) inOrOut = true;
+				if(Math.isNaN(time)) time = 0.5;
+				camOther.fade(FlxColor.BLACK, time, inOrOut);
+			case 'fadeGame':
+				var time:Float = Std.parseFloat(value2);
+				var converted:Float = Std.parseFloat(value1);
+				var inOrOut:Bool = false;
+				if(converted == 1) inOrOut = true;
+				if(Math.isNaN(time)) time = 0.5;
+				camGame.fade(FlxColor.BLACK, time, inOrOut);
+			case 'defaultZoom':
+				var val:Float = Std.parseFloat(value1);
+				if(!Math.isNaN(val))
+					defaultCamZoom = val;
 			case 'Dadbattle Spotlight':
 				var val:Null<Int> = Std.parseInt(value1);
 				if(val == null) val = 0;
@@ -5539,6 +5573,12 @@ class PlayState extends MusicBeatState
 
 		switch (SONG.song.toLowerCase())
 		{
+			case 'reverie':
+				switch(curStep)
+				{
+					case 144:
+						dad.alpha = 1;
+				}
 			case 'darkness':
 				switch(curStep)
 				{

@@ -1,15 +1,15 @@
 {
 	"directory": "sadfox",
-	"defaultZoom": 0.45,
+	"defaultZoom": 0.7,
 	"isPixelStage": false,
 
-	"boyfriend": [870, 50],
+	"boyfriend": [1670, 50],
 	"girlfriend": [530, 30],
-	"opponent": [-850, 0],
-	"hide_girlfriend": false,
+	"opponent": [90, 120],
+	"hide_girlfriend": true,
 
-	"camera_boyfriend": [-300, 0],
-	"camera_opponent": [500, 70],
+	"camera_boyfriend": [-300, 100],
+	"camera_opponent": [200, 270],
 	"camera_girlfriend": [0, 0],
 	"camera_speed": 1
 }
