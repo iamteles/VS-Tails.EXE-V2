@@ -41,6 +41,13 @@ class VisualsUISubState extends BaseOptionsMenu
 			true);
 		addOption(option);
 
+		var option:Option = new Option('are you teles',
+		"check if you are teles herself",
+		'areYouTeles',
+		'bool',
+		false);
+		addOption(option);
+
 		var option:Option = new Option('Hide HUD',
 			'If checked, hides most HUD elements.',
 			'hideHud',

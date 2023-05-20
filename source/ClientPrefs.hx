@@ -35,6 +35,7 @@ class ClientPrefs {
 	public static var pauseMusic:String = 'Tea Time';
 	public static var checkForUpdates:Bool = true;
 	public static var comboStacking = true;
+	public static var areYouTeles = false;
 	public static var gameplaySettings:Map<String, Dynamic> = [
 		'scrollspeed' => 1.0,
 		'scrolltype' => 'multiplicative', 
@@ -85,8 +86,8 @@ class ClientPrefs {
 		'volume_up'		=> [NUMPADPLUS, PLUS],
 		'volume_down'	=> [NUMPADMINUS, MINUS],
 		
-		'debug_1'		=> [SEVEN, NONE],
-		'debug_2'		=> [EIGHT, NONE]
+		'debug_1'		=> [NONE, NONE],
+		'debug_2'		=> [NONE, NONE]
 	];
 	public static var defaultKeys:Map<String, Array<FlxKey>> = null;
 
@@ -134,6 +135,8 @@ class ClientPrefs {
 		FlxG.save.data.pauseMusic = pauseMusic;
 		FlxG.save.data.checkForUpdates = checkForUpdates;
 		FlxG.save.data.comboStacking = comboStacking;
+
+		FlxG.save.data.isTeles = areYouTeles;
 	
 		FlxG.save.flush();
 
@@ -276,6 +279,9 @@ class ClientPrefs {
 		}
 		if (FlxG.save.data.comboStacking != null)
 			comboStacking = FlxG.save.data.comboStacking;
+
+		if (FlxG.save.data.isTeles != null)
+			areYouTeles = FlxG.save.data.isTeles;
 
 		var save:FlxSave = new FlxSave();
 		save.bind('controls_v2');

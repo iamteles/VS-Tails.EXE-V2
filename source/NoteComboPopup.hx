@@ -6,6 +6,7 @@ import flixel.graphics.frames.FlxAtlasFrames;
 
 class NoteComboPopup extends FlxSprite
 {
+	public var forceAlpha = false;
 	public function new(x:Float = 0, y:Float = 0) {
 		super(x, y);
 
@@ -16,11 +17,11 @@ class NoteComboPopup extends FlxSprite
 		frames = Paths.getSparrowAtlas('noteCombo');
 		antialiasing = ClientPrefs.globalAntialiasing;
 		animation.addByPrefix('pop', 'note combo!', 24, false);
-		alpha = 0;
+		if (!forceAlpha) alpha = 0;
 	}
 
 	public function comboHit() {
-		alpha = 1;
+		if (!forceAlpha) alpha = 1;
 		animation.play('pop', false);
 	}
 

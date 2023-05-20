@@ -8,9 +8,15 @@ class SongUnlock
 	public static var initsongUnlocks:Map<String, Dynamic> = [
 		'Chasing' => [true],
 		'Darkness' => [false],
+		'Rivals' => [false],
+		'Reverie' => [false],
+		'Sidekick' => [false],
+		'Starshine' => [false],
 		'Coughing' => [false],
 		'Hatch' => [false],
-		'Soic' => [false]
+		'Levitating' => [false],
+		'Soic' => [false],
+		'Nightmare' => [false],
 	];
 
 	public static var songUnlocks:Map<String, Dynamic> = [];

@@ -1,59 +1,59 @@
 {
 	"animations": [
 		{
-			"loop": false,
 			"offsets": [
 				0,
 				-104
 			],
-			"fps": 24,
+			"loop": false,
 			"anim": "singLEFT",
-			"indices": [],
-			"name": "left"
+			"fps": 24,
+			"name": "left",
+			"indices": []
 		},
 		{
-			"loop": false,
 			"offsets": [
 				0,
 				-104
 			],
-			"fps": 24,
+			"loop": false,
 			"anim": "singDOWN",
-			"indices": [],
-			"name": "down"
+			"fps": 24,
+			"name": "down",
+			"indices": []
 		},
 		{
-			"loop": false,
 			"offsets": [
 				0,
 				-104
 			],
-			"fps": 24,
+			"loop": false,
 			"anim": "singUP",
-			"indices": [],
-			"name": "up"
+			"fps": 24,
+			"name": "up",
+			"indices": []
 		},
 		{
-			"loop": false,
 			"offsets": [
 				0,
 				-104
 			],
-			"fps": 24,
+			"loop": false,
 			"anim": "singRIGHT",
-			"indices": [],
-			"name": "right"
+			"fps": 24,
+			"name": "right",
+			"indices": []
 		},
 		{
+			"loop": false,
 			"offsets": [
 				0,
 				-104
 			],
-			"indices": [],
-			"fps": 24,
 			"anim": "idle",
-			"loop": false,
-			"name": "idle"
+			"fps": 24,
+			"name": "idle",
+			"indices": []
 		}
 	],
 	"no_antialiasing": true,
@@ -62,7 +62,7 @@
 		300,
 		320
 	],
-	"healthicon": "chicken",
+	"healthicon": "tails",
 	"flip_x": false,
 	"healthbar_colors": [
 		255,

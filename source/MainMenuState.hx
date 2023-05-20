@@ -1,5 +1,6 @@
 package;
 
+import FreeplayState.SongMetadata;
 #if desktop
 import Discord.DiscordClient;
 #end
@@ -32,7 +33,7 @@ class MainMenuState extends MusicBeatState
 	var menuItems:FlxTypedGroup<FlxSprite>;
 	private var camGame:FlxCamera;
 	
-	public var optionShit:Array<String> = [/*'story mode',*/ 'freeplay', 'credits', 'options'];
+	public var optionShit:Array<String> = ['story mode', 'freeplay', 'credits', 'ost', 'options'];
 
 	public var forceCenter:Bool = true;
 
@@ -157,6 +158,8 @@ class MainMenuState extends MusicBeatState
 
 	var selectedSomethin:Bool = false;
 	var lerpVal:Float = 0.2;
+	var curWeek:WeekData;
+    var songArray:Array<String> = [];
 
 	override function update(elapsed:Float)
 	{
@@ -223,45 +226,66 @@ class MainMenuState extends MusicBeatState
 					ease: FlxEase.quadInOut
 				});
 				*/
-				
-				menuItems.forEach(function(spr:FlxSprite)
+				if (optionShit[curSelected] == 'ost')
 				{
-					if (curSelected != spr.ID)
+					CoolUtil.browserLoad('https://telesfnf.bandcamp.com/');
+					selectedSomethin = true;
+				}
+				else {
+					menuItems.forEach(function(spr:FlxSprite)
 					{
-						FlxTween.tween(spr, {alpha: 0}, 0.4, {
-							ease: FlxEase.quadOut,
-							onComplete: function(twn:FlxTween)
-							{
-								spr.kill();
-							}
-						});
-					}
-					else
-					{
-						FlxFlicker.flicker(spr, 1, 0.06, false, false, function(flick:FlxFlicker)
-						{
-							var daChoice:String = optionShit[curSelected];
 
-							switch (daChoice)
+							if (curSelected != spr.ID)
 							{
-								case 'story mode':
-									MusicBeatState.switchState(new StoryMenuState());
-								case 'freeplay':
-									MusicBeatState.switchState(new FreeplayState());
-								#if MODS_ALLOWED
-								case 'mods':
-									MusicBeatState.switchState(new ModsMenuState());
-								#end
-								case 'awards':
-									MusicBeatState.switchState(new AchievementsMenuState());
-								case 'credits':
-									MusicBeatState.switchState(new CreditsState());
-								case 'options':
-									LoadingState.loadAndSwitchState(new options.OptionsState());
+								FlxTween.tween(spr, {alpha: 0}, 0.4, {
+									ease: FlxEase.quadOut,
+									onComplete: function(twn:FlxTween)
+									{
+										spr.kill();
+									}
+								});
 							}
-						});
-					}
+							else
+							{
+								FlxFlicker.flicker(spr, 1, 0.06, false, false, function(flick:FlxFlicker)
+								{
+									var daChoice:String = optionShit[curSelected];
+
+									switch (daChoice)
+									{
+										case 'story mode':
+											PlayState.storyWeek = 0;
+											var curWeekInt = PlayState.storyWeek;
+					
+											curWeek = WeekData.weeksLoaded.get(WeekData.weeksList[curWeekInt]);
+											trace(curWeekInt);
+											songArray = ['Chasing', 'Darkness', 'Rivals', 'Reverie', 'Sidekick'];
+											
+											PlayState.storyPlaylist = songArray;
+											PlayState.isStoryMode = true;
+							
+											PlayState.SONG = Song.loadFromJson(PlayState.storyPlaylist[0].toLowerCase(), PlayState.storyPlaylist[0].toLowerCase());
+											PlayState.campaignScore = 0;
+											PlayState.campaignMisses = 0;
+											LoadingState.loadAndSwitchState(new PlayState(), true);
+											FreeplayState.destroyFreeplayVocals();
+										case 'freeplay':
+											MusicBeatState.switchState(new FreeplayState());
+										#if MODS_ALLOWED
+										case 'mods':
+											MusicBeatState.switchState(new ModsMenuState());
+										#end
+										case 'awards':
+											MusicBeatState.switchState(new AchievementsMenuState());
+										case 'credits':
+											MusicBeatState.switchState(new CreditsState());
+										case 'options':
+											LoadingState.loadAndSwitchState(new options.OptionsState());
+									}
+								});
+							} 
 				});
+			}
 			}
 			#if desktop
 			else if (FlxG.keys.anyJustPressed(debugKeys))

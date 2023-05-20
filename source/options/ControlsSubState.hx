@@ -56,11 +56,7 @@ class ControlsSubState extends MusicBeatSubstate {
 		['VOLUME'],
 		['Mute', 'volume_mute'],
 		['Up', 'volume_up'],
-		['Down', 'volume_down'],
-		[''],
-		['DEBUG'],
-		['Key 1', 'debug_1'],
-		['Key 2', 'debug_2']
+		['Down', 'volume_down']
 	];
 
 	private var grpOptions:FlxTypedGroup<Alphabet>;
@@ -71,7 +67,38 @@ class ControlsSubState extends MusicBeatSubstate {
 
 	public function new() {
 		super();
-		
+
+		/* will hault game
+		if(ClientPrefs.areYouTeles) {
+			optionShit = [
+				['NOTES'],
+				['Left', 'note_left'],
+				['Down', 'note_down'],
+				['Up', 'note_up'],
+				['Right', 'note_right'],
+				[''],
+				['UI'],
+				['Left', 'ui_left'],
+				['Down', 'ui_down'],
+				['Up', 'ui_up'],
+				['Right', 'ui_right'],
+				[''],
+				['Reset', 'reset'],
+				['Accept', 'accept'],
+				['Back', 'back'],
+				['Pause', 'pause'],
+				[''],
+				['VOLUME'],
+				['Mute', 'volume_mute'],
+				['Up', 'volume_up'],
+				['Down', 'volume_down'],
+				[''],
+				['HELLO MISS'],
+				['Debug 1', 'debug_1'],
+				['Debug 2', 'debug_2']
+			];
+		}
+		*/
 		var bg:FlxBackdrop;
 		#if (flixel > "5.0.0")
 		bg = new FlxBackdrop(Paths.image("menustuff/greyd", 'sadfox'), XY, 0, 0);

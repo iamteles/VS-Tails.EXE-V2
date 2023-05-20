@@ -1,5 +1,5 @@
 {
-	"storyName": "Your New Week",
+	"storyName": "le epic bonus songs",
 	"difficulties": "Normal",
 	"hideFreeplay": false,
 	"weekBackground": "stage",
@@ -26,6 +26,15 @@
 			]
 		],
 		[
+			"Starshine",
+			"tails",
+			[
+				255,
+				160,
+				0
+			]
+		],
+		[
 			"Hatch",
 			"eggy",
 			[
@@ -35,12 +44,30 @@
 			]
 		],
 		[
+			"Levitating",
+			"head",
+			[
+				255,
+				160,
+				0
+			]
+		],
+		[
 			"Soic",
 			"soic",
 			[
 				0,
 				93,
 				255
+			]
+		],
+		[
+			"Nightmare",
+			"stoner",
+			[
+				255,
+				160,
+				0
 			]
 		]
 	],
