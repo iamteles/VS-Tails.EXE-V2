@@ -1083,10 +1083,8 @@ class PlayState extends MusicBeatState
 
 		switch(curStage)
 		{
-			case 'starshine':
-				comboPopup.forceAlpha = false;
-			case 'blast':
-				boyfriend.visible = false; // because it was null object referencing when upper
+			case 'pixel':
+				comboPopup.forceAlpha = true;
 		}
 
 
@@ -4449,7 +4447,7 @@ class PlayState extends MusicBeatState
 				if (storyPlaylist.length <= 0)
 				{
 					WeekData.loadTheFirstEnabledMod();
-					FlxG.sound.playMusic(Paths.music('freakyMenu'));
+					//FlxG.sound.playMusic(Paths.music('freakyMenu'));
 
 					cancelMusicFadeTween();
 					if(FlxTransitionableState.skipNextTransIn) {
@@ -4458,6 +4456,7 @@ class PlayState extends MusicBeatState
 					MusicBeatState.switchState(new ComingSoonScreen());
 
 					// if ()
+					/*
 					if(!ClientPrefs.getGameplaySetting('practice', false) && !ClientPrefs.getGameplaySetting('botplay', false)) {
 						StoryMenuState.weekCompleted.set(WeekData.weeksList[storyWeek], true);
 
@@ -4469,6 +4468,7 @@ class PlayState extends MusicBeatState
 						FlxG.save.data.weekCompleted = StoryMenuState.weekCompleted;
 						FlxG.save.flush();
 					}
+					*/
 					changedDifficulty = false;
 				}
 				else
@@ -5006,6 +5006,7 @@ class PlayState extends MusicBeatState
 			case 'Eye Note':
 				trace('its eye note');
 				health -= 1;
+				FlxG.sound.play(Paths.sound('spikeHit'));
 			default:
 				health -= daNote.missHealth * healthLoss;
 				if (SONG.song.toLowerCase() == 'soic') songSpeed += 0.01;

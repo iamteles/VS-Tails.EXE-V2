@@ -2,8 +2,8 @@
 	"animations": [
 		{
 			"offsets": [
-				0,
-				0
+				200,
+				430
 			],
 			"loop": false,
 			"fps": 24,
@@ -13,8 +13,8 @@
 		},
 		{
 			"offsets": [
-				441,
-				81
+				299,
+				451
 			],
 			"loop": false,
 			"fps": 24,
@@ -24,8 +24,8 @@
 		},
 		{
 			"offsets": [
-				5,
-				0
+				322,
+				456
 			],
 			"loop": false,
 			"fps": 24,
@@ -35,8 +35,8 @@
 		},
 		{
 			"offsets": [
-				130,
-				197
+				304,
+				440
 			],
 			"loop": false,
 			"fps": 24,
@@ -46,44 +46,33 @@
 		},
 		{
 			"offsets": [
-				1,
-				118
+				191,
+				424
 			],
 			"loop": false,
 			"fps": 24,
 			"anim": "singRIGHT",
 			"indices": [],
 			"name": "right"
-		},
-		{
-			"offsets": [
-				60,
-				60
-			],
-			"indices": [],
-			"fps": 24,
-			"anim": "laugh",
-			"loop": false,
-			"name": "ar ar ar"
 		}
 	],
 	"no_antialiasing": false,
-	"image": "characters/blast head",
+	"image": "characters/sonicexe",
 	"position": [
-		30,
-		320
+		0,
+		110
 	],
-	"healthicon": "head",
+	"healthicon": "sidekick",
 	"flip_x": false,
 	"healthbar_colors": [
-		35,
-		133,
-		190
+		1,
+		89,
+		180
 	],
 	"camera_position": [
-		300,
-		30
+		10,
+		-50
 	],
 	"sing_duration": 6.1,
-	"scale": 1
+	"scale": 0.7
 }

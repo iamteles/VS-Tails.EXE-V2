@@ -83,6 +83,11 @@
 						"defaultZoom",
 						"0.65",
 						""
+					],
+					[
+						"Change Character",
+						"dad",
+						"sonic2"
 					]
 				]
 			],
@@ -113,6 +118,11 @@
 						"Change Character",
 						"egg",
 						"tailsEXE"
+					],
+					[
+						"Change Character",
+						"dad",
+						"sonic3"
 					]
 				]
 			],

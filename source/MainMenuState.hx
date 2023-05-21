@@ -79,6 +79,13 @@ class MainMenuState extends MusicBeatState
         backdrop.screenCenter();
         backdrop.alpha = 0.4;
         add(backdrop);
+		
+		var maxArts:Int = switch (SongUnlock.getUnlock('Darkness')) {
+			case false: 1;
+			case true: 3;
+		}
+		var art:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.image("menustuff/rotation/" + FlxG.random.int(1, maxArts), 'sadfox'));
+		add(art);
 
 		spikyThing = new FlxSprite(0, 720 - 144).loadGraphic(Paths.image("menustuff/main/spikes", 'sadfox'));
 		add(spikyThing);
@@ -228,8 +235,8 @@ class MainMenuState extends MusicBeatState
 				*/
 				if (optionShit[curSelected] == 'ost')
 				{
-					CoolUtil.browserLoad('https://telesfnf.bandcamp.com/');
-					selectedSomethin = true;
+					CoolUtil.browserLoad('https://distrokid.com/hyperfollow/teles1/vs-tailsexe-volume-1');
+					selectedSomethin = false;
 				}
 				else {
 					menuItems.forEach(function(spr:FlxSprite)
