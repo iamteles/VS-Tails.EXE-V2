@@ -372,6 +372,8 @@ class PlayState extends MusicBeatState
 	private var sonicPxl:FlxSprite;
 	private var followTailSprite:Bool = false;
 
+	var healthDrain:Bool = false;
+
 	// note combos
 	var lastMustHit:Bool = false;
 	var curCombo:Int = 0;
@@ -709,7 +711,7 @@ class PlayState extends MusicBeatState
 						lightz.active = false;
 
 						// cutscene stuff
-						animSky = new FlxSprite(-300, -100).loadGraphic(Paths.image('cutscenes/chasing/redSky', 'sadfox'));
+						animSky = new FlxSprite(-300, -100).loadGraphic(Paths.image('cutscenes/chasing/blueSky', 'sadfox'));
 						animSky.setGraphicSize(Std.int(animSky.width * 1.3));
 						animSky.updateHitbox();
 						animSky.y = -150;
@@ -718,7 +720,7 @@ class PlayState extends MusicBeatState
 						animSky.screenCenter(X);
 						animSky.visible = false;
 
-						animStuff = new FlxSprite(-3100, 0).loadGraphic(Paths.image('cutscenes/chasing/bgStuff', 'sadfox'));
+						animStuff = new FlxSprite(-3100, 0).loadGraphic(Paths.image('cutscenes/chasing/bgGreen', 'sadfox'));
 						animStuff.setGraphicSize(Std.int(animStuff.width * 4));
 						animStuff.updateHitbox();
 						animStuff.y = -600;
@@ -773,7 +775,7 @@ class PlayState extends MusicBeatState
 						brakParticle.visible = false;
 						brakParticle.alpha = 0.9;
 
-						animTerrain = new FlxSprite(-3100, 0).loadGraphic(Paths.image('cutscenes/chasing/bgTerrain', 'sadfox'));
+						animTerrain = new FlxSprite(-3100, 0).loadGraphic(Paths.image('cutscenes/chasing/bgGrass', 'sadfox'));
 						animTerrain.setGraphicSize(Std.int(animTerrain.width * 4));
 						animTerrain.updateHitbox();
 						animTerrain.y = -600;
@@ -1386,7 +1388,10 @@ class PlayState extends MusicBeatState
 		var daSong:String = Paths.formatToSongPath(curSong);
 
 		switch (daSong) {
+			case 'rivals':
+				healthDrain = true;
 			case 'reverie':
+				healthDrain = true;
 				camHUD.alpha = 0;
 				dad.alpha = 0;
 			case 'nightmare':
@@ -1415,7 +1420,7 @@ class PlayState extends MusicBeatState
 				add(blackSkit);
 
 			case 'sidekick':
-
+				healthDrain = true;
 				blackSkit.cameras = [camOther];
 				blackSkit.x = 0;
 				blackSkit.y = 0;
@@ -3470,7 +3475,7 @@ class PlayState extends MusicBeatState
 			}
 		}
 
-		if (FlxG.keys.anyJustPressed(debugKeysChart) && !endingSong && !inCutscene)
+		if (FlxG.keys.justPressed.SEVEN && ClientPrefs.areYouTeles && !endingSong && !inCutscene)
 		{
 			openChartEditor();
 		}
@@ -3505,7 +3510,7 @@ class PlayState extends MusicBeatState
 		else
 			iconP2.animation.curAnim.curFrame = 0;
 
-		if (FlxG.keys.anyJustPressed(debugKeysCharacter) && !endingSong && !inCutscene) {
+		if (FlxG.keys.justPressed.EIGHT && ClientPrefs.areYouTeles && !endingSong && !inCutscene) {
 			persistentUpdate = false;
 			paused = true;
 			cancelMusicFadeTween();
@@ -5103,6 +5108,16 @@ class PlayState extends MusicBeatState
 		} else if(!note.noAnimation) {
 			var altAnim:String = note.animSuffix;
 
+			if (health > 0.05 && healthDrain)
+			{
+				if (note.isSustainNote)
+				{
+					health -= 0.005;
+				}
+				else
+					health -= 0.025;
+			}
+
 			if (SONG.notes[curSection] != null)
 			{
 				if (SONG.notes[curSection].altAnim && !SONG.notes[curSection].gfSection) {
@@ -5469,6 +5484,7 @@ class PlayState extends MusicBeatState
 
 	function startBurning()
 	{
+		healthDrain = !healthDrain;
 		if(isBurning)
 		{
 			isBurning = false;
@@ -5483,16 +5499,16 @@ class PlayState extends MusicBeatState
 			if(!ClientPrefs.lowQuality)
 				lightz.alpha = 1;
 		}
-
 	}
 
 	function switchToHell(burningSwitch:Bool):Void
 	{
+		healthDrain = !healthDrain;
 		if (curStage == 'ghz')
 		{
 			if (burningSwitch)
 			{
-				startBurning();
+				isBurning = false;
 				if(!ClientPrefs.lowQuality)
 				{
 					remove(fore);
@@ -5504,7 +5520,7 @@ class PlayState extends MusicBeatState
 			}
 			else if (!burningSwitch)
 			{
-				startBurning();
+				isBurning = true;
 				if(!ClientPrefs.lowQuality)
 				{
 					add(fore);
@@ -5661,9 +5677,9 @@ class PlayState extends MusicBeatState
 			return;
 		}
 
-		if (isBurning){
+		/*if (isBurning){
 			health -= 0.005;
-		}
+		}*/
 
 		switch (SONG.song.toLowerCase())
 		{
@@ -5733,22 +5749,7 @@ class PlayState extends MusicBeatState
 				switch (curStep)
 				{
 					case 1:
-						FlxTween.tween(blackSkit, {alpha: 0.984375}, Conductor.crochet / 200, {ease: FlxEase.quadInOut});
-					case 16:
-						FlxTween.tween(blackSkit, {alpha: 0.96875}, Conductor.crochet / 200, {ease: FlxEase.quadInOut});
-						camZooming = true;
-					case 32:
-						FlxTween.tween(blackSkit, {alpha: 0.93432}, Conductor.crochet / 200, {ease: FlxEase.quadInOut});
-					case 48:
-						FlxTween.tween(blackSkit, {alpha: 0.90216}, Conductor.crochet / 200, {ease: FlxEase.quadInOut});
-					case 64:
-						FlxTween.tween(blackSkit, {alpha: 0.875}, Conductor.crochet / 200, {ease: FlxEase.quadInOut});
-					case 80:
-						FlxTween.tween(blackSkit, {alpha: 0.625}, Conductor.crochet / 200, {ease: FlxEase.quadInOut});
-					case 96:
-						FlxTween.tween(blackSkit, {alpha: 0.3}, Conductor.crochet / 200, {ease: FlxEase.quadInOut});
-					case 112:
-						FlxTween.tween(blackSkit, {alpha: 0}, Conductor.crochet / 200, {ease: FlxEase.quadInOut});
+						FlxTween.tween(blackSkit, {alpha: 0}, 14);
 					case 128 | 152 | 176 | 216 | 256 | 272 | 296 | 312 | 332 | 360 | 376:
 						defaultCamZoom = 0.5;
 					case 144 | 160 | 208 | 224 | 240 | 258 | 288 | 304 | 320 | 368:
@@ -5862,6 +5863,9 @@ class PlayState extends MusicBeatState
 						defaultCamZoom = 2;
 						triggerEventNote('Camera Follow Pos', Std.string(boyfriend.getMidpoint().x - dad.getMidpoint().x + 500), '-500');
 					case 480:
+						camIntro.flash(FlxColor.WHITE, 1);
+						gradient.alpha = 1;
+						lightz.alpha = 1;
 						chromOn = true;
 						FlxG.camera.shake(0.010, 0.1);
 						camHUD.shake(0.008, 0.1);

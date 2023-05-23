@@ -25,15 +25,14 @@ import flixel.input.keyboard.FlxKey;
 
 using StringTools;
 
-class MainMenuState extends MusicBeatState
+class ExtrasMenu extends MusicBeatState
 {
-	public static var psychEngineVersion:String = '0.6.3'; //This is also used for Discord RPC
 	public static var curSelected:Int = 0;
 
 	var menuItems:FlxTypedGroup<FlxSprite>;
 	private var camGame:FlxCamera;
 	
-	public var optionShit:Array<String> = ['story mode', 'freeplay', 'credits', 'extras', 'options'];
+	public var optionShit:Array<String> = ['gallery', 'ost', 'discord', 'more'];
 
 	public var forceCenter:Bool = true;
 
@@ -42,9 +41,12 @@ class MainMenuState extends MusicBeatState
 	var spikyThing:FlxSprite;
 	var leftArrow:FlxSprite;
 	var rightArrow:FlxSprite;
+	var promo:FlxSprite;
 
 	var camFollow:FlxObject;
 	var debugKeys:Array<FlxKey>;
+
+	var isPromo:Bool = false;
 
 	override function create()
 	{
@@ -80,12 +82,7 @@ class MainMenuState extends MusicBeatState
         backdrop.alpha = 0.4;
         add(backdrop);
 		
-		var maxArts:Int = switch (SongUnlock.getUnlock('Darkness')) {
-			case false: 1;
-			case true: 3;
-		}
-		var art:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.image("menustuff/rotation/" + FlxG.random.int(1, maxArts), 'sadfox'));
-		add(art);
+
 
 		spikyThing = new FlxSprite(0, 720 - 144).loadGraphic(Paths.image("menustuff/main/spikes", 'sadfox'));
 		add(spikyThing);
@@ -121,13 +118,9 @@ class MainMenuState extends MusicBeatState
 		add(leftArrow);
 		add(rightArrow);
 
-		var versionShit:FlxText = new FlxText(12, FlxG.height - 44, 0, "Psych Engine v" + psychEngineVersion, 12);
+		var versionShit:FlxText = new FlxText(12, FlxG.height - 24, 0, "Press ESCAPE to go back", 12);
 		versionShit.scrollFactor.set();
-		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-		add(versionShit);
-		var versionShit:FlxText = new FlxText(12, FlxG.height - 24, 0, "VS Tails.EXE v2.0 - WIP", 12);
-		versionShit.scrollFactor.set();
-		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		versionShit.setFormat("Righteous", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(versionShit);
 
 		// NG.core.calls.event.logEvent('swag').send();
@@ -148,6 +141,10 @@ class MainMenuState extends MusicBeatState
 		}
 		#end
 		*/
+
+		promo = new FlxSprite(0, 0).loadGraphic(Paths.image("menustuff/ad", 'sadfox'));
+		promo.alpha = 0;
+		add(promo);
 
 		super.create();
 	}
@@ -176,7 +173,20 @@ class MainMenuState extends MusicBeatState
 			if(FreeplayState.vocals != null) FreeplayState.vocals.volume += 0.5 * elapsed;
 		}
 
-		if (!selectedSomethin)
+		if (isPromo) {
+			if (controls.BACK)
+			{
+				isPromo = false;
+				FlxG.sound.play(Paths.sound('cancelMenu'));
+				FlxTween.tween(promo, {alpha: 0}, 1, {ease: FlxEase.quadInOut});
+			}
+			if (controls.ACCEPT)
+			{
+				CoolUtil.browserLoad('https://youtu.be/UTyOLKHU9Bo');
+			}
+	
+		}
+		else if (!selectedSomethin)
 		{
 			if (controls.UI_LEFT_P)
 			{
@@ -237,6 +247,10 @@ class MainMenuState extends MusicBeatState
 					CoolUtil.browserLoad('https://distrokid.com/hyperfollow/teles1/vs-tailsexe-volume-1');
 				else if (optionShit[curSelected] == 'discord')
 					CoolUtil.browserLoad('https://discord.gg/a7UjAsBFFT');
+				else if (optionShit[curSelected] == 'more') {
+					isPromo = true;
+					FlxTween.tween(promo, {alpha: 1}, 1, {ease: FlxEase.quadInOut});
+				}
 				else {
 					selectedSomethin = true;
 					menuItems.forEach(function(spr:FlxSprite)
@@ -260,36 +274,8 @@ class MainMenuState extends MusicBeatState
 
 									switch (daChoice)
 									{
-										case 'extras':
-											MusicBeatState.switchState(new ExtrasMenu());
-										case 'story mode':
-											PlayState.storyWeek = 0;
-											var curWeekInt = PlayState.storyWeek;
-					
-											curWeek = WeekData.weeksLoaded.get(WeekData.weeksList[curWeekInt]);
-											trace(curWeekInt);
-											songArray = ['Chasing', 'Darkness', 'Rivals', 'Reverie', 'Sidekick'];
-											
-											PlayState.storyPlaylist = songArray;
-											PlayState.isStoryMode = true;
-							
-											PlayState.SONG = Song.loadFromJson(PlayState.storyPlaylist[0].toLowerCase(), PlayState.storyPlaylist[0].toLowerCase());
-											PlayState.campaignScore = 0;
-											PlayState.campaignMisses = 0;
-											LoadingState.loadAndSwitchState(new PlayState(), true);
-											FreeplayState.destroyFreeplayVocals();
-										case 'freeplay':
-											MusicBeatState.switchState(new FreeplayState());
-										#if MODS_ALLOWED
-										case 'mods':
-											MusicBeatState.switchState(new ModsMenuState());
-										#end
-										case 'awards':
-											MusicBeatState.switchState(new AchievementsMenuState());
-										case 'credits':
-											MusicBeatState.switchState(new CreditsState());
-										case 'options':
-											LoadingState.loadAndSwitchState(new options.OptionsState());
+										case 'gallery':
+											MusicBeatState.switchState(new GalleryState());
 									}
 								});
 							} 

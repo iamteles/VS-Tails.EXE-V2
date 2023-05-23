@@ -23,7 +23,7 @@ class SongUnlock
 
 	public static function initialize():Void
 	{
-		FlxG.save.bind('songUnlocks');
+		FlxG.save.bind('songUnlocks', 'teles/VSTails');
 
 		for (song in initsongUnlocks.keys())
 			songUnlocks.set(song, initsongUnlocks.get(song)[0]);
@@ -53,6 +53,15 @@ class SongUnlock
 	public static function getUnlock(optionToGet:String)
 	{
 		return songUnlocks.get(optionToGet);
+	}
+	public static function getStoryStatus() {
+		var count:Int = 0;
+
+		for (song in ['Chasing', 'Darkness', 'Rivals', 'Reverie', 'Sidekick']) {
+			if (getUnlock(song))  count++;
+		}
+
+		return count;
 	}
 	public static function unlockSong(unlockThis:String)
 	{

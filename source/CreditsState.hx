@@ -19,6 +19,7 @@ import flixel.tweens.FlxTween;
 import flixel.tweens.FlxEase;
 import flixel.addons.display.FlxBackdrop;
 import lime.utils.Assets;
+import flixel.effects.FlxFlicker;
 
 using StringTools;
 using flixel.util.FlxSpriteUtil;
@@ -39,6 +40,7 @@ class CreditsState extends MusicBeatState
 	private var creditsStuff:Array<Array<String>> = [];
 
 	var bg:FlxBackdrop;
+	var yummy:FlxSprite;
 	var arrowItems:FlxTypedGroup<FlxSprite>;
 	var spikeThignies:FlxTypedGroup<FlxSprite>;
 	var lineStuff:FlxTypedGroup<FlxSprite>;
@@ -53,13 +55,15 @@ class CreditsState extends MusicBeatState
 
 		persistentUpdate = true;
 
+		FlxG.mouse.visible = true;
+
 		bg = new FlxBackdrop(Paths.image("menustuff/grid", 'sadfox'), XY, 0, 0);
 		// bg = new FlxBackdrop(Paths.image("menustuff/grid", 'sadfox'), 8, 8, true, true, 1, 1);
         bg.velocity.set(FlxG.random.bool(50) ? 90 : -90, FlxG.random.bool(50) ? 90 : -90);
         bg.screenCenter();
         bg.alpha = 0.4;
         add(bg);
-		
+
 		var pisspoop:Array<Array<String>> = [ //Name - Icon name - Description - Link - Role
 			['VS Tails.EXE Team'],
 			['teles', 'teles', '1 year, i cant believe it', 'https://www.youtube.com/channel/UCHK83AQBjAc9sy0lE6m8e3A', 'Director, Musician, Coder, Animator'],
@@ -89,6 +93,7 @@ class CreditsState extends MusicBeatState
 			['Xarion', 'xar' ,'play vs jeremy NOW', 'https://twitter.com/Xar1on', 'Charter'],
 			['Diamond', 'diamond' ,'what would my quote be?', 'https://twitter.com/DiamonDiglett42', 'Charter, Animator'],
 			['The rest of the team', 'team', 'Thanks to whoever didnt get their work featured in v2', '', 'Team'],
+			['Tr1NgleDev', 'tr1ngle', "Menu assets and coding", 'https://github.com/Tr1NgleDev', 'Contributor'],
 			['Sakurnyaw', 'sakurnyaw', "Eggy's Icon", 'https://twitter.com/Sakurnyaw', 'Contributor'],
 			['DiogoTV', 'diogo', 'Coding Advice', 'https://twitter.com/DiogoTVV', 'Contributor'],
 			['Unholywanderer04', 'unholy' ,'Combos Lua Script', 'https://gamebanana.com/members/1908754', 'Contributor'],
@@ -295,6 +300,9 @@ class CreditsState extends MusicBeatState
 			FlxTween.tween(redshit, {y: redshit.y + 36}, 4, {type: LOOPING, ease: FlxEase.linear});
 		}
 
+		yummy = new FlxSprite(0, 0).loadGraphic(Paths.image("menustuff/yummy", 'sadfox'));
+		add(yummy);
+		
 		changeSelection();
 		
 		super.create();
@@ -304,6 +312,22 @@ class CreditsState extends MusicBeatState
 	var holdTime:Float = 0;
 	override function update(elapsed:Float)
 	{
+		if(FlxG.mouse.overlaps(yummy)){
+			if(FlxG.mouse.justPressed){
+				ClientPrefs.saveSettings();
+				FlxFlicker.flicker(yummy, 1, 0.05, false, false, function(flick:FlxFlicker)
+				{
+					var poop:String = Highscore.formatSong('octane', 1);
+	
+					PlayState.SONG = Song.loadFromJson('octane', 'octane');
+					PlayState.isStoryMode = false;
+					PlayState.storyDifficulty = 1;
+
+					LoadingState.loadAndSwitchState(new PlayState());
+				});
+			}
+		}
+			
 		if (FlxG.sound.music.volume < 0.7)
 		{
 			FlxG.sound.music.volume += 0.5 * FlxG.elapsed;
