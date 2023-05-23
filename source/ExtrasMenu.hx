@@ -82,7 +82,8 @@ class ExtrasMenu extends MusicBeatState
         backdrop.alpha = 0.4;
         add(backdrop);
 		
-
+		var art:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.image("menustuff/rotation/" + FlxG.random.int(4, 6), 'sadfox'));
+		add(art);
 
 		spikyThing = new FlxSprite(0, 720 - 144).loadGraphic(Paths.image("menustuff/main/spikes", 'sadfox'));
 		add(spikyThing);
@@ -205,7 +206,7 @@ class ExtrasMenu extends MusicBeatState
 			{
 				selectedSomethin = true;
 				FlxG.sound.play(Paths.sound('cancelMenu'));
-				MusicBeatState.switchState(new TitleState());
+				MusicBeatState.switchState(new MainMenuState());
 			}
 
 			if(controls.UI_LEFT)
