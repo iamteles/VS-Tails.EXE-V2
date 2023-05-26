@@ -354,8 +354,11 @@ class PlayState extends MusicBeatState
 	var fore2:FlxSprite;
 	var gradient:FlxSprite;
 	var blackvg:FlxSprite;
+	var awesomesolodude:FlxSprite;
 	var bg2:BGSprite;
 	var grd2:BGSprite;
+	var bgS:BGSprite;
+	var grdS:BGSprite;
 	var lightz:FlxSprite;
 	var shineThing:FlxSprite;
 
@@ -828,17 +831,17 @@ class PlayState extends MusicBeatState
 				}
 			case 'ghzSun':
 				blackvg.alpha = 0.6;
-				var bg:BGSprite = new BGSprite('stages/ghzSun/sky', -550, -300, 0.3, 0.3);
-				bg.setGraphicSize(Std.int(bg.width * 1.8));
-				bg.updateHitbox();
-				bg.antialiasing = ClientPrefs.globalAntialiasing;
-				add(bg);
+				bgS = new BGSprite('stages/ghzSun/sky', -550, -300, 0.3, 0.3);
+				bgS.setGraphicSize(Std.int(bgS.width * 1.8));
+				bgS.updateHitbox();
+				bgS.antialiasing = ClientPrefs.globalAntialiasing;
+				add(bgS);
 
-				var grd:BGSprite = new BGSprite('stages/ghzSun/ground', -300, -400, 1, 1);
-				grd.setGraphicSize(Std.int(grd.width * 2));
-				grd.updateHitbox();
-				grd.antialiasing = ClientPrefs.globalAntialiasing;
-				add(grd);
+				grdS = new BGSprite('stages/ghzSun/ground', -300, -400, 1, 1);
+				grdS.setGraphicSize(Std.int(grdS.width * 2));
+				grdS.updateHitbox();
+				grdS.antialiasing = ClientPrefs.globalAntialiasing;
+				add(grdS);
 
 				bg2 = new BGSprite('stages/ghz/skyHappy', -550, -300, 0.3, 0.3);
 				bg2.setGraphicSize(Std.int(bg2.width * 1.8));
@@ -860,6 +863,12 @@ class PlayState extends MusicBeatState
 				shineThing.antialiasing = ClientPrefs.globalAntialiasing;
 				shineThing.scrollFactor.set(0.3, 0.3);
 				shineThing.active = false;
+
+				awesomesolodude = new FlxSprite(0, 0).loadGraphic(Paths.image('dd', 'sadfox'));
+				awesomesolodude.x += FlxG.width;
+				awesomesolodude.alpha = 0.5;
+				awesomesolodude.cameras = [camHUD];
+				add(awesomesolodude);
 			case 'blast':
 				var circle:BGSprite = new BGSprite('stages/blast/circle', 0, 0, 1, 1);
 				circle.antialiasing = ClientPrefs.globalAntialiasing;
@@ -1390,10 +1399,18 @@ class PlayState extends MusicBeatState
 		switch (daSong) {
 			case 'rivals':
 				healthDrain = true;
+				blackSkit.cameras = [camOther];
+				blackSkit.x = 0;
+				blackSkit.y = 0;
+				add(blackSkit);
 			case 'reverie':
 				healthDrain = true;
 				camHUD.alpha = 0;
 				dad.alpha = 0;
+				blackSkit.cameras = [camOther];
+				blackSkit.x = 0;
+				blackSkit.y = 0;
+				add(blackSkit);
 			case 'nightmare':
 				iconP2.alpha = 0;
 			case 'levitating':
@@ -4571,8 +4588,8 @@ class PlayState extends MusicBeatState
 	public var totalNotesHit:Float = 0.0;
 
 	public var showCombo:Bool = false;
-	public var showComboNum:Bool = true;
-	public var showRating:Bool = true;
+	public var showComboNum:Bool = false;
+	public var showRating:Bool = false;
 
 	private function cachePopUpScore()
 	{
@@ -5688,6 +5705,8 @@ class PlayState extends MusicBeatState
 				{
 					case 1:
 						FlxTween.tween(blackSkit, {alpha: 0}, 4, {ease: FlxEase.quadInOut});
+					case 800:
+						FlxTween.tween(awesomesolodude, {x: 0 - (FlxG.width)}, 18);
 					case 1056:
 						egg.alpha = 1;
 						dad.alpha = 0;
@@ -5699,12 +5718,32 @@ class PlayState extends MusicBeatState
 						bg2.visible = false;
 						grd2.visible = false;
 						applyVCR(false);
+					case 2336:
+						FlxTween.tween(timeTxt, {alpha: 0}, 4, {ease: FlxEase.quadInOut});
+						FlxTween.tween(gf, {alpha: 0}, 4, {ease: FlxEase.quadInOut});
+						FlxTween.tween(dad, {alpha: 0}, 4, {ease: FlxEase.quadInOut});
+						FlxTween.tween(egg, {alpha: 0}, 4, {ease: FlxEase.quadInOut});
+						FlxTween.tween(healthBar, {alpha: 0}, 4, {ease: FlxEase.quadInOut});
+						FlxTween.tween(healthBarBG, {alpha: 0}, 4, {ease: FlxEase.quadInOut});
+						FlxTween.tween(iconP1, {alpha: 0}, 4, {ease: FlxEase.quadInOut});
+						FlxTween.tween(iconP2, {alpha: 0}, 4, {ease: FlxEase.quadInOut});
+						FlxTween.tween(bgS, {alpha: 0}, 4, {ease: FlxEase.quadInOut});
+						FlxTween.tween(grdS, {alpha: 0}, 4, {ease: FlxEase.quadInOut});
+						FlxTween.tween(scoreTxt, {alpha: 0}, 4, {ease: FlxEase.quadInOut});
 					case 2592:
 						FlxTween.tween(blackSkit, {alpha: 1}, 6, {ease: FlxEase.quadInOut});
+				}
+			case 'rivals':
+				switch(curStep)
+				{
+					case 1:
+						FlxTween.tween(blackSkit, {alpha: 0}, 2, {ease: FlxEase.quadInOut});
 				}	
 			case 'reverie':
 				switch(curStep)
 				{
+					case 1:
+						FlxTween.tween(blackSkit, {alpha: 0}, 14, {ease: FlxEase.quadInOut});
 					case 144:
 						dad.alpha = 1;
 				}

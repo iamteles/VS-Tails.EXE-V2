@@ -201,7 +201,7 @@
 -----------------------------------------------------------------------|By Unholywanderer04|------------------------------------------------------------------------------------------
 
 function onDestroy()
-    setPropertyFromClass('ClientPrefs', 'hideHud', false) -- So the stupid thing actually (hopefully) unhides once you complete a song >:(
+    --setPropertyFromClass('ClientPrefs', 'hideHud', false) -- So the stupid thing actually (hopefully) unhides once you complete a song >:(
 end
 
 function onCreatePost()
@@ -320,9 +320,9 @@ end
 local begin = false
 function onUpdate(elapsed)
     if visible then
-        setPropertyFromClass('ClientPrefs', 'hideHud', true)
+        --setPropertyFromClass('ClientPrefs', 'hideHud', true)
     elseif not visible then
-        setPropertyFromClass('ClientPrefs', 'hideHud', false)
+        --setPropertyFromClass('ClientPrefs', 'hideHud', false)
     end
 
     if not begin then -- initial note thing, constantly gets note pos until you hit a note
@@ -410,7 +410,7 @@ function onUpdate(elapsed)
 
     if (getPropertyFromClass('flixel.FlxG', 'keys.justPressed.SEVEN') or 
         getPropertyFromClass('flixel.FlxG', 'keys.justPressed.EIGHT')) then
-        setPropertyFromClass('ClientPrefs', 'hideHud', false)
+        --setPropertyFromClass('ClientPrefs', 'hideHud', false)
     end
 
     -- These are here for more randomness --
