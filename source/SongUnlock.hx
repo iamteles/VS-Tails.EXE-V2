@@ -54,10 +54,10 @@ class SongUnlock
 	{
 		return songUnlocks.get(optionToGet);
 	}
-	public static function getStoryStatus() {
+	public static function getStoryStatus(debugOr:Bool = false) {
 		var count:Int = 0;
 
-		for (song in ['Chasing', 'Darkness', 'Rivals', 'Reverie', 'Sidekick']) {
+		for (song in ['Chasing', 'Darkness', 'Rivals', 'Reverie', 'Sidekick', 'Starshine', 'Coughing', 'Hatch', 'Levitating', 'Soic', 'Nightmare']) {
 			if (getUnlock(song))  count++;
 		}
 

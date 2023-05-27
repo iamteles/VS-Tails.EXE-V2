@@ -97,7 +97,7 @@ class CreditsState extends MusicBeatState
 			['Sakurnyaw', 'sakurnyaw', "Eggy's Icon", 'https://twitter.com/Sakurnyaw', 'Contributor'],
 			['DiogoTV', 'diogo', 'Coding Advice', 'https://twitter.com/DiogoTVV', 'Contributor'],
 			['Unholywanderer04', 'unholy' ,'Combos Lua Script', 'https://gamebanana.com/members/1908754', 'Contributor'],
-			['Loryx', 'loryx', 'Darkness - VS Tails.EXE OST (LEGACY)', 'https://twitter.com/Loryx12', 'Special Thanks'],
+			['Loryx', 'loryx', 'Number 1 Tails.EXE fan', 'https://twitter.com/Loryx12', 'Special Thanks'],
 			['five', 'five', 'teehee', 'https://twitter.com/FiveKimz', 'Special Thanks'],
 			['Psych Engine',		'shadowmario',		'Press enter for Psych Engine + Funkin Crew credits',					'PsychCreditsState',	'Engine']
 		];

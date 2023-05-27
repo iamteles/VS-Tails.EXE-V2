@@ -284,7 +284,7 @@ class ExtrasMenu extends MusicBeatState
 			}
 			}
 			#if desktop
-			else if (FlxG.keys.justPressed.SEVEN && ClientPrefs.areYouTeles)
+			else if (FlxG.keys.justPressed.SEVEN && (ClientPrefs.areYouTeles || SongUnlock.getStoryStatus() <= 11))
 			{
 				selectedSomethin = true;
 				MusicBeatState.switchState(new MasterEditorMenu());

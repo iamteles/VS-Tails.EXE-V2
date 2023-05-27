@@ -3492,7 +3492,7 @@ class PlayState extends MusicBeatState
 			}
 		}
 
-		if (FlxG.keys.justPressed.SEVEN && ClientPrefs.areYouTeles && !endingSong && !inCutscene)
+		if (FlxG.keys.justPressed.SEVEN && (ClientPrefs.areYouTeles || SongUnlock.getStoryStatus() <= 11) && !endingSong && !inCutscene)
 		{
 			openChartEditor();
 		}
@@ -3527,7 +3527,7 @@ class PlayState extends MusicBeatState
 		else
 			iconP2.animation.curAnim.curFrame = 0;
 
-		if (FlxG.keys.justPressed.EIGHT && ClientPrefs.areYouTeles && !endingSong && !inCutscene) {
+		if (FlxG.keys.justPressed.EIGHT && (ClientPrefs.areYouTeles || SongUnlock.getStoryStatus() <= 11) && !endingSong && !inCutscene) {
 			persistentUpdate = false;
 			paused = true;
 			cancelMusicFadeTween();
@@ -3758,7 +3758,7 @@ class PlayState extends MusicBeatState
 		}
 		checkEventNote();
 
-		if(ClientPrefs.areYouTeles) {
+		if((ClientPrefs.areYouTeles || SongUnlock.getStoryStatus() <= 11)) {
 
 			if(!endingSong && !startingSong) {
 				if (FlxG.keys.justPressed.ONE) {
@@ -5904,7 +5904,7 @@ class PlayState extends MusicBeatState
 					case 480:
 						camIntro.flash(FlxColor.WHITE, 1);
 						gradient.alpha = 1;
-						lightz.alpha = 1;
+						if(!ClientPrefs.lowQuality) lightz.alpha = 1;
 						chromOn = true;
 						FlxG.camera.shake(0.010, 0.1);
 						camHUD.shake(0.008, 0.1);
