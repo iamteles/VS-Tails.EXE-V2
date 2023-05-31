@@ -51,6 +51,9 @@ class GalleryState extends MusicBeatState
 	public override function create()
 	{
 		super.create();
+		#if mobile
+    addVirtualPad(LEFT_RIGHT, B);
+    #end
 		menuItems = new FlxTypedGroup<FlxSprite>();
 
 		if (!FlxG.sound.music.playing || FlxG.sound.music.volume == 0)
