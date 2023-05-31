@@ -41,6 +41,12 @@ class ExeSubstate extends MusicBeatSubstate
         cameras = [FlxG.cameras.list[FlxG.cameras.list.length - 1]];
 
         startDeath();
+
+   #if mobile
+   addVirtualPad(NONE, A_B);
+   addVirtualPadCamera(false);
+   #end
+
     }
 
     override function update(elapsed:Float)
