@@ -29,6 +29,11 @@ class TailsState extends MusicBeatState
 	
 	override function create()
 	{
+
+		#if mobile
+		FlxG.android.preventDefaultKeys = [BACK];
+		#end
+
 		#if desktop
 		// Updating Discord Rich Presence
 		DiscordClient.changePresence("Title", null);
