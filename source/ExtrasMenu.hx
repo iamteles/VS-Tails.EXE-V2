@@ -147,6 +147,10 @@ class ExtrasMenu extends MusicBeatState
 		promo.alpha = 0;
 		add(promo);
 
+   #if mobile
+   addVirtualPad(LEFT_RIGHT, A_B);
+   #end
+
 		super.create();
 	}
 
