@@ -304,7 +304,12 @@ class CreditsState extends MusicBeatState
 		add(yummy);
 		
 		changeSelection();
-		
+
+   #if mobile
+   addVirtualPad(UP_DOWN, A_B);
+   addVirtualPadCamera(false);
+   #end
+
 		super.create();
 	}
 
