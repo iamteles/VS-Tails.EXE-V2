@@ -116,6 +116,17 @@ class TailsState extends MusicBeatState
 
 	override function update(elapsed:Float)
 	{
+
+		#if mobile
+		for (touch in FlxG.touches.list)
+		{
+			if (touch.justPressed)
+			{
+				pressedEnter = true;
+			}
+		}
+		#end
+
 		var pressedEnter:Bool = FlxG.keys.justPressed.ENTER || controls.ACCEPT;
 
 		if (pressedEnter && initialized && !transitioning)
