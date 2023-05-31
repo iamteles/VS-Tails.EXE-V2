@@ -40,11 +40,21 @@ class ComingSoonScreen extends MusicBeatState
 		add(bg);
 
 		super.create();
-
 	}
 
 	override function update(elapsed:Float)
 	{
+		#if mobile
+		for (touch in FlxG.touches.list) {
+		 if (touch.justPressed) //yes touch :)
+		 {
+            if (!FlxG.sound.music.playing) {
+                    FlxG.sound.playMusic(Paths.music('freakyMenu'));
+            }
+			FlxG.switchState(new MainMenuState());
+	         }
+		}
+		#else
 		if (controls.BACK || controls.ACCEPT)
 		{
             if (!FlxG.sound.music.playing) {
@@ -52,6 +62,7 @@ class ComingSoonScreen extends MusicBeatState
             }
 			FlxG.switchState(new MainMenuState());
 		}
+		#end
 		super.update(elapsed);
 	}
 }
