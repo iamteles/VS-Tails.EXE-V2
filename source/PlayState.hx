@@ -983,9 +983,9 @@ class PlayState extends MusicBeatState
 		if (OpenFlAssets.exists(luaFile))
 		{
 		  doPush = true;
-		} else {
+		} /*else {
 		Application.current.window.alert(luaFile, 'NOT FOUND :C');
-		}
+		}*/
 			
 		if(doPush) 
 			luaArray.push(new FunkinLua(luaFile));
@@ -998,9 +998,9 @@ class PlayState extends MusicBeatState
 		if (OpenFlAssets.exists(luaFile))
 		{
 			doPush = true;
-		} else {
+		} /*else {
 		Application.current.window.alert(luaFile, 'NOT FOUND :C');  
-		}
+		}*/
 			
 		if(doPush) 
 			luaArray.push(new FunkinLua(luaFile));
