@@ -280,6 +280,9 @@ class ExtrasMenu extends MusicBeatState
 									switch (daChoice)
 									{
 										case 'gallery':
+										#if mobile
+                    removeVirtualPad ();
+                    #end
 											MusicBeatState.switchState(new GalleryState());
 									}
 								});
