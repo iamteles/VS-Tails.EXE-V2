@@ -45,10 +45,10 @@ jobs:
           haxelib install hxcpp > /dev/null --quiet
           haxelib install lime 7.9.0
           haxelib install openfl 9.1.0
-          haxelib install flixel 4.11.0
+          haxelib install flixel
           haxelib install flixel-tools
           haxelib install flixel-ui
-          haxelib install flixel-addons 2.11.0
+          haxelib install flixel-addons
           haxelib install tjson
           haxelib install hxjsonast
           haxelib install hxCodec
@@ -67,8 +67,6 @@ jobs:
           haxelib run lime config ANDROID_NDK_ROOT $ANDROID_NDK_HOME
           haxelib run lime config JAVA_HOME $JAVA_HOME
           haxelib run lime config ANDROID_SETUP true
-          haxelib set flixel-addons 2.11.0
-          haxelib set flixel 4.11.0
           haxelib set openfl 9.1.0
           haxelib set lime 7.9.0
         env:
