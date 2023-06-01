@@ -281,7 +281,7 @@ class ExtrasMenu extends MusicBeatState
 									{
 										case 'gallery':
 										#if mobile
-                    removeVirtualPad ();
+                    removeVirtualPad();
                     #end
 											MusicBeatState.switchState(new GalleryState());
 									}
