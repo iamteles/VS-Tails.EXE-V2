@@ -2933,12 +2933,12 @@ class FunkinLua {
 					return true;
 				}
 			}
-		}
+		}*/
 		luaTrace('Missing shader $name .frag AND .vert files!', false, false, FlxColor.RED);
 		#else
 		luaTrace('This platform doesn\'t support Runtime Shaders!', false, false, FlxColor.RED);
 		#end
-		return false;*/
+		return false;
 	}
 
 	function getGroupStuff(leArray:Dynamic, variable:String) {
