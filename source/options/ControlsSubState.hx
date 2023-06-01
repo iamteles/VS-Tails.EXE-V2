@@ -67,7 +67,8 @@ class ControlsSubState extends MusicBeatSubstate {
 
 	public function new() {
 		super();
-
+   #if mobile
+   addVirtualPad(LEFT_FULL, A_B);
 		/* will hault game
 		if(ClientPrefs.areYouTeles) {
 			optionShit = [
