@@ -251,7 +251,7 @@ class FunkinLua {
 			return false;
 		});
 
-		// shader shit
+		/*// shader shit
 		Lua_helper.add_callback(lua, "initLuaShader", function(name:String) {
 			if(!ClientPrefs.shaders) return false;
 
@@ -472,7 +472,7 @@ class FunkinLua {
 			#else
 			luaTrace("setShaderSampler2D: Platform unsupported for Runtime Shaders!", false, false, FlxColor.RED);
 			#end
-		});
+		});*/
 
 
 		//
@@ -2869,7 +2869,7 @@ class FunkinLua {
 		return PlayState.instance.modchartTexts.exists(name) ? PlayState.instance.modchartTexts.get(name) : Reflect.getProperty(PlayState.instance, name);
 	}
 
-	#if (!flash && sys)
+/*	#if (!flash && sys)
 	public function getShader(obj:String):FlxRuntimeShader
 	{
 		var killMe:Array<String> = obj.split('.');
@@ -2933,13 +2933,13 @@ class FunkinLua {
 					return true;
 				}
 			}
-		}*/
+		}
 		luaTrace('Missing shader $name .frag AND .vert files!', false, false, FlxColor.RED);
 		#else
 		luaTrace('This platform doesn\'t support Runtime Shaders!', false, false, FlxColor.RED);
 		#end
 		return false;
-	}
+	}*/
 
 	function getGroupStuff(leArray:Dynamic, variable:String) {
 		var killMe:Array<String> = variable.split('.');
