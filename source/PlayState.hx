@@ -1578,13 +1578,13 @@ class PlayState extends MusicBeatState
 
 	}
 
-	#if (!flash && sys)
+	#if (!flash && sys && mobile)
 	public var runtimeShaders:Map<String, Array<String>> = new Map<String, Array<String>>();
 	public function createRuntimeShader(name:String):FlxRuntimeShader
 	{
 		if(!ClientPrefs.shaders) return new FlxRuntimeShader();
 
-		#if (!flash /*&& MODS_ALLOWED*/ && sys)
+		#if (!flash /*&& MODS_ALLOWED*/ && sys && mobile)
 		if(!runtimeShaders.exists(name) && !initLuaShader(name))
 		{
 			FlxG.log.warn('Shader $name is missing!');
@@ -1602,9 +1602,6 @@ class PlayState extends MusicBeatState
 	public function initLuaShader(name:String)
 	{
 		if(!ClientPrefs.shaders) return false;
-
-		var arr:Array<String> = runtimeShaders.get(name);
-		return new FlxRuntimeShader(arr[0], arr[1]);
 
 		if(runtimeShaders.exists(name))
 		{
