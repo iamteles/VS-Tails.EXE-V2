@@ -1603,6 +1603,9 @@ class PlayState extends MusicBeatState
 	{
 		if(!ClientPrefs.shaders) return false;
 
+		var arr:Array<String> = runtimeShaders.get(name);
+		return new FlxRuntimeShader(arr[0], arr[1]);
+
 		if(runtimeShaders.exists(name))
 		{
 			FlxG.log.warn('Shader $name was already initialized!');
