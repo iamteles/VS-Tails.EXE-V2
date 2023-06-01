@@ -976,54 +976,35 @@ class PlayState extends MusicBeatState
 		add(luaDebugGroup);
 		#end
 
-		// "GLOBAL" SCRIPTS
 		#if LUA_ALLOWED
-		var filesPushed:Array<String> = [];
-		var foldersToCheck:Array<String> = [Paths.getPreloadPath('scripts/')];
-
-		#if MODS_ALLOWED
-		foldersToCheck.insert(0, Paths.mods('scripts/'));
-		if(Paths.currentModDirectory != null && Paths.currentModDirectory.length > 0)
-			foldersToCheck.insert(0, Paths.mods(Paths.currentModDirectory + '/scripts/'));
-
-		for(mod in Paths.getGlobalMods())
-			foldersToCheck.insert(0, Paths.mods(mod + '/scripts/'));
-		#end
-
-		for (folder in foldersToCheck)
-		{
-			if(FileSystem.exists(folder))
-			{
-				for (file in FileSystem.readDirectory(folder))
-				{
-					if(file.endsWith('.lua') && !filesPushed.contains(file))
-					{
-						luaArray.push(new FunkinLua(folder + file));
-						filesPushed.push(file);
-					}
-				}
-			}
-		}
-		#end
-
-
-		// STAGE SCRIPTS
-		#if (MODS_ALLOWED && LUA_ALLOWED)
+		// "GLOBAL" SCRIPTS
 		var doPush:Bool = false;
-		var luaFile:String = 'stages/' + curStage + '.lua';
-		if(FileSystem.exists(Paths.modFolders(luaFile))) {
-			luaFile = Paths.modFolders(luaFile);
-			doPush = true;
+		var luaFile = Paths.getPreloadPath('scripts/Editable Combo and Ratings v2.2.lua');
+		if (OpenFlAssets.exists(luaFile))
+		{
+		  doPush = true;
 		} else {
-			luaFile = Paths.getPreloadPath(luaFile);
-			if(FileSystem.exists(luaFile)) {
-				doPush = true;
-			}
+		Application.current.window.alert(luaFile, 'NOT FOUND :C');
 		}
-
-		if(doPush)
+			
+		if(doPush) 
 			luaArray.push(new FunkinLua(luaFile));
 		#end
+			
+		#if LUA_ALLOWED
+		//STAGE SCRIPTS
+		var doPush:Bool = false;
+		var luaFile = Paths.getPreloadPath('stages/' + curStage + '.lua');
+		if (OpenFlAssets.exists(luaFile))
+		{
+			doPush = true;
+		} else {
+		Application.current.window.alert(luaFile, 'NOT FOUND :C');  
+		}
+			
+		if(doPush) 
+			luaArray.push(new FunkinLua((luaFile));
+  	#end
 
 		var gfVersion:String = SONG.gfVersion;
 		if(gfVersion == null || gfVersion.length < 1)
@@ -1362,32 +1343,17 @@ class PlayState extends MusicBeatState
 
 		// SONG SPECIFIC SCRIPTS
 		#if LUA_ALLOWED
-		var filesPushed:Array<String> = [];
-		var foldersToCheck:Array<String> = [Paths.getPreloadPath('data/' + Paths.formatToSongPath(SONG.song) + '/')];
-
-		#if MODS_ALLOWED
-		foldersToCheck.insert(0, Paths.mods('data/' + Paths.formatToSongPath(SONG.song) + '/'));
-		if(Paths.currentModDirectory != null && Paths.currentModDirectory.length > 0)
-			foldersToCheck.insert(0, Paths.mods(Paths.currentModDirectory + '/data/' + Paths.formatToSongPath(SONG.song) + '/'));
-
-		for(mod in Paths.getGlobalMods())
-			foldersToCheck.insert(0, Paths.mods(mod + '/data/' + Paths.formatToSongPath(SONG.song) + '/' ));// using push instead of insert because these should run after everything else
-		#end
-
-		for (folder in foldersToCheck)
+		var doPush:Bool = false;
+		var luaFile = Paths.getPreloadPath('data/' + Paths.formatToSongPath(SONG.song) +  '/' + 'script.lua');
+		if (OpenFlAssets.exists(luaFile))
 		{
-			if(FileSystem.exists(folder))
-			{
-				for (file in FileSystem.readDirectory(folder))
-				{
-					if(file.endsWith('.lua') && !filesPushed.contains(file))
-					{
-						luaArray.push(new FunkinLua(folder + file));
-						filesPushed.push(file);
-					}
-				}
-			}
+		  doPush = true;
+		} else {
+		//Application.current.window.alert(luaFile, 'NOT FOUND :C');
 		}
+			
+		if(doPush) 
+			luaArray.push(new FunkinLua(luaFile));
 		#end
 
 		// he's the one who likes all our pretty songs and he likes to sing along and he likes to shoot his gun but he knows not what it means :   )
