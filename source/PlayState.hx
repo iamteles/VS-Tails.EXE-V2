@@ -1003,7 +1003,7 @@ class PlayState extends MusicBeatState
 		}
 			
 		if(doPush) 
-			luaArray.push(new FunkinLua((luaFile));
+			luaArray.push(new FunkinLua((luaFile)));
   	#end
 
 		var gfVersion:String = SONG.gfVersion;
