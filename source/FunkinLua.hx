@@ -2561,9 +2561,9 @@ class FunkinLua {
 		Lua_helper.add_callback(lua, "saveFile", function(path:String, content:String, ?absolute:Bool = false)
 		{
 			try {
-				if(!absolute)
+				/*if(!absolute)
 					File.saveContent(Paths.mods(path), content);
-				else
+				else*/
 					File.saveContent(path, content);
 
 				return true;
@@ -2898,7 +2898,7 @@ class FunkinLua {
 			return true;
 		}
 
-		var foldersToCheck:Array<String> = [Paths.mods('shaders/')];
+		/*var foldersToCheck:Array<String> = [Paths.mods('shaders/')];
 		if(Paths.currentModDirectory != null && Paths.currentModDirectory.length > 0)
 			foldersToCheck.insert(0, Paths.mods(Paths.currentModDirectory + '/shaders/'));
 
@@ -2938,7 +2938,7 @@ class FunkinLua {
 		#else
 		luaTrace('This platform doesn\'t support Runtime Shaders!', false, false, FlxColor.RED);
 		#end
-		return false;
+		return false;*/
 	}
 
 	function getGroupStuff(leArray:Dynamic, variable:String) {
