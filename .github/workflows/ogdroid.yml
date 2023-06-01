@@ -45,10 +45,10 @@ jobs:
           haxelib install hxcpp > /dev/null --quiet
           haxelib install lime 7.9.0
           haxelib install openfl 9.1.0
-          haxelib install flixel
+          haxelib install flixel 4.11.0
           haxelib install flixel-tools
           haxelib install flixel-ui
-          haxelib install flixel-addons
+          haxelib install flixel-addons 2.11.0
           haxelib install tjson
           haxelib install hxjsonast
           haxelib install hxCodec
