@@ -1578,13 +1578,13 @@ class PlayState extends MusicBeatState
 
 	}
 
-	#if (!flash && sys && mobile)
+/*	#if (!flash && sys && mobile)
 	public var runtimeShaders:Map<String, Array<String>> = new Map<String, Array<String>>();
 	public function createRuntimeShader(name:String):FlxRuntimeShader
 	{
 		if(!ClientPrefs.shaders) return new FlxRuntimeShader();
 
-		#if (!flash /*&& MODS_ALLOWED*/ && sys && mobile)
+		#if (!flash && MODS_ALLOWED && sys && mobile)
 		if(!runtimeShaders.exists(name) && !initLuaShader(name))
 		{
 			FlxG.log.warn('Shader $name is missing!');
@@ -1606,7 +1606,6 @@ class PlayState extends MusicBeatState
 		if(runtimeShaders.exists(name))
 		{
 			FlxG.log.warn('Shader $name was already initialized!');
-			//return new FlxRuntimeShader();
 			return true;
 		}
 
@@ -1647,9 +1646,9 @@ class PlayState extends MusicBeatState
 			}
 		}
 		FlxG.log.warn('Missing shader $name .frag AND .vert files!');
-		return false;*/
-	}
-	#end
+		return false;
+	} //checked code and it's useless bcuz it's for lua
+	#end*/
 
 	function set_songSpeed(value:Float):Float
 	{
