@@ -62,7 +62,7 @@ class OptionsState extends MusicBeatState
         removeVirtualPad();
         #end
 				openSubState(new options.GameplaySettingsSubState());
-			case 'Adjust Delay and CCombo'
+			case 'Adjust Delay and Combo':
 		    #if mobile
         removeVirtualPad();
         #end
