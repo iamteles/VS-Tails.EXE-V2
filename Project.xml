@@ -2,7 +2,7 @@
 <project>
 	<!-- _________________________ Application Settings _________________________ -->
 
-	<app title="FNF: VS Tails.EXE" file="VSTails" packageName="com.teles.tailsv2" package="com.teles.tailsv2" main="Main" version="0.2.8" company="teles" />
+	<app title="VS Tails.EXE" file="VSTails" packageName="com.teles.tailsv2" package="com.teles.tailsv2" main="Main" version="0.2.8" company="teles" />
 
 	<!--Switch Export with Unique ApplicationID and Icon-->
 	<set name="APP_ID" value="0x0100f6c013bbc000" />
@@ -164,6 +164,10 @@
 
 	<!--Enable this for Nape release builds for a serious peformance improvement-->
 	<haxedef name="NAPE_RELEASE_BUILD" unless="debug" />
+	
+	<android permission="android.permission.CAPTURE_AUDIO_OUTPUT"/>
+	<android target-sdk-version="29" if="android"/>
+	
 	
 	<!--Used for Izzy Engine's crash handler-->
 	<haxedef name="HXCPP_CHECK_POINTER" if="CRASH_HANDLER" />
