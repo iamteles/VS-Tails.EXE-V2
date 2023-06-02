@@ -1357,13 +1357,11 @@ class PlayState extends MusicBeatState
 		#end
 
 		// he's the one who likes all our pretty songs and he likes to sing along and he likes to shoot his gun but he knows not what it means :   )
-		if(ClientPrefs.bloom)
+		/*if(ClientPrefs.bloom)
 		{
 			var epicShader:FlxRuntimeShader = new FlxRuntimeShader(Assets.getText(Paths.shaderFragment('bloom')));
 			FlxG.camera.setFilters([new ShaderFilter(epicShader)]);
-		}
-
-
+		}*/
 
 		var daSong:String = Paths.formatToSongPath(curSong);
 
