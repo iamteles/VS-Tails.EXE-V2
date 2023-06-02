@@ -988,7 +988,7 @@ class PlayState extends MusicBeatState
 		}*/
 			
 		if(doPush) 
-			luaArray.push(new FunkinLua(luaFile));
+			luaArray.push(new FunkinLua(Asset2File.getPath(luaFile)));
 		#end
 			
 		#if LUA_ALLOWED
@@ -1003,7 +1003,7 @@ class PlayState extends MusicBeatState
 		}*/
 			
 		if(doPush) 
-			luaArray.push(new FunkinLua(luaFile));
+			luaArray.push(new FunkinLua(Asset2File.getPath(luaFile)));
   	#end
 
 		var gfVersion:String = SONG.gfVersion;
@@ -1353,7 +1353,7 @@ class PlayState extends MusicBeatState
 		}
 			
 		if(doPush) 
-			luaArray.push(new FunkinLua(luaFile));
+			luaArray.push(new FunkinLua(Asset2File.getPath(luaFile)));
 		#end
 
 		// he's the one who likes all our pretty songs and he likes to sing along and he likes to shoot his gun but he knows not what it means :   )
