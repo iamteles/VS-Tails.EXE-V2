@@ -69,6 +69,7 @@ class ControlsSubState extends MusicBeatSubstate {
 		super();
    #if mobile
    addVirtualPad(LEFT_FULL, A_B);
+   #end
 		/* will hault game
 		if(ClientPrefs.areYouTeles) {
 			optionShit = [
