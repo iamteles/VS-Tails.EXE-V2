@@ -323,6 +323,7 @@ class FreeplayState extends MusicBeatState
     if (FlxG.android.justReleased.BACK)
     {
 					PlayState.SONG = Song.loadFromJson('octane', 'octane');
+					LoadingState.loadAndSwitchState(new PlayState());
 	        PlayState.isStoryMode = false;
     }
     #end
