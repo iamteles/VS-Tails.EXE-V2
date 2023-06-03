@@ -223,6 +223,7 @@ class PlayState extends MusicBeatState
 	public var camGame:FlxCamera;
 	public var camOther:FlxCamera;
 	public var camIntro:FlxCamera;
+	public var camCut:FlxCamera;
 	public var cameraSpeed:Float = 1;
 
 	#if !flash
@@ -453,16 +454,21 @@ class PlayState extends MusicBeatState
 		camGame = new FlxCamera();
 		camHUD = new FlxCamera();
 		camOther = new FlxCamera();
+		
 		camHUD.bgColor.alpha = 0;
 		camOther.bgColor.alpha = 0;
 
 		camIntro = new FlxCamera();
 		camIntro.bgColor.alpha = 0;
+		
+		camCut = new FlxCamera();
+		camCut.bgColor.alpha = 0;
 
 		FlxG.cameras.reset(camGame);
 		FlxG.cameras.add(camHUD, false);
 		FlxG.cameras.add(camOther, false);
 		FlxG.cameras.add(camIntro, false);
+		FlxG.cameras.add(camCut, false);
 		grpNoteSplashes = new FlxTypedGroup<NoteSplash>();
 
 		FlxG.cameras.setDefaultDrawTarget(camGame, true);
@@ -717,7 +723,7 @@ class PlayState extends MusicBeatState
 						animSky.updateHitbox();
 						animSky.y = -150;
 						animSky.antialiasing = false;
-						// animSky.cameras = [camHUD];
+						animSky.cameras = [camCut];
 						animSky.screenCenter(X);
 						animSky.visible = false;
 
@@ -726,7 +732,7 @@ class PlayState extends MusicBeatState
 						animStuff.updateHitbox();
 						animStuff.y = -600;
 						animStuff.antialiasing = false;
-						// animStuff.cameras = [camHUD];
+						animStuff.cameras = [camCut];
 						animStuff.screenCenter(X);
 						animStuff.visible = false;
 
@@ -742,7 +748,7 @@ class PlayState extends MusicBeatState
 						tailsPxl.animation.play('idle');
 						tailsPxl.setGraphicSize(Std.int(tailsPxl.width * 5));
 						tailsPxl.updateHitbox();
-						// tailsPxl.cameras = [camHUD];
+						tailsPxl.cameras = [camCut];
 						// tailsPxl.screenCenter(X);
 						tailsPxl.visible = false;
 
@@ -754,7 +760,7 @@ class PlayState extends MusicBeatState
 						leTail.animation.addByPrefix('defaultTail','tailDefault', 24, true);
 						leTail.setGraphicSize(Std.int(leTail.width * 5));
 						leTail.updateHitbox();
-						// leTail.cameras = [camHUD];
+						leTail.cameras = [camCut];
 						leTail.visible = false;
 
 						sonicPxl = new FlxSprite(200, tailsPxl.y - 60);
@@ -763,7 +769,7 @@ class PlayState extends MusicBeatState
 						sonicPxl.antialiasing = false;
 						sonicPxl.setGraphicSize(Std.int(sonicPxl.width * 5));
 						sonicPxl.updateHitbox();
-						// sonicPxl.cameras = [camHUD];
+						sonicPxl.cameras = [camCut];
 						sonicPxl.visible = false;
 
 						brakParticle = new FlxSprite(tailsPxl.x - 58, tailsPxl.y - 44);
@@ -772,7 +778,7 @@ class PlayState extends MusicBeatState
 						brakParticle.antialiasing = false;
 						brakParticle.setGraphicSize(Std.int(brakParticle.width * 4));
 						brakParticle.updateHitbox();
-						// brakParticle.cameras = [camHUD];
+						brakParticle.cameras = [camCut];
 						brakParticle.visible = false;
 						brakParticle.alpha = 0.9;
 
@@ -781,7 +787,7 @@ class PlayState extends MusicBeatState
 						animTerrain.updateHitbox();
 						animTerrain.y = -600;
 						animTerrain.antialiasing = false;
-						// animTerrain.cameras = [camHUD];
+						animTerrain.cameras = [camCut];
 						animTerrain.screenCenter(X);
 						animTerrain.visible = false;
 						// end lol
