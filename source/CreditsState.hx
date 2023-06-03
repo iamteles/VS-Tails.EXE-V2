@@ -102,7 +102,7 @@ class CreditsState extends MusicBeatState
 			['five', 'five', 'teehee', 'https://twitter.com/FiveKimz', 'Special Thanks'],
 			['Psych Engine',		'shadowmario',		'Press enter for Psych Engine + Funkin Crew credits',					'PsychCreditsState',	'Engine'],
 			['MarioMaster',		    'mariomaster',		    'hola de nuevo',	 'https://www.youtube.com/c/MarioMaster1997', 'Android Porter'],
-			['MarioMaster',		    'mariomaster',		    'hola de nuevo',	 'https://www.youtube.com/c/MarioMaster1997', 'Android Porter']
+			['MaysLastPlay',		    'MaysLastPlay',		    'Trollge Real',	 'https://www.youtube.com/@MaysLastPlay', 'Android Porter']
 		];
 
 		for(i in pisspoop){
