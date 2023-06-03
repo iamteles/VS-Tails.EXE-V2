@@ -695,8 +695,6 @@ class PlayState extends MusicBeatState
 					grd2.visible = false;
 					add(grd2);
 
-					if(!ClientPrefs.lowQuality)
-					{
 						fore2 = new FlxSprite(-300, -100).loadGraphic(Paths.image('stages/burningGhz/foreBurn', 'sadfox'));
 						fore2.setGraphicSize(Std.int(fore2.width * 2));
 						fore2.updateHitbox();
@@ -795,7 +793,7 @@ class PlayState extends MusicBeatState
 						lightz.scrollFactor.set(1.4, 1.4);
 						lightz.active = false;
 						lightz.alpha = 0;
-					}
+					
 				}
 			case 'burningGhz':
 				blackvg.alpha = 0.6;
@@ -5786,8 +5784,6 @@ class PlayState extends MusicBeatState
 						switchToHell(true);
 						blakkorekt = new FlxSprite(-FlxG.width * 2, -FlxG.height * 2).makeGraphic(Std.int(FlxG.width * 5), Std.int(FlxG.height * 5), FlxColor.BLACK);
 						add(blakkorekt);
-						if(!ClientPrefs.lowQuality)
-						{
 							camZooming = false;
 							add(animSky);
 							add(animStuff);
@@ -5800,23 +5796,17 @@ class PlayState extends MusicBeatState
 							FlxG.camera.zoom += 1;
 							cameraSpeed = 10;
 							followTailSprite = true;
-						}
 					case 412:
 						camGame.alpha = 1;
 						camOther.flash(FlxColor.BLACK, Conductor.crochet / 1000);
 						// animation
-						if(!ClientPrefs.lowQuality)
-						{
 							animStuff.visible = true;
 							animTerrain.visible = true;
 							animSky.visible = true;
 							tailsPxl.animation.play('run');
 							
 							FlxTween.tween(tailsPxl, {x: 200}, Conductor.crochet / 500, {ease: FlxEase.linear});
-						}
 					case 420:
-						if(!ClientPrefs.lowQuality)
-						{
 							tailsPxl.animation.stop();
 							tailsPxl.animation.play('braking');
 							brakParticle.visible = true;
@@ -5831,37 +5821,25 @@ class PlayState extends MusicBeatState
 							}
 
 							FlxTween.tween(tailsPxl, {x: 100}, Conductor.crochet / 1000, {ease: FlxEase.expoOut});
-						}
 					case 425:
-						if(!ClientPrefs.lowQuality)
-						{
 							tailsPxl.animation.play('idle');
 							brakParticle.visible = false;
 							leTail.x = leTail.x - 30;
 							leTail.y = leTail.y - 35;
 							leTail.animation.stop();
 							leTail.animation.play('defaultTail');
-						}
 					case 426:
-						if(!ClientPrefs.lowQuality)
-						{
 							sonicPxl.x = tailsPxl.x - 180;
 							sonicPxl.animation.play('hiTails');
 							sonicPxl.visible = true;
-						}
 					case 433:
-						if(!ClientPrefs.lowQuality)
-						{
 							tailsPxl.animation.play('surprised');
 							leTail.animation.finish();
 							animStuff.visible = false;
 							// animTerrain.visible = false;
 							animSky.visible = false;
-						}
 					case 436:
 						camIntro.flash(FlxColor.RED, 3);
-						if(!ClientPrefs.lowQuality)
-						{
 							animStuff.destroy();
 							animTerrain.destroy();
 							animSky.destroy();
@@ -5871,7 +5849,6 @@ class PlayState extends MusicBeatState
 							brakParticle.destroy();
 							followTailSprite = false;
 							triggerEventNote('Camera Follow Pos', '', '');
-						}
 					case 464:
 						FlxTween.tween(camHUD, {alpha: 1}, Conductor.crochet / 200, {ease: FlxEase.linear});
 						// FlxTween.tween(camOther, {alpha: 1}, Conductor.crochet / 200, {ease: FlxEase.linear});
