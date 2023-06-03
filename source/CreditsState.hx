@@ -65,6 +65,11 @@ class CreditsState extends MusicBeatState
         add(bg);
 
 		var pisspoop:Array<Array<String>> = [ //Name - Icon name - Description - Link - Role
+			['Android Port'],      ['MarioMaster',		    'mariomaster',		    'hola de nuevo',	 'https://www.youtube.com/c/MarioMaster1997',	'D10616'],
+
+			['MaysLastPlay',		'MaysLastPlay',		'Android Porter',							'https://www.youtube.com/channel/UCx0LxtFR8ROd9sFAq-UxDfw',	'5DE7FF']
+
+		
 			['VS Tails.EXE Team'],
 			['teles', 'teles', '1 year, i cant believe it', 'https://www.youtube.com/channel/UCHK83AQBjAc9sy0lE6m8e3A', 'Director, Musician, Coder, Animator'],
 			['Astro_Galaxy', 'astro' ,'Space Journey when?', 'https://www.youtube.com/channel/UChhiMUkcTdDDpOiMPY0td5w', 'Artist, Animator'],
