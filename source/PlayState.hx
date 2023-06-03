@@ -2326,13 +2326,11 @@ class PlayState extends MusicBeatState
 		persocazzo.updateHitbox();
 		persocazzo.cameras = [camIntro];
 		add(persocazzo);
-		#if desktop
-		if(FileSystem.exists(Paths.txt(SONG.song.toLowerCase() + "/info")))
+		if(OpenFlAssets.exists(Paths.txt(SONG.song.toLowerCase() + "/info")))
 		{
 			var songInfoArtist:String = (CoolUtil.coolTextFile(Paths.txt(curSong.toLowerCase() + "/info"))[0]).toUpperCase();
 			persocazzo.text = songInfoArtist;
 		}
-		#end
 
 		// there should have been better code i swear
 		var machecazz:Bool = false;
