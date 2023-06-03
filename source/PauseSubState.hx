@@ -39,6 +39,7 @@ class PauseSubState extends MusicBeatSubstate
 
 		#if mobile
     addVirtualPad(UP_DOWN, A);
+    addVirtualPadCamera(false);
     #end
 
 		if(CoolUtil.difficulties.length < 2) menuItemsOG.remove('Change Difficulty'); //No need to change difficulty if there is only one!
@@ -155,11 +156,11 @@ class PauseSubState extends MusicBeatSubstate
 		var downP = controls.UI_DOWN_P;
 		var accepted = controls.ACCEPT;
 
-		if (#if !mobile upP #else virtualPad.buttonUp.justPressed #end)
+		if (upP)
 		{
 			changeSelection(-1);
 		}
-		if (#if !mobile downP #else virtualPad.buttonDown.justPressed #end)
+		if (downP)
 		{
 			changeSelection(1);
 		}
@@ -195,7 +196,7 @@ class PauseSubState extends MusicBeatSubstate
 				}
 		}
 
-		if (#if !mobile accepted #else virtualPad.buttonA.justPressed #end && (cantUnpause <= 0 || !ClientPrefs.controllerMode))
+		if (accepted && (cantUnpause <= 0 || !ClientPrefs.controllerMode))
 		{
 			if (menuItems == difficultyChoices)
 			{
