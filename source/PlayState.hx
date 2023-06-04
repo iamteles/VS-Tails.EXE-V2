@@ -5789,7 +5789,6 @@ class PlayState extends MusicBeatState
 						triggerEventNote('Change Character', 'dad', 'tailsEXE');
 						switchToHell(true);
 						blakkorekt = new FlxSprite(-FlxG.width * 2, -FlxG.height * 2).makeGraphic(Std.int(FlxG.width * 5), Std.int(FlxG.height * 5), FlxColor.BLACK);
-						blakkorekt.cameras = [camCut];
 						add(blakkorekt);
 							camZooming = false;
 							add(animSky);
