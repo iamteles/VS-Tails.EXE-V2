@@ -5786,16 +5786,13 @@ class PlayState extends MusicBeatState
 						FlxTween.tween(camGame, {alpha: 0}, Conductor.crochet / 1000, {ease: FlxEase.linear});
 						FlxTween.tween(camHUD, {alpha: 0}, Conductor.crochet / 1000, {ease: FlxEase.linear});
 					case 408:
-						
-						camCut.alpha = 1; // wtf?????????? If this work, mays can call me dumb
 						triggerEventNote('Change Character', 'dad', 'tailsEXE');
 						switchToHell(true);
 						blakkorekt = new FlxSprite(-FlxG.width * 2, -FlxG.height * 2).makeGraphic(Std.int(FlxG.width * 5), Std.int(FlxG.height * 5), FlxColor.BLACK);
-						blakkorekt.cameras = [camHUD];
+						blakkorekt.cameras = [camCut];
 						add(blakkorekt);
 							camZooming = false;
 							add(animSky);
-							remove(blakkorekt);
 							add(animStuff);
 							add(leTail);
 							add(tailsPxl);
@@ -5878,7 +5875,6 @@ class PlayState extends MusicBeatState
 						add(blakkorekt);
 						blakkorekt.destroy();
 						camGame.alpha = 1;
-						camCut.alpha = 0;
 						cameraSpeed = 1;
 					case 484 | 500 | 516 | 532 | 548 | 564 | 580 | 596:
 						chromOn = false;
