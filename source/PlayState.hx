@@ -5792,7 +5792,6 @@ class PlayState extends MusicBeatState
 							add(sonicPxl);
 							add(brakParticle);
 							add(animTerrain);
-							blakkorekt.destroy();
 							tailsPxl.visible = true;
 							FlxG.camera.zoom += 1;
 							cameraSpeed = 10;
@@ -5840,7 +5839,7 @@ class PlayState extends MusicBeatState
 							// animTerrain.visible = false;
 							animSky.visible = false;
 					case 436:
-						camCut.flash(FlxColor.RED, 3);
+						camIntro.flash(FlxColor.RED, 3);
 							animStuff.destroy();
 							animTerrain.destroy();
 							animSky.destroy();
@@ -5863,9 +5862,6 @@ class PlayState extends MusicBeatState
 						chromOn = true;
 						FlxG.camera.shake(0.010, 0.1);
 						camHUD.shake(0.008, 0.1);
-						blakkorekt = new FlxSprite(-FlxG.width * 2, -FlxG.height * 2).makeGraphic(Std.int(FlxG.width * 5), Std.int(FlxG.height * 5), FlxColor.BLACK);
-						blakkorekt.cameras = [camCut];
-						add(blakkorekt);
 						blakkorekt.destroy();
 						camGame.alpha = 1;
 						cameraSpeed = 1;
