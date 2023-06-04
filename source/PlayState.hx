@@ -5797,8 +5797,9 @@ class PlayState extends MusicBeatState
 							add(leTail);
 							add(tailsPxl);
 							add(sonicPxl);
-						//	add(brakParticle);
+							add(brakParticle);
 							add(animTerrain);
+							blakkorekt.destroy();
 							tailsPxl.visible = true;
 							FlxG.camera.zoom += 1;
 							cameraSpeed = 10;
@@ -5853,7 +5854,6 @@ class PlayState extends MusicBeatState
 							tailsPxl.destroy();
 							leTail.destroy();
 							sonicPxl.destroy();
-							add(brakParticle);
 							brakParticle.destroy();
 							followTailSprite = false;
 							triggerEventNote('Camera Follow Pos', '', '');
@@ -5870,6 +5870,9 @@ class PlayState extends MusicBeatState
 						chromOn = true;
 						FlxG.camera.shake(0.010, 0.1);
 						camHUD.shake(0.008, 0.1);
+						blakkorekt = new FlxSprite(-FlxG.width * 2, -FlxG.height * 2).makeGraphic(Std.int(FlxG.width * 5), Std.int(FlxG.height * 5), FlxColor.BLACK);
+						blakkorekt.cameras = [camCut];
+						add(blakkorekt);
 						blakkorekt.destroy();
 						camGame.alpha = 1;
 						cameraSpeed = 1;
