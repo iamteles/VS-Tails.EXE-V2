@@ -695,6 +695,8 @@ class PlayState extends MusicBeatState
 					grd2.visible = false;
 					add(grd2);
 
+					if(!ClientPrefs.lowQuality)
+					{
 						fore2 = new FlxSprite(-300, -100).loadGraphic(Paths.image('stages/burningGhz/foreBurn', 'sadfox'));
 						fore2.setGraphicSize(Std.int(fore2.width * 2));
 						fore2.updateHitbox();
@@ -793,7 +795,7 @@ class PlayState extends MusicBeatState
 						lightz.scrollFactor.set(1.4, 1.4);
 						lightz.active = false;
 						lightz.alpha = 0;
-					
+					}
 				}
 			case 'burningGhz':
 				blackvg.alpha = 0.6;
@@ -974,35 +976,54 @@ class PlayState extends MusicBeatState
 		add(luaDebugGroup);
 		#end
 
-		#if LUA_ALLOWED
 		// "GLOBAL" SCRIPTS
-		var doPush:Bool = false;
-		var luaFile = Paths.getPreloadPath('scripts/Editable Combo and Ratings v2.2.lua');
-		if (OpenFlAssets.exists(luaFile))
-		{
-		  doPush = true;
-		} /*else {
-		Application.current.window.alert(luaFile, 'NOT FOUND :C');
-		}*/
-			
-		if(doPush) 
-			luaArray.push(new FunkinLua(Asset2File.getPath(luaFile)));
-		#end
-			
 		#if LUA_ALLOWED
-		//STAGE SCRIPTS
-		var doPush:Bool = false;
-		var luaFile = Paths.getPreloadPath('stages/' + curStage + '.lua');
-		if (OpenFlAssets.exists(luaFile))
+		var filesPushed:Array<String> = [];
+		var foldersToCheck:Array<String> = [Paths.getPreloadPath('scripts/')];
+
+		#if MODS_ALLOWED
+		foldersToCheck.insert(0, Paths.mods('scripts/'));
+		if(Paths.currentModDirectory != null && Paths.currentModDirectory.length > 0)
+			foldersToCheck.insert(0, Paths.mods(Paths.currentModDirectory + '/scripts/'));
+
+		for(mod in Paths.getGlobalMods())
+			foldersToCheck.insert(0, Paths.mods(mod + '/scripts/'));
+		#end
+
+		for (folder in foldersToCheck)
 		{
+			if(FileSystem.exists(folder))
+			{
+				for (file in FileSystem.readDirectory(folder))
+				{
+					if(file.endsWith('.lua') && !filesPushed.contains(file))
+					{
+						luaArray.push(new FunkinLua(folder + file));
+						filesPushed.push(file);
+					}
+				}
+			}
+		}
+		#end
+
+
+		// STAGE SCRIPTS
+		#if (MODS_ALLOWED && LUA_ALLOWED)
+		var doPush:Bool = false;
+		var luaFile:String = 'stages/' + curStage + '.lua';
+		if(FileSystem.exists(Paths.modFolders(luaFile))) {
+			luaFile = Paths.modFolders(luaFile);
 			doPush = true;
-		} /*else {
-		Application.current.window.alert(luaFile, 'NOT FOUND :C');  
-		}*/
-			
-		if(doPush) 
-			luaArray.push(new FunkinLua(Asset2File.getPath(luaFile)));
-  	#end
+		} else {
+			luaFile = Paths.getPreloadPath(luaFile);
+			if(FileSystem.exists(luaFile)) {
+				doPush = true;
+			}
+		}
+
+		if(doPush)
+			luaArray.push(new FunkinLua(luaFile));
+		#end
 
 		var gfVersion:String = SONG.gfVersion;
 		if(gfVersion == null || gfVersion.length < 1)
@@ -1272,11 +1293,6 @@ class PlayState extends MusicBeatState
 
 		cloneTimeTxt.cameras = [camHUD];
 
-   #if mobile
-   addMobileControls(false);
-   mobileControls.visible = false;
-   #end
-
 		// if (SONG.song == 'South')
 		// FlxG.camera.alpha = 0.7;
 		// UI_camera.zoom = 1;
@@ -1341,25 +1357,42 @@ class PlayState extends MusicBeatState
 
 		// SONG SPECIFIC SCRIPTS
 		#if LUA_ALLOWED
-		var doPush:Bool = false;
-		var luaFile = Paths.getPreloadPath('data/' + Paths.formatToSongPath(SONG.song) +  '/' + 'script.lua');
-		if (OpenFlAssets.exists(luaFile))
+		var filesPushed:Array<String> = [];
+		var foldersToCheck:Array<String> = [Paths.getPreloadPath('data/' + Paths.formatToSongPath(SONG.song) + '/')];
+
+		#if MODS_ALLOWED
+		foldersToCheck.insert(0, Paths.mods('data/' + Paths.formatToSongPath(SONG.song) + '/'));
+		if(Paths.currentModDirectory != null && Paths.currentModDirectory.length > 0)
+			foldersToCheck.insert(0, Paths.mods(Paths.currentModDirectory + '/data/' + Paths.formatToSongPath(SONG.song) + '/'));
+
+		for(mod in Paths.getGlobalMods())
+			foldersToCheck.insert(0, Paths.mods(mod + '/data/' + Paths.formatToSongPath(SONG.song) + '/' ));// using push instead of insert because these should run after everything else
+		#end
+
+		for (folder in foldersToCheck)
 		{
-		  doPush = true;
-		} else {
-		//Application.current.window.alert(luaFile, 'NOT FOUND :C');
+			if(FileSystem.exists(folder))
+			{
+				for (file in FileSystem.readDirectory(folder))
+				{
+					if(file.endsWith('.lua') && !filesPushed.contains(file))
+					{
+						luaArray.push(new FunkinLua(folder + file));
+						filesPushed.push(file);
+					}
+				}
+			}
 		}
-			
-		if(doPush) 
-			luaArray.push(new FunkinLua(Asset2File.getPath(luaFile)));
 		#end
 
 		// he's the one who likes all our pretty songs and he likes to sing along and he likes to shoot his gun but he knows not what it means :   )
-		/*if(ClientPrefs.bloom)
+		if(ClientPrefs.bloom)
 		{
-			var epicShader:FlxRuntimeShader = new FlxRuntimeShader(Assets.getText(Paths.shaderFragment('bloom')));
+			var epicShader:FlxRuntimeShader = new FlxRuntimeShader(File.getContent(Paths.shaderFragment('bloom')));
 			FlxG.camera.setFilters([new ShaderFilter(epicShader)]);
-		}*/
+		}
+
+
 
 		var daSong:String = Paths.formatToSongPath(curSong);
 
@@ -1574,13 +1607,13 @@ class PlayState extends MusicBeatState
 
 	}
 
-/*	#if (!flash && sys && mobile)
+	#if (!flash && sys)
 	public var runtimeShaders:Map<String, Array<String>> = new Map<String, Array<String>>();
 	public function createRuntimeShader(name:String):FlxRuntimeShader
 	{
 		if(!ClientPrefs.shaders) return new FlxRuntimeShader();
 
-		#if (!flash && MODS_ALLOWED && sys && mobile)
+		#if (!flash && MODS_ALLOWED && sys)
 		if(!runtimeShaders.exists(name) && !initLuaShader(name))
 		{
 			FlxG.log.warn('Shader $name is missing!');
@@ -1595,7 +1628,7 @@ class PlayState extends MusicBeatState
 		#end
 	}
 
-	public function initLuaShader(name:String)
+	public function initLuaShader(name:String, ?glslVersion:Int = 120)
 	{
 		if(!ClientPrefs.shaders) return false;
 
@@ -1605,7 +1638,7 @@ class PlayState extends MusicBeatState
 			return true;
 		}
 
-		/*var foldersToCheck:Array<String> = [Paths.mods('shaders/')];
+		var foldersToCheck:Array<String> = [Paths.mods('shaders/')];
 		if(Paths.currentModDirectory != null && Paths.currentModDirectory.length > 0)
 			foldersToCheck.insert(0, Paths.mods(Paths.currentModDirectory + '/shaders/'));
 
@@ -1643,8 +1676,8 @@ class PlayState extends MusicBeatState
 		}
 		FlxG.log.warn('Missing shader $name .frag AND .vert files!');
 		return false;
-	} //checked code and it's useless bcuz it's for lua
-	#end*/
+	}
+	#end
 
 	function set_songSpeed(value:Float):Float
 	{
@@ -2324,11 +2357,13 @@ class PlayState extends MusicBeatState
 		persocazzo.updateHitbox();
 		persocazzo.cameras = [camIntro];
 		add(persocazzo);
-		if(OpenFlAssets.exists(Paths.txt(SONG.song.toLowerCase() + "/info")))
+		#if desktop
+		if(FileSystem.exists(Paths.txt(SONG.song.toLowerCase() + "/info")))
 		{
 			var songInfoArtist:String = (CoolUtil.coolTextFile(Paths.txt(curSong.toLowerCase() + "/info"))[0]).toUpperCase();
 			persocazzo.text = songInfoArtist;
 		}
+		#end
 
 		// there should have been better code i swear
 		var machecazz:Bool = false;
@@ -2371,11 +2406,6 @@ class PlayState extends MusicBeatState
 
 	public function startCountdown():Void
 	{
-
-   #if mobile
-   mobileControls.visible = true;
-   #end
-
 		if(startedCountdown) {
 			callOnLuas('onStartCountdown', []);
 			return;
@@ -3454,7 +3484,7 @@ class PlayState extends MusicBeatState
 			botplayTxt.alpha = 1 - Math.sin((Math.PI * botplaySine) / 180);
 		}
 
-		if (controls.PAUSE #if mobile || FlxG.android.justReleased.BACK #end && startedCountdown && canPause)
+		if (controls.PAUSE && startedCountdown && canPause)
 		{
 			var ret:Dynamic = callOnLuas('onPause', [], false);
 			if(ret != FunkinLua.Function_Stop) {
@@ -4366,11 +4396,6 @@ class PlayState extends MusicBeatState
 	public var transitioning = false;
 	public function endSong():Void
 	{
-
-	 #if mobile
-   mobileControls.visible = false;
-   #end
-
 		//Should kill you if you tried to cheat
 		if(!startingSong) {
 			notes.forEach(function(daNote:Note) {
@@ -5784,6 +5809,8 @@ class PlayState extends MusicBeatState
 						switchToHell(true);
 						blakkorekt = new FlxSprite(-FlxG.width * 2, -FlxG.height * 2).makeGraphic(Std.int(FlxG.width * 5), Std.int(FlxG.height * 5), FlxColor.BLACK);
 						add(blakkorekt);
+						if(!ClientPrefs.lowQuality)
+						{
 							camZooming = false;
 							add(animSky);
 							add(animStuff);
@@ -5796,17 +5823,23 @@ class PlayState extends MusicBeatState
 							FlxG.camera.zoom += 1;
 							cameraSpeed = 10;
 							followTailSprite = true;
+						}
 					case 412:
 						camGame.alpha = 1;
 						camOther.flash(FlxColor.BLACK, Conductor.crochet / 1000);
 						// animation
+						if(!ClientPrefs.lowQuality)
+						{
 							animStuff.visible = true;
 							animTerrain.visible = true;
 							animSky.visible = true;
 							tailsPxl.animation.play('run');
 							
 							FlxTween.tween(tailsPxl, {x: 200}, Conductor.crochet / 500, {ease: FlxEase.linear});
+						}
 					case 420:
+						if(!ClientPrefs.lowQuality)
+						{
 							tailsPxl.animation.stop();
 							tailsPxl.animation.play('braking');
 							brakParticle.visible = true;
@@ -5821,25 +5854,37 @@ class PlayState extends MusicBeatState
 							}
 
 							FlxTween.tween(tailsPxl, {x: 100}, Conductor.crochet / 1000, {ease: FlxEase.expoOut});
+						}
 					case 425:
+						if(!ClientPrefs.lowQuality)
+						{
 							tailsPxl.animation.play('idle');
 							brakParticle.visible = false;
 							leTail.x = leTail.x - 30;
 							leTail.y = leTail.y - 35;
 							leTail.animation.stop();
 							leTail.animation.play('defaultTail');
+						}
 					case 426:
+						if(!ClientPrefs.lowQuality)
+						{
 							sonicPxl.x = tailsPxl.x - 180;
 							sonicPxl.animation.play('hiTails');
 							sonicPxl.visible = true;
+						}
 					case 433:
+						if(!ClientPrefs.lowQuality)
+						{
 							tailsPxl.animation.play('surprised');
 							leTail.animation.finish();
 							animStuff.visible = false;
 							// animTerrain.visible = false;
 							animSky.visible = false;
+						}
 					case 436:
 						camIntro.flash(FlxColor.RED, 3);
+						if(!ClientPrefs.lowQuality)
+						{
 							animStuff.destroy();
 							animTerrain.destroy();
 							animSky.destroy();
@@ -5849,6 +5894,7 @@ class PlayState extends MusicBeatState
 							brakParticle.destroy();
 							followTailSprite = false;
 							triggerEventNote('Camera Follow Pos', '', '');
+						}
 					case 464:
 						FlxTween.tween(camHUD, {alpha: 1}, Conductor.crochet / 200, {ease: FlxEase.linear});
 						// FlxTween.tween(camOther, {alpha: 1}, Conductor.crochet / 200, {ease: FlxEase.linear});
@@ -6269,7 +6315,7 @@ class PlayState extends MusicBeatState
 			// had to do this because there is a bug in haxe where Stop != Continue doesnt work
 			var bool:Bool = ret == FunkinLua.Function_Continue;
 			if(!bool && ret != 0) {
-				returnVal = ret;
+				returnVal = cast ret;
 			}
 		}
 		#end
