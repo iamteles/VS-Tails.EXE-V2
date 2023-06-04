@@ -5797,7 +5797,7 @@ class PlayState extends MusicBeatState
 							add(leTail);
 							add(tailsPxl);
 							add(sonicPxl);
-							add(brakParticle);
+						//	add(brakParticle);
 							add(animTerrain);
 							tailsPxl.visible = true;
 							FlxG.camera.zoom += 1;
@@ -5846,7 +5846,7 @@ class PlayState extends MusicBeatState
 							// animTerrain.visible = false;
 							animSky.visible = false;
 					case 436:
-						camIntro.flash(FlxColor.RED, 3);
+						camCut.flash(FlxColor.RED, 3);
 							animStuff.destroy();
 							animTerrain.destroy();
 							animSky.destroy();
