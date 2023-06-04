@@ -5853,6 +5853,7 @@ class PlayState extends MusicBeatState
 							tailsPxl.destroy();
 							leTail.destroy();
 							sonicPxl.destroy();
+							add(brakParticle);
 							brakParticle.destroy();
 							followTailSprite = false;
 							triggerEventNote('Camera Follow Pos', '', '');
